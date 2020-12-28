@@ -9,6 +9,15 @@
             %span.text-white-opacity-05
               %small
                 = episode.published_on
-          .player.pt-4
-            %audio{:controls => "", :preload => "none", :style => "max-width: 100%"}
-              %source{:src => episode.mp3_url, :type => "audio/mp3"}
+
+          .player{id: "player"}
+
+            %root{:style => ""}
+              -# .flex.w-full
+              -#   %progress-bar
+              -# .flex.w-full.justify-between
+              -#   .text-left{:class => "w-3/12"}
+              -#     %timer-current.text-sm
+              -#   .text-right{:class => "w-3/12"}
+              -#     %timer-duration.text-sm
+              %play-button

@@ -1,4 +1,4 @@
-- if true # cache_if !current_user&.admin?, @episode do
+- cache_if !current_user&.admin?, @episode do
   = render "shared/episode_show", episode: @episode
   #fb-root
 
@@ -33,7 +33,12 @@
                 "data-share" => "true",
                 "data-size" => "large",
                 "data-width" => ""}
+    .container
+      .row
+        %h2 Pod love
 
+        .col-md-12
+          = render "podlove", episode: @episode
   - if current_user&.admin?
     .p.mt-3
       = edit_button  edit_admin_episode_path @episode

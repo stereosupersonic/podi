@@ -1,0 +1,182 @@
+%br
+.player{id: "player"}
+
+  %root{:style => ""}
+    .flex.w-full
+      %progress-bar
+    .flex.w-full.justify-between
+      .text-left{:class => "w-3/12"}
+        %timer-current.text-sm
+      .text-right{:class => "w-3/12"}
+        %timer-duration.text-sm
+    %play-button
+
+%script{:src => "https://cdn.podlove.org/web-player/5.x/embed.js"}
+
+:javascript
+  podlovePlayer('#player', {
+      title: "#{episode.title}",
+      //subtitle: 'test',
+      //summary: 'summary',
+      //publicationDate: 'podcast.date',
+      //poster: "#{episode.artwork_url}",
+      duration: '1234',
+      audio: [{
+          url: "#{episode.mp3_url}",
+          mimeType: 'audio/mp3',
+          size: '123}',
+          title: 'Audio MP3'
+      }],
+      files: [{
+      "url": "https://forschergeist.de/podlove/file/2017/s/webplayer/c/episode/fg072-verantwortung-in-der-informatik.m4a",
+      "size": "71862603",
+      "title": "Episode",
+      "mimeType": "audio/mp4"
+    }],
+      contributors: []
+  },
+  {
+  "base": "/player/",
+
+  "theme": {
+    "tokens": {
+      "brand": "#166255",
+      "brandDark": "#166255",
+      "brandDarkest": "#1A3A4A",
+      "brandLightest": "#E5EAECFF",
+      "shadeDark": "#807E7C",
+      "shadeBase": "#807E7C",
+      "contrast": "#000",
+      "alt": "#fff"
+    },
+    "fonts": {
+      "ci": {
+        "name": "RobotoBlack",
+        "family": [
+          "RobotoBlack",
+          "Calibri",
+          "Candara",
+          "Arial",
+          "Helvetica",
+          "sans-serif"
+        ],
+        "weight": 900,
+        "src": ["./assets/Roboto-Black.ttf"]
+      },
+      "regular": {
+        "name": "FiraSansLight",
+        "family": [
+          "FiraSansLight",
+          "Calibri",
+          "Candara",
+          "Arial",
+          "Helvetica",
+          "sans-serif"
+        ],
+        "weight": 300,
+        "src": ["./assets/FiraSans-Light.ttf"]
+      },
+      "bold": {
+        "name": "FiraSansBold",
+        "family": [
+          "FiraSansBold",
+          "Calibri",
+          "Candara",
+          "Arial",
+          "Helvetica",
+          "sans-serif"
+        ],
+        "weight": 700,
+        "src": ["./assets/FiraSans-Bold.ttf"]
+      }
+    }
+  },
+  "subscribe-button": {
+    "feed": "https://forschergeist.de/feed/m4a/",
+    "clients": [
+      {
+        "id": "apple-podcasts",
+        "service": "id934797989"
+      },
+      {
+        "id": "antenna-pod"
+      },
+      {
+        "id": "beyond-pod"
+      },
+      {
+        "id": "castro"
+      },
+      {
+        "id": "clementine"
+      },
+      {
+        "id": "deezer",
+        "service": "deezer-id"
+      },
+      {
+        "id": "downcast"
+      },
+      {
+        "id": "google-podcasts",
+        "service": "https://forschergeist.de/feed/m4a/"
+      },
+      {
+        "id": "gpodder"
+      },
+      {
+        "id": "itunes"
+      },
+      {
+        "id": "i-catcher"
+      },
+      {
+        "id": "instacast"
+      },
+      {
+        "id": "overcast"
+      },
+      {
+        "id": "player-fm"
+      },
+      {
+        "id": "pocket-casts"
+      },
+      {
+        "id": "pocket-casts",
+        "service": "https://forschergeist.de/feed/m4a/"
+      },
+      {
+        "id": "pod-grasp"
+      },
+      {
+        "id": "podcast-addict"
+      },
+      {
+        "id": "podcast-republic"
+      },
+      {
+        "id": "podcat"
+      },
+      {
+        "id": "podscout"
+      },
+      {
+        "id": "rss-radio"
+      },
+      {
+        "id": "rss"
+      }
+    ]
+  },
+  "share": {
+    "channels": ["facebook", "twitter", "mail", "link"],
+    "outlet": "/share.html",
+    "sharePlaytime": true
+  }
+  }
+
+
+
+
+  );
