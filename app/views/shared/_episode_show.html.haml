@@ -11,13 +11,23 @@
                 = episode.published_on
 
           .player{id: "player"}
+            -# %root{:style => ""}
+            -# https://docs.podlove.org/podlove-web-player/templating.html
 
-            %root{:style => ""}
-              -# .flex.w-full
-              -#   %progress-bar
-              -# .flex.w-full.justify-between
-              -#   .text-left{:class => "w-3/12"}
-              -#     %timer-current.text-sm
-              -#   .text-right{:class => "w-3/12"}
-              -#     %timer-duration.text-sm
+            -# .flex.w-full
+            -#   %progress-bar
+            -# .flex.w-full.justify-between
+            -#   .text-left{:class => "w-3/12"}
+            -#     %timer-current.text-sm
+            -#   .text-right{:class => "w-3/12"}
+            -#     %timer-duration.text-sm
+            %root.p-4.flex.items-center{:style => "max-width:950px;min-width:260px;"}
               %play-button
+              %progress-bar
+              .p-4
+                %play-state{:on => "initialize"}
+                  %span On Initialize
+                %play-state{:on => "active"}
+                  %span On Active
+                %play-state{:on => "ended"}
+                  %span On Ended
