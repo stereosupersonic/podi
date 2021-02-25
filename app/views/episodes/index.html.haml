@@ -9,6 +9,7 @@
   - @episodes.each do |episode|
     .row.align-items-center.justify-content-center.text-center
       .col-md-12{"data-aos" => "fade-up", "data-aos-delay" => "400"}
-        = render "shared/episode", episode: episode
+        .d-block.bg-white.mb-5
+          = render "shared/audio", episode: episode
 
   =will_paginate @episodes_records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

@@ -13,6 +13,15 @@ class EpisodePresenter < ApplicationPresenter
     h.format_date o.published_on
   end
 
+  def published_on_iso8601
+    o.published_on.iso8601
+  end
+
+  def duration_iso8601
+    # ISO 8601 Duration format ([hh]:[mm]:[ss].[sss]), capable of add ing milliseconds, see https://en.wikipedia.org/wiki/ISO_8601
+    Time.at(o.file_duration).utc.strftime("%H:%M:%S.%3N")
+  end
+
   def artwork_url
     # You should use this tag when you have a high quality, episode-specific image you would like listeners to see.
     # Specify your episode artwork using the <a href> attribute in the <itunes:image> tag.
