@@ -59,6 +59,6 @@ class EpisodePresenter < ApplicationPresenter
   end
 
   def audio_filename_formatted
-    "#{o.audio.filename} (#{o.audio.key})" if o.audio
+    o.audio.filename.to_s if o.audio
   end
 end
