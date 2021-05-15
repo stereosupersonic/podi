@@ -109,7 +109,7 @@ describe "Administrate Episodes", type: :system do
     end
 
     it "edits a existin episode" do
-      episode1 = FactoryBot.create :episode, title: "balh", number: 1
+      FactoryBot.create :episode, title: "balh", number: 1
       episode2 = FactoryBot.create :episode, title: "foo", number: 2, description: "should be foo"
 
       visit "/"
