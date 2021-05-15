@@ -25,8 +25,6 @@
 #  index_episodes_on_title         (title) UNIQUE
 #
 class Episode < ApplicationRecord
-  include ImageUploader::Attachment(:image)
-
   ATTRIBUTES = %w[
     title
     description
@@ -34,8 +32,8 @@ class Episode < ApplicationRecord
     nodes
     number
     active
-    image
     chapter_marks
+    artwork_url
     audio
   ].freeze
 
@@ -52,7 +50,7 @@ class Episode < ApplicationRecord
   validates(:title, uniqueness: true)
 
   validates(:audio, presence: true)
-  validates(:image, presence: true)
+  validates(:artwork_url, presence: true)
 
   has_one_attached :audio
 

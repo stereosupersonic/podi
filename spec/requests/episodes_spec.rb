@@ -79,7 +79,7 @@ RSpec.describe "episodes", type: :request do
               </content:encoded>
               <itunes:duration>321</itunes:duration>
               <link>http://wartenberger.test.com/episodes/002-anton-muller</link>
-              <itunes:image href="memory://#{episode2.image.id}"/>
+              <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/002-anton-muller.jpg"/>
               <itunes:explicit>false</itunes:explicit>
             </item>
             <item>
@@ -99,7 +99,7 @@ RSpec.describe "episodes", type: :request do
                   <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br> </p>]]>
               </description>
               <content:encoded>
-                <![CDATA[<p>we talk about bikes and things</p> <br><h3>Show Notes</h3> <br><ul> <li>some nodes</li> </ul> <br><br>
+              <![CDATA[<p>we talk about bikes and things</p> <br><h3>Show Notes</h3> <br><ul> <li>some nodes</li> </ul> <br><br>
                   <h2>Kontakt</h2> <p> <br> <b>Schreibt uns!</b> <br> Schickt uns eure Themenwünsche und euer Feedback.<br>
                   <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br> <br> <b>Folgt uns!</b> <br>
                   Bleibt auf dem Laufenden über zukünftige Folgen <br>
@@ -110,7 +110,7 @@ RSpec.describe "episodes", type: :request do
               </content:encoded>
               <itunes:duration>321</itunes:duration>
               <link>http://wartenberger.test.com/episodes/001-soli-wartenberg</link>
-              <itunes:image href="memory://#{episode1.image.id}"/>
+              <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/001-soli-wartenberg.jpg"/>
               <itunes:explicit>false</itunes:explicit>
             </item>
           </channel>

@@ -69,9 +69,10 @@ describe "Administrate Episodes", type: :system do
         00:01:30 Vorstellung
       )
 
-      attach_file "Image", Rails.root.join("spec/fixtures/001-vorstellung.jpg")
+      fill_in "Artwork url", with: "https://test.com/001-test.png"
       attach_file "Audio", Rails.root.join("spec/fixtures/test-002.mp3")
       click_on "Save"
+      expect(page).to have_content "Episode was successfully created."
 
       expect(last_episode.duration).to eq 8
       expect(last_episode.audio_size).to eq 114_031
@@ -127,7 +128,7 @@ describe "Administrate Episodes", type: :system do
 
       fill_in "Title", with: "balh"
       fill_in "Nodes", with: "# my notes here *there*"
-      # attach_file "Audio", Rails.root.join("spec/fixtures/test-001.mp3")
+
       click_on "Save"
       expect(page).to have_content "Title has already been taken"
 

@@ -20,7 +20,7 @@
         %tr{id: "episode-#{episode.id}", class: "text-nowrap #{'inactive' unless episode.published?}"}
           %td= show_boolean_value episode.published?
           %td= episode.number
-          %td= image_tag(episode.artwork_url(size: 50)) if episode.image
+          %td= image_tag(episode.artwork_url(size: 50), size: "50x50")
           %td= episode.title
           %td= episode.audio_size_formatted
           %td= episode.duration_formatted
