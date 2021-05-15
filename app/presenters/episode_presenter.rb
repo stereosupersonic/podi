@@ -11,7 +11,7 @@ class EpisodePresenter < ApplicationPresenter
     h.format_date o.published_on
   end
 
-  def artwork_url
+  def artwork_url(size: 500)
     # You should use this tag when you have a high quality, episode-specific image you would like listeners to see.
     # Specify your episode artwork using the <a href> attribute in the <itunes:image> tag.
     # Depending on their device, listeners see your episode artwork in varying sizes.
@@ -24,11 +24,8 @@ class EpisodePresenter < ApplicationPresenter
     # in JPEG or PNG format, 72 dpi, with appropriate file extensions (.jpg, .png), and in the RGB colorspace.
     # These requirements are different from the standard RSS image tag specifications.
     # Make sure the file type in the URL matches the actual file type of the image file.d
-    o.artwork_url.presence || current_setting.default_episode_artwork_url
-  end
 
-  def file_duration
-    o.duration
+    o.artwork_url.presence || current_setting.default_episode_artwork_url
   end
 
   def cdn_url
@@ -44,10 +41,6 @@ class EpisodePresenter < ApplicationPresenter
     cdn_url
   end
 
-  def file_size
-    o.audio_size
-  end
-
   def mp3_url
     Rails.application.routes.url_helpers.episode_url(o, format: :mp3)
   end
@@ -58,10 +51,14 @@ class EpisodePresenter < ApplicationPresenter
   end
 
   def audio_size_formatted
-    h.number_to_human_size file_size
+    h.number_to_human_size o.audio_size
   end
 
   def duration_formatted
-    h.format_duration seconds: file_duration if file_duration
+    h.format_duration seconds: o.duration
+  end
+
+  def audio_filename_formatted
+    o.audio.filename.to_s if o.audio
   end
 end

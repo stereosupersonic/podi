@@ -24,15 +24,32 @@
 #  index_episodes_on_title         (title) UNIQUE
 #
 class Episode < ApplicationRecord
+  ATTRIBUTES = %w[
+    title
+    description
+    published_on
+    nodes
+    number
+    active
+    chapter_marks
+    artwork_url
+    audio
+  ].freeze
+
   def to_param
     slug
   end
 
   scope :published, -> { where(active: true).where("published_on <= ?", Time.zone.today).order(number: :desc) }
 
+  validates(:number, :title, :description, :nodes, :published_on, presence: true)
+
   validates(:number, uniqueness: true)
   validates(:slug, uniqueness: true)
   validates(:title, uniqueness: true)
+
+  validates(:audio, presence: true)
+  validates(:artwork_url, presence: true)
 
   has_one_attached :audio
 

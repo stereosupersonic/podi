@@ -3,7 +3,7 @@
     .row
       .col-md-12
         %h1 New Episode
-        = simple_form_for(@episode_creator, url: admin_episodes_path,method: :post,html: { class: 'form-horizontal' })do |f|
+        = simple_form_for([:admin, @episode], html: { class: 'form-horizontal' })do |f|
           = f.error_notification
           = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
