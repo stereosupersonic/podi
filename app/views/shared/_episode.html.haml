@@ -1,7 +1,7 @@
 .podcast-entry.bg-white.mb-5.p-2
   .row
     .col-md-3
-      = link_to image_tag(episode.artwork_url, class: "image img-thumbnail img-fluid d-block", alt: "episode artwork"), episode.episonde_url
+      = link_to image_tag(episode.artwork_url(size: 200), class: "image img-thumbnail img-fluid d-block", alt: "episode artwork"), episode.episonde_url
     .col-md
       %h3.font-weight-light
         = link_to "Episode #{episode.number}", episode.episonde_url

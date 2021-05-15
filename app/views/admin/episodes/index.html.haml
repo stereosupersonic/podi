@@ -6,9 +6,11 @@
       %tr
         %th Published
         %th Epsiode
+        %th Cover
         %th Title
         %th Size
         %th Duration
+        %th Filename
         %th Downloads
         %th Published
         %th
@@ -18,9 +20,11 @@
         %tr{id: "episode-#{episode.id}", class: "text-nowrap #{'inactive' unless episode.published?}"}
           %td= show_boolean_value episode.published?
           %td= episode.number
-          %td= episode.title
+          %td= image_tag(episode.artwork_url(size: 50), size: "50x50")
+          %td= link_to truncate(episode.title), episode_path(episode)
           %td= episode.audio_size_formatted
           %td= episode.duration_formatted
+          %td= episode.audio_filename_formatted
           %td= episode.downloads_count
           %td= episode.published_on
           %td= edit_button edit_admin_episode_path(episode)

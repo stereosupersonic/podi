@@ -29,6 +29,7 @@ FactoryBot.define do
     slug { "#{number.to_s.rjust(3, "0")} #{title}".parameterize }
     description { "we talk about bikes and things" }
     artwork_url { "https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/#{slug}.jpg" }
+    nodes { "* some nodes" }
     downloads_count { 1 }
     published_on { Time.current.to_date }
     sequence(:number)

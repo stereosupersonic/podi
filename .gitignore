@@ -49,3 +49,4 @@ public/sitemap.xml.gz
 *.dump
 expected_xml.xml
 response.xml
+.env_production
