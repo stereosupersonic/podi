@@ -8,5 +8,6 @@
 - if f.object.audio.respond_to?(:attached?) && f.object.audio.attached?
   =  "The currently attached file is #{f.object.audio.filename} (#{f.object.audio.key}) Click here to replace this file."
 = f.input :audio, as: :file
+= f.input :downloads_count, as: :text
 = f.input :published_on, as: :date, html5: true
 = f.input :active, as: :boolean

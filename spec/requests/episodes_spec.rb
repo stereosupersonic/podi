@@ -125,9 +125,19 @@ RSpec.describe "episodes", type: :request do
 
   describe "GET /episode.mp3" do
     it "increment the download counter" do
-      episode = EpisodePresenter.new FactoryBot.create :episode, downloads_count: 0, number: 4, title: :test
+      episode = EpisodePresenter.new FactoryBot.create :episode, downloads_count: 1, number: 4, title: :test
 
       get episode.mp3_url
+
+      expect(response.body).to match(%r{<html><body>You are being <a href=.*>redirected</a>\.</body></html>})
+      expect(response.body).to match(%r{http://wartenberger\.test\.com/.*/test-001\.mp3})
+      expect(episode.reload.downloads_count).to eq 2
+    end
+
+    it "dont increment the download counter with notracking flag" do
+      episode = EpisodePresenter.new FactoryBot.create :episode, downloads_count: 1, number: 4, title: :test
+
+      get episode.mp3_url(notracking: true)
 
       expect(response.body).to match(%r{<html><body>You are being <a href=.*>redirected</a>\.</body></html>})
       expect(response.body).to match(%r{http://wartenberger\.test\.com/.*/test-001\.mp3})

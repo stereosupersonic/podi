@@ -20,10 +20,16 @@ class EpisodesController < ApplicationController
         # ETag caching https://api.rubyonrails.org/classes/ActionController/ConditionalGet.html#method-i-stale-3F
         format.html
         format.mp3 do
-          episode_record.increment! :downloads_count
+          episode_record.increment! :downloads_count if track_downloads?
           redirect_to @episode.file_url
         end
       end
     end
+  end
+
+  private
+
+  def track_downloads?
+    params[:notracking].blank? && current_user.blank?
   end
 end

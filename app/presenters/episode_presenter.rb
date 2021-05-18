@@ -41,8 +41,13 @@ class EpisodePresenter < ApplicationPresenter
     cdn_url
   end
 
-  def mp3_url
-    Rails.application.routes.url_helpers.episode_url(o, format: :mp3)
+  def mp3_url(notracking: false)
+    params = {}.tap do |result|
+      result[:format] = :mp3
+      result[:notracking] = true if notracking
+    end
+
+    Rails.application.routes.url_helpers.episode_url(o, params)
   end
 
   def episonde_url
