@@ -79,6 +79,17 @@ module ApplicationHelper
     end
   end
 
+  def show_status(status)
+    case status.to_sym
+    when :ok
+      icon_tag :check, class: "text-success"
+    when :error
+      icon_tag :times, class: "text-danger"
+    when :fatal
+      icon_tag "exclamation-triangle", class: "text-danger"
+    end
+  end
+
   def render_markdown(text)
     return "" if text.blank?
 

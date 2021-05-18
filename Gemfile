@@ -21,6 +21,8 @@ gem "rails-i18n"
 gem "redcarpet"
 
 gem "devise"
+gem "faraday"
+gem "faraday_middleware"
 
 gem "will_paginate"
 gem "will_paginate-bootstrap4"

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :episodes, only: %i[show index], param: :slug
+  resource :status, only: %i[show], controller: :status
 
   root to: "welcome#index"
 

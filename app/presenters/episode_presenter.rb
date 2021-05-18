@@ -33,7 +33,7 @@ class EpisodePresenter < ApplicationPresenter
       File.join(Rails.application.config.aws_cloudfront_url, o.audio.blob.key)
     else
       route = o.audio.blob.is_a?(ActiveStorage::Variant) ? :rails_representation : :rails_blob
-      Rails.application.routes.url_helpers.route_for(route, o.audio.blob)
+      Rails.application.routes.url_helpers.route_for(route, o.audio.blob) if o.audio.blob
     end
   end
 
@@ -41,8 +41,13 @@ class EpisodePresenter < ApplicationPresenter
     cdn_url
   end
 
-  def mp3_url
-    Rails.application.routes.url_helpers.episode_url(o, format: :mp3)
+  def mp3_url(notracking: false)
+    params = {}.tap do |result|
+      result[:format] = :mp3
+      result[:notracking] = true if notracking
+    end
+
+    Rails.application.routes.url_helpers.episode_url(o, params)
   end
 
   def episonde_url
