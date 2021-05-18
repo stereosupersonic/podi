@@ -4,12 +4,11 @@
       .episode-header.bg-dark.text-white.text-center
         %h2.header.text-white.font-weight-light.display-4
           = episode.title
-      .site-blocks-cover.overlay.inner-page-cover{style: "background-image: url(#{episode.artwork_url});"}
+      .site-section.bg-light
         .container-fluid
-          .row.align-items-top.justify-content-center.text-center
-            .col-md-8
+          = image_tag(episode.artwork_url, class: "rounded mx-auto img-thumbnail img-fluid d-block", size: "1200x1200", alt: "episode artwork")
 
-  .row
-    .col-md-12
+  .row.bg-light
+    .col-md-10.mx-auto
       .player
         = render "shared/webplayer", webplayer_config: PodigeeWebplayerConfigBuilder.new(episode, title: true).to_json
