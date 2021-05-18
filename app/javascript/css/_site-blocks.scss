@@ -43,7 +43,7 @@
 
   &,
   .row {
-    min-height: 300px;
+    min-height: 360px;
 
     @media screen and (min-width: 576px) {
       height: calc(120vh)
@@ -664,6 +664,8 @@
 }
 
 .player {
+  margin-right: -15px;
+  margin-left: -15px;
   img {
     max-width: 100px;
     border-radius: 50%;
