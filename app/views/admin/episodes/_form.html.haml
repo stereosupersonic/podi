@@ -4,8 +4,9 @@
 = f.input :nodes, as: :text, input_html: { cols: 5, rows: 10 }
 = f.input :chapter_marks, as: :text, input_html: { cols: 5, rows: 10 }, hint: "chapter marks format: 00:00:41.018 Intro"
 = f.input :artwork_url, hint: "Path for episodes logo"
+
 - if f.object.audio.respond_to?(:attached?) && f.object.audio.attached?
-  =  "The currently attached file is #{f.object.audio.filename}. Click here to replace this file."
+  =  "The currently attached file is #{f.object.audio.filename} (#{f.object.audio.key}) Click here to replace this file."
 = f.input :audio, as: :file
 = f.input :published_on, as: :date, html5: true
 = f.input :active, as: :boolean

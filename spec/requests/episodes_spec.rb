@@ -89,7 +89,7 @@ RSpec.describe "episodes", type: :request do
               <pubDate>#{episode1.published_on.to_date.rfc822}</pubDate>
               <description>
                 <![CDATA[<p>we talk about bikes and things</p> <br><h3>Show Notes</h3>
-                  <br><p>no notes available</p> <br><br> <h2>Kontakt</h2> <p> <br>
+                  <br><ul> <li>some nodes</li> </ul> <br><br> <h2>Kontakt</h2> <p> <br>
                   <b>Schreibt uns!</b> <br> Schickt uns eure Themenwünsche und euer Feedback.<br>
                   <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br> <br>
                   <b>Folgt uns!</b> <br> Bleibt auf dem Laufenden über zukünftige Folgen <br>
@@ -99,7 +99,7 @@ RSpec.describe "episodes", type: :request do
                   <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br> </p>]]>
               </description>
               <content:encoded>
-                <![CDATA[<p>we talk about bikes and things</p> <br><h3>Show Notes</h3> <br><p>no notes available</p> <br><br>
+              <![CDATA[<p>we talk about bikes and things</p> <br><h3>Show Notes</h3> <br><ul> <li>some nodes</li> </ul> <br><br>
                   <h2>Kontakt</h2> <p> <br> <b>Schreibt uns!</b> <br> Schickt uns eure Themenwünsche und euer Feedback.<br>
                   <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br> <br> <b>Folgt uns!</b> <br>
                   Bleibt auf dem Laufenden über zukünftige Folgen <br>

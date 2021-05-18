@@ -6,29 +6,26 @@ module Admin
     end
 
     def new
-      @episode_creator = EpisodeCreator.new
-    end
-
-    def edit
-      episode = find_episode
-      attributes = episode.slice(*EpisodeUpdater::UPDATEABLE_ATTRIBUTES)
-      @episode_updater = EpisodeUpdater.new attributes.merge(episode: episode)
+      @episode = Episode.new number: Episode.maximum(:number).to_i.next
     end
 
     def create
-      @episode_creator = EpisodeCreator.new(create_params)
-      if @episode_creator.call
+      @episode = Episode.new create_params
+      @episode.slug = build_slug(@episode)
+      if @episode.save
         redirect_to admin_episodes_path, notice: "Episode was successfully created."
       else
         render :new
       end
     end
 
-    def update
-      episode = Episode.find params[:id] # no slug given during the update
-      @episode_updater = EpisodeUpdater.new(update_params.merge(episode: episode))
+    def edit
+      @episode = Episode.find_by!(slug: params[:id])
+    end
 
-      if @episode_updater.call
+    def update
+      @episode = Episode.find_by!(slug: params[:id])
+      if @episode.update(update_params) && @episode.update(slug: build_slug(@episode))
         redirect_to admin_episodes_path, notice: "Episode was successfully updated."
       else
         render :edit
@@ -37,16 +34,17 @@ module Admin
 
     protected
 
-    def find_episode
-      Episode.find_by!(slug: params[:id])
+    def build_slug(episode)
+      return if episode.number.blank? || episode.title.blank?
+      "#{episode.number.to_s.rjust(3, "0")} #{episode.title}".parameterize(locale: :de)
     end
 
     def create_params
-      params.require(:episode_creator).permit(*EpisodeCreator::CREATABLE_ATTRIBUTES)
+      params.require(:episode).permit(*Episode::ATTRIBUTES)
     end
 
     def update_params
-      params.require(:episode_updater).permit(*(EpisodeUpdater::UPDATEABLE_ATTRIBUTES + [:slug]))
+      params.require(:episode).permit(*Episode::ATTRIBUTES)
     end
   end
 end
