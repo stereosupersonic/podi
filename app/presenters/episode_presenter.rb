@@ -11,7 +11,7 @@ class EpisodePresenter < ApplicationPresenter
     h.format_date o.published_on
   end
 
-  def artwork_url(size: 500)
+  def artwork_url(size: 900)
     # You should use this tag when you have a high quality, episode-specific image you would like listeners to see.
     # Specify your episode artwork using the <a href> attribute in the <itunes:image> tag.
     # Depending on their device, listeners see your episode artwork in varying sizes.
@@ -25,7 +25,17 @@ class EpisodePresenter < ApplicationPresenter
     # These requirements are different from the standard RSS image tag specifications.
     # Make sure the file type in the URL matches the actual file type of the image file.d
 
-    o.artwork_url.presence || current_setting.default_episode_artwork_url
+    if o.image.present?
+      if o.image.storage.is_a? Shrine::Storage::Cloudinary
+        o.image_url(width: size, height: size, crop: :fit, responsive: true)
+      else
+        o.image.url
+      end
+    elsif o.artwork_url.present?
+      o.artwork_url
+    else
+      current_setting.default_episode_artwork_url
+    end
   end
 
   def cdn_url

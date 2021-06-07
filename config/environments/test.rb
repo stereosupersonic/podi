@@ -55,4 +55,8 @@ Rails.application.configure do
 
   config.active_storage.service = :test
   config.active_job.queue_adapter = :inline
+
+  config.cloudinary_cloud_name = nil
+  config.cloudinary_api_key = nil
+  config.cloudinary_api_secret = nil
 end

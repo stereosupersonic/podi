@@ -7,7 +7,7 @@ RSpec::Matchers.define :have_meta do |name, expected|
     end
   end
 
-  failure_message_for_should do |_actual|
+  failure_message do |_actual|
     actual = if name.include?("og:")
       first("meta[property='#{name}']", visible: false)
     else

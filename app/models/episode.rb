@@ -8,6 +8,7 @@
 #  chapter_marks   :text
 #  description     :text             not null
 #  downloads_count :integer          default(0)
+#  image_data      :text
 #  nodes           :text
 #  number          :integer          default(0), not null
 #  published_on    :date
@@ -24,6 +25,8 @@
 #  index_episodes_on_title         (title) UNIQUE
 #
 class Episode < ApplicationRecord
+  include ImageUploader::Attachment(:image)
+
   ATTRIBUTES = %w[
     title
     description
@@ -31,6 +34,7 @@ class Episode < ApplicationRecord
     nodes
     number
     active
+    image
     chapter_marks
     artwork_url
     audio
@@ -49,7 +53,10 @@ class Episode < ApplicationRecord
   validates(:title, uniqueness: true)
 
   validates(:audio, presence: true)
-  validates(:artwork_url, presence: true)
+
+  # TODO: either one or the other
+  # validates(:artwork_url, presence: true)
+  # validates(:image, presence: true)
 
   has_one_attached :audio
 

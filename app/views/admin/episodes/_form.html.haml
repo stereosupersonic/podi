@@ -3,6 +3,11 @@
 = f.input :description, as: :text, input_html: { cols: 5, rows: 10 }
 = f.input :nodes, as: :text, input_html: { cols: 5, rows: 10 }
 = f.input :chapter_marks, as: :text, input_html: { cols: 5, rows: 10 }, hint: "chapter marks format: 00:00:41.018 Intro"
+
+= f.hidden_field :image, value: f.object.cached_image_data
+= image_tag f.object.image_url, size: "50x50" if  f.object.cached_image_data || f.object.image
+= f.input :image, as: :file
+
 = f.input :artwork_url, hint: "Path for episodes logo"
 
 - if f.object.audio.respond_to?(:attached?) && f.object.audio.attached?
