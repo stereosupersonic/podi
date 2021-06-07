@@ -11,7 +11,7 @@ class EpisodePresenter < ApplicationPresenter
     h.format_date o.published_on
   end
 
-  def artwork_url(size: 500)
+  def artwork_url(size: 900)
     # You should use this tag when you have a high quality, episode-specific image you would like listeners to see.
     # Specify your episode artwork using the <a href> attribute in the <itunes:image> tag.
     # Depending on their device, listeners see your episode artwork in varying sizes.
