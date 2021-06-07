@@ -26,7 +26,6 @@ class EpisodePresenter < ApplicationPresenter
     # Make sure the file type in the URL matches the actual file type of the image file.d
 
     if o.image.present?
-
       if o.image.storage.is_a? Shrine::Storage::Cloudinary
         o.image_url(width: size, height: size, crop: :fit, responsive: true)
       else
