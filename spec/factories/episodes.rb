@@ -31,7 +31,7 @@ FactoryBot.define do
     description { "we talk about bikes and things" }
     artwork_url { "https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/#{slug}.jpg" }
     nodes { "* some nodes" }
-    image_data { TestData.image_data }
+    # image_data { TestData.image_data }
     downloads_count { 1 }
     published_on { Time.current.to_date }
     sequence(:number)
