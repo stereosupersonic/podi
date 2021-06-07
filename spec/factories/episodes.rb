@@ -8,6 +8,7 @@
 #  chapter_marks   :text
 #  description     :text             not null
 #  downloads_count :integer          default(0)
+#  image_data      :text
 #  nodes           :text
 #  number          :integer          default(0), not null
 #  published_on    :date
@@ -30,6 +31,7 @@ FactoryBot.define do
     description { "we talk about bikes and things" }
     artwork_url { "https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/#{slug}.jpg" }
     nodes { "* some nodes" }
+    image_data { TestData.image_data }
     downloads_count { 1 }
     published_on { Time.current.to_date }
     sequence(:number)
