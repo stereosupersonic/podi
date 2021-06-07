@@ -39,6 +39,8 @@ gem "rack-attack"
 gem "shrine", "~> 3.0"
 gem "shrine-cloudinary", "~> 1.1"
 
+gem "loofah", "~> 2.2.1"
+
 group :development do
   gem "listen", "~> 3.3"
   gem "rack-mini-profiler", "~> 2.0"
