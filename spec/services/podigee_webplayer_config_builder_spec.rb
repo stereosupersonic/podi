@@ -9,22 +9,25 @@ RSpec.describe PodigeeWebplayerConfigBuilder do
     expect(JSON.parse(json_config)).to eq(
       {
         "episode" =>
-        {"chaptermarks" => nil,
-         "coverUrl" => nil,
-         "description" => nil,
-         "media" => {"mp3" => "http://wartenberger.test.com/episodes/#{episode.slug}.mp3"},
-         "subtitle" => nil,
-         "title" => nil,
-         "url" => "http://wartenberger.test.com/episodes/#{episode.slug}"},
+        {
+          "chaptermarks" => nil,
+          "coverUrl" => nil,
+          "description" => nil,
+          "media" => {"mp3" => "http://wartenberger.test.com/episodes/#{episode.slug}.mp3"},
+          "subtitle" => nil,
+          "title" => nil,
+          "url" => "http://wartenberger.test.com/episodes/#{episode.slug}"
+        },
         "extensions" =>
-      {
-        "ChapterMarks" => {},
-        "SubscribeBar" => {}
-      },
+          {
+            "ChapterMarks" => {},
+            "SubscribeBar" => {}
+          },
         "options" =>
-      {
-        "theme" => "default"
-      }
+          {
+            "startPanel" => "ChapterMarks",
+            "theme" => "default"
+          }
       }
     )
   end
