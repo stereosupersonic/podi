@@ -11,8 +11,8 @@ class PodigeeWebplayerConfigBuilder
     {
       options: {
         # https://github.com/podigee/podigee-podcast-player/blob/master/docs/theming.md
-        theme: options.fetch(:theme, "default")
-        # startPanel: "ChapterMarks"
+        theme: options.fetch(:theme, "default"),
+        startPanel: "ChapterMarks"
       },
       extensions: {
         ChapterMarks: {},
