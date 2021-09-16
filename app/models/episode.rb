@@ -44,6 +44,8 @@ class Episode < ApplicationRecord
     slug
   end
 
+  has_many :images
+
   scope :published, -> { where(active: true).where("published_on <= ?", Time.zone.today).order(number: :desc) }
 
   validates(:number, :title, :description, :nodes, :published_on, presence: true)
