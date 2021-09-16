@@ -48,6 +48,20 @@ describe "Episodes", type: :system do
       expect(page).to have_title "Blah Test"
     end
 
+    it "gets an epsiode by number" do
+      FactoryBot.create :episode, title: "Blah Test", number: 1
+
+      visit "/episodes/001-old-title"
+
+      expect(page).to have_content "Blah Test"
+      expect(page).to have_title "Blah Test"
+
+      visit "/episodes/1"
+
+      expect(page).to have_content "Blah Test"
+      expect(page).to have_title "Blah Test"
+    end
+
     it "gets an future epsiode by slug" do
       FactoryBot.create :episode, title: "Blah Test", number: 1, published_on: 1.day.since
 
