@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_151618) do
+ActiveRecord::Schema.define(version: 2021_08_11_125922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,10 +56,22 @@ ActiveRecord::Schema.define(version: 2021_03_16_151618) do
     t.integer "number", default: 0, null: false
     t.string "artwork_url"
     t.text "chapter_marks"
+    t.text "image_data"
     t.index ["number"], name: "index_episodes_on_number", unique: true
     t.index ["published_on"], name: "index_episodes_on_published_on"
     t.index ["slug"], name: "index_episodes_on_slug", unique: true
     t.index ["title"], name: "index_episodes_on_title", unique: true
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.bigint "episode_id", null: false
+    t.integer "element_order", default: 0, null: false
+    t.string "cloudinary_public_id", null: false
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["episode_id"], name: "index_images_on_episode_id"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -104,4 +116,5 @@ ActiveRecord::Schema.define(version: 2021_03_16_151618) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "images", "episodes"
 end
