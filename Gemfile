@@ -8,7 +8,6 @@ gem "puma", "~> 5.0"
 gem "turbolinks", "~> 5"
 gem "jbuilder", "~> 2.7"
 
-gem "sass-rails", "~> 6.0"
 gem "cssbundling-rails", "~> 0.2.6"
 gem "jsbundling-rails", "~> 0.2.1"
 
