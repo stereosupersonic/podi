@@ -59,6 +59,7 @@ group :development, :test do
   gem "launchy" # for capybara save_and_open_page
   gem "webdrivers"
   gem "dotenv-rails"
+  gem "foreman"
 end
 
 group :test do
