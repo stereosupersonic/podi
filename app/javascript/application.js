@@ -3,6 +3,3 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 
 import * as bootstrap from "bootstrap"
-
-
-//import "@fortawesome/fontawesome-free/css/all.css";

@@ -7,8 +7,9 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "turbolinks", "~> 5"
 gem "jbuilder", "~> 2.7"
-gem 'sass-rails', '>= 6'
-# gem 'bcrypt', '~> 3.1.7' # Use Active Model has_secure_password
+
+gem "sass-rails", "~> 6.0"
+gem "cssbundling-rails", "~> 0.2.6"
 gem "jsbundling-rails", "~> 0.2.1"
 
 gem "simple_form"
