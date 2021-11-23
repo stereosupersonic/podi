@@ -6,7 +6,8 @@
           = episode.title
       .site-section.bg-light
         .container-fluid
-          = image_tag(episode.artwork_url, class: "rounded mx-auto img-thumbnail img-fluid d-block", size: "1200x1200", alt: "episode artwork")
+          - size = 600
+          = image_tag(episode.artwork_url(size: size+5), class: "rounded mx-auto img-thumbnail img-fluid d-block", size: "#{size}x#{size}", alt: "episode artwork")
 
   .row.bg-light
     .col-md-10.mx-auto
