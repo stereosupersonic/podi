@@ -15,7 +15,7 @@ gem "simple_form"
 
 gem "bootsnap", ">= 1.4.4", require: false
 gem "haml-rails", "~> 2.0"
-gem "nokogiri", "~> 1.11.0"
+gem "nokogiri", ">= 1.12.5"
 gem "rails-i18n"
 gem "redcarpet"
 
