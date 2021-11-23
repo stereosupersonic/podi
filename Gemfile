@@ -27,7 +27,8 @@ gem "will_paginate-bootstrap4"
 gem "rollbar"
 gem "newrelic_rpm"
 
-gem "ruby-mp3info", require: false
+gem "ruby-mp3info", github: "stereosupersonic/ruby-mp3info", branch: "add-tests"
+
 gem "dalli"
 
 gem "sitemap_generator" # https://github.com/kjvarga/sitemap_generator

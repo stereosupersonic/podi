@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require "bundler/setup"
+require "uri"
 require "mp3Info"
 
 def uri?(string)
@@ -25,6 +26,11 @@ puts "Size: #{mp3_file.size}"
 
 Mp3Info.open(file_path) do |mp3info|
   puts "length in sec: #{mp3info.length.to_i}"
-  puts "*******************************"
- #  pp mp3info
+  puts "******* DESCRIPTION ***********"
+  puts mp3info.tag2.COMM
+  puts "********* CHAPTERS **********"
+  mp3info.tag2.CHAP.values.each do |v|
+
+   puts  Time.at(v.start.to_f/1000).utc.strftime("%H:%M:%S.%1N").to_s + " " + v[:sub_frames].first.body.title
+  end
 end
