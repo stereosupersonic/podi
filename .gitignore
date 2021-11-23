@@ -50,3 +50,7 @@ public/sitemap.xml.gz
 expected_xml.xml
 response.xml
 .env_production
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
+.sass-cache
