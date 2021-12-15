@@ -29,7 +29,7 @@ class EpisodesController < ApplicationController
             payload[:episode_id] = episode_record.id
 
             episode_record.increment! :downloads_count if track_downloads?
-            redirect_to @episode # .file_url
+            redirect_to @episode.file_url
           end
         end
       end
