@@ -65,9 +65,8 @@ ActiveRecord::Schema.define(version: 2021_12_15_152257) do
 
   create_table "events", force: :cascade do |t|
     t.bigint "episode_id", null: false
-    t.string "uuid"
-    t.string "user_agent"
-    t.string "remote_ip"
+    t.jsonb "data"
+    t.jsonb "metadata"
     t.string "media_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
