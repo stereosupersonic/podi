@@ -7,10 +7,10 @@ RSpec.describe "episodes", type: :request do
     it "generates a feed" do
       episode1 = FactoryBot.create :episode, number: 1, title: "Soli Wartenberg"
       episode2 = FactoryBot.create :episode, number: 2, title: "Anton Müller",
-                                             nodes: <<~MARKDOWN
-                                               * [link](https://test.com)
-                                               * [link2](https://test.com)
-                                             MARKDOWN
+        nodes: <<~MARKDOWN
+          * [link](https://test.com)
+          * [link2](https://test.com)
+        MARKDOWN
       FactoryBot.create :episode, number: 3, title: "Future", published_on: 1.day.since
       FactoryBot.create :episode, number: 4, title: "inactive", active: false
 

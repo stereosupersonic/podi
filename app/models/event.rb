@@ -5,7 +5,6 @@
 #  id         :bigint           not null, primary key
 #  data       :jsonb
 #  media_type :string
-#  metadata   :jsonb
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  episode_id :bigint           not null

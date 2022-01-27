@@ -5,7 +5,6 @@
 #  id         :bigint           not null, primary key
 #  data       :jsonb
 #  media_type :string
-#  metadata   :jsonb
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  episode_id :bigint           not null
@@ -21,5 +20,10 @@
 require "rails_helper"
 
 RSpec.describe Event, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "has a valid factory" do
+    user = FactoryBot.build :event
+
+    expect(user).to be_valid
+    assert user.save!
+  end
 end

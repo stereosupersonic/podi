@@ -5,7 +5,6 @@
 #  id         :bigint           not null, primary key
 #  data       :jsonb
 #  media_type :string
-#  metadata   :jsonb
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  episode_id :bigint           not null
@@ -20,10 +19,18 @@
 #
 FactoryBot.define do
   factory :event do
-    episode { nil }
-    uuid { "MyString" }
-    user_agent { "MyString" }
-    remote_ip { "MyString" }
-    media_type { "MyString" }
+    episode
+    media_type { "Chrome" }
+    data {
+      {user_agent: "Mozilla\5.0",
+       remote_ip: "127.0.0.1",
+       uuid: "123234df",
+       client_name: "Chrome",
+       client_full_version: "30.0.1599.17",
+       client_os_name: "Windows",
+       client_os_full_version: "8",
+       client_device_name: nil,
+       client_device_type: "desktop"}
+    }
   end
 end
