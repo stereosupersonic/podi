@@ -124,24 +124,64 @@ RSpec.describe "episodes", type: :request do
   end
 
   describe "GET /episode.mp3" do
-    it "increment the download counter" do
-      episode = EpisodePresenter.new FactoryBot.create :episode, downloads_count: 1, number: 4, title: :test
+    let(:episode) { EpisodePresenter.new FactoryBot.create :episode, downloads_count: 1, number: 4, title: :test }
+    describe "download counter" do
+      it "increment" do
+        get episode.mp3_url
 
-      get episode.mp3_url
+        expect(response.body).to match(%r{<html><body>You are being <a href=.*>redirected</a>\.</body></html>})
+        expect(response.body).to match(%r{http://wartenberger\.test\.com/.*/test-001\.mp3})
+        expect(episode.reload.downloads_count).to eq 2
+      end
 
-      expect(response.body).to match(%r{<html><body>You are being <a href=.*>redirected</a>\.</body></html>})
-      expect(response.body).to match(%r{http://wartenberger\.test\.com/.*/test-001\.mp3})
-      expect(episode.reload.downloads_count).to eq 2
+      it "dont increment with notracking flag" do
+        get episode.mp3_url(notracking: true)
+
+        expect(response.body).to match(%r{<html><body>You are being <a href=.*>redirected</a>\.</body></html>})
+        expect(response.body).to match(%r{http://wartenberger\.test\.com/.*/test-001\.mp3})
+        expect(episode.reload.downloads_count).to eq 1
+      end
     end
 
-    it "dont increment the download counter with notracking flag" do
-      episode = EpisodePresenter.new FactoryBot.create :episode, downloads_count: 1, number: 4, title: :test
+    describe "log data" do
+      it "enquese the event job" do
+        expect {
+          get episode.mp3_url
+        }.to enqueue_job(Mp3EventJob)
+      end
 
-      get episode.mp3_url(notracking: true)
+      it "logs valid data" do
+        ua = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.17 Safari/537.36"
+        headers = {"HTTP_USER_AGENT" => ua}
 
-      expect(response.body).to match(%r{<html><body>You are being <a href=.*>redirected</a>\.</body></html>})
-      expect(response.body).to match(%r{http://wartenberger\.test\.com/.*/test-001\.mp3})
-      expect(episode.reload.downloads_count).to eq 1
+        get episode.mp3_url, params: {}, headers: headers
+        perform_enqueued_jobs_now!
+
+        event = Event.last
+        expect(event).to_not be_nil
+        expect(event.episode).to eq episode.reload
+        expect(event.media_type).to eq "Chrome"
+        expect(event.data.symbolize_keys).to include(
+          user_agent: /Mozilla\/5\.0/,
+          remote_ip: "127.0.0.1",
+          uuid: a_kind_of(String),
+          client_name: "Chrome",
+          client_full_version: "30.0.1599.17",
+          client_os_name: "Windows",
+          client_os_full_version: "8",
+          client_device_name: nil,
+          client_device_type: "desktop"
+        )
+      end
+      it "logs valid data without a user_agent " do
+        get episode.mp3_url
+        perform_enqueued_jobs_now!
+
+        event = Event.last
+        expect(event).to_not be_nil
+        expect(event.episode).to eq episode.reload
+        expect(event.media_type).to be_nil
+      end
     end
   end
 end

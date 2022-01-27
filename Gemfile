@@ -39,7 +39,9 @@ gem "shrine", "~> 3.0"
 gem "shrine-cloudinary", "~> 1.1"
 
 gem "device_detector"
-gem "sucker_punch", "~> 3.0"
+
+gem "good_job", "~> 2.9"
+
 group :development do
   gem "listen", "~> 3.3"
   gem "rack-mini-profiler", "~> 2.0"

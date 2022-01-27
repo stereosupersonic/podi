@@ -22,15 +22,16 @@ class EpisodesController < ApplicationController
         format.html
         format.mp3 do
           ActiveSupport::Notifications.instrument(:track_mp3_downloads) do |payload|
-            payload[:user_agent] = request.headers["User-Agent"]
-            payload[:remote_ip] = request.remote_ip
-            payload[:media_type] = request.media_type
-            payload[:uuid] = request.uuid
+            data = {}
+            data[:user_agent] = request.headers["User-Agent"]
+            data[:remote_ip] = request.remote_ip
+            data[:uuid] = request.uuid
+            payload[:data] = data
             payload[:episode_id] = episode_record.id
-
-            episode_record.increment! :downloads_count if track_downloads?
-            redirect_to @episode.file_url
           end
+
+          episode_record.increment! :downloads_count if track_downloads?
+          redirect_to @episode.file_url
         end
       end
     end
