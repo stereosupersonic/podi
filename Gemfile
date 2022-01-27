@@ -38,7 +38,7 @@ gem "rack-attack"
 gem "shrine", "~> 3.0"
 gem "shrine-cloudinary", "~> 1.1"
 
-gem "device_detector"
+gem "device_detector", git: "git@github.com:stereosupersonic/device_detector.git"
 
 gem "good_job", "~> 2.9"
 

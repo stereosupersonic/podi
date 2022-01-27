@@ -1,3 +1,9 @@
+GIT
+  remote: git@github.com:stereosupersonic/device_detector.git
+  revision: d2b6e9d2533c8b1a354552b6fc51b79735cce413
+  specs:
+    device_detector (1.0.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -107,7 +113,6 @@ GEM
     cssbundling-rails (0.2.8)
       railties (>= 6.0.0)
     dalli (3.2.0)
-    device_detector (1.0.6)
     devise (4.8.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -401,7 +406,7 @@ DEPENDENCIES
   capybara
   cssbundling-rails (~> 0.2.6)
   dalli
-  device_detector
+  device_detector!
   devise
   dotenv-rails
   factory_bot_rails
