@@ -15,7 +15,6 @@ require "action_view/railtie"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
-require "good_job/engine"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -35,7 +34,7 @@ module Podi
 
     config.time_zone = "Berlin"
     config.i18n.default_locale = :en
-    config.active_job.queue_adapter = :good_job
+    config.active_job.queue_adapter = :sidekiq
     config.generators do |g|
       g.assets = false
       g.helper = false

@@ -39,8 +39,7 @@ gem "shrine", "~> 3.0"
 gem "shrine-cloudinary", "~> 1.1"
 
 gem "device_detector", git: "git@github.com:stereosupersonic/device_detector.git"
-
-gem "good_job", "~> 2.9"
+gem "sidekiq", "~> 6.4"
 
 group :development do
   gem "listen", "~> 3.3"
