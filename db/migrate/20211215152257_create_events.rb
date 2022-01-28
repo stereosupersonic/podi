@@ -4,7 +4,7 @@ class CreateEvents < ActiveRecord::Migration[6.1]
       t.references :episode, null: false, foreign_key: true
       t.jsonb :data
 
-      t.string :media_type
+      t.datetime :downloaded_at
 
       t.timestamps
     end

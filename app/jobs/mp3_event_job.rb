@@ -2,7 +2,9 @@ class Mp3EventJob < ApplicationJob
   def perform(payload)
     Rails.logger.info "###### Mp3EventJob"
     episode = Episode.find payload[:episode_id]
+
     data = payload[:data]
+
     client = DeviceDetector.new(payload.dig(:data, :user_agent))
     data[:client_name] = client.name
     data[:client_full_version] = client.full_version
@@ -11,6 +13,6 @@ class Mp3EventJob < ApplicationJob
     data[:client_device_name] = client.device_name
     data[:client_device_type] = client.device_type
 
-    Event.create! data: data, episode: episode, media_type: data[:client_name]
+    Event.create! data: data, episode: episode, downloaded_at: payload[:downloaded_at]
   end
 end

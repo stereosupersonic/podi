@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2021_12_15_152257) do
   create_table "events", force: :cascade do |t|
     t.bigint "episode_id", null: false
     t.jsonb "data"
-    t.string "media_type"
+    t.datetime "downloaded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["episode_id"], name: "index_events_on_episode_id"

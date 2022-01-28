@@ -11,4 +11,4 @@
       .col-md-12
         = render "shared/episode", episode: episode
 
-  =will_paginate @episodes_records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
+  = will_paginate @episodes_records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

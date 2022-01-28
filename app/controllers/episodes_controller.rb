@@ -26,6 +26,7 @@ class EpisodesController < ApplicationController
             data[:user_agent] = request.headers["User-Agent"]
             data[:remote_ip] = request.remote_ip
             data[:uuid] = request.uuid
+            payload[:downloaded_at] = Time.current
             payload[:data] = data
             payload[:episode_id] = episode_record.id
           end

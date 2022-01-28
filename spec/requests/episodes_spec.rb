@@ -153,14 +153,15 @@ RSpec.describe "episodes", type: :request do
       it "logs valid data" do
         ua = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.17 Safari/537.36"
         headers = {"HTTP_USER_AGENT" => ua}
-
-        get episode.mp3_url, params: {}, headers: headers
-        perform_enqueued_jobs_now!
-
+        downloaded_at = Time.current
+        travel_to downloaded_at do
+          get episode.mp3_url, params: {}, headers: headers
+          perform_enqueued_jobs_now!
+        end
         event = Event.last
         expect(event).to_not be_nil
         expect(event.episode).to eq episode.reload
-        expect(event.media_type).to eq "Chrome"
+        expect(event.downloaded_at).to be_within(1.second).of downloaded_at
         expect(event.data.symbolize_keys).to include(
           user_agent: /Mozilla\/5\.0/,
           remote_ip: "127.0.0.1",
@@ -180,7 +181,6 @@ RSpec.describe "episodes", type: :request do
         event = Event.last
         expect(event).to_not be_nil
         expect(event.episode).to eq episode.reload
-        expect(event.media_type).to be_nil
       end
     end
   end

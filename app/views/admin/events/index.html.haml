@@ -1,0 +1,19 @@
+%h1
+  = "#{@event_records.count} Events"
+
+%table.table.table-striped.table-bordered
+  %thead.thead-dark
+    %tr
+      %th Date
+      %th Episode
+      %th Info
+      %th
+  %tbody
+    - @events.each do |event|
+      %tr{ id: "event-#{event.id}", class: "text-nowrap" }
+        %td= event.downloaded_at
+        %td= event.episode_title
+        %td= event.info
+        %td= show_button admin_event_path(event)
+
+= will_paginate @event_records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

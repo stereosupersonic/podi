@@ -2,12 +2,12 @@
 #
 # Table name: events
 #
-#  id         :bigint           not null, primary key
-#  data       :jsonb
-#  media_type :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  episode_id :bigint           not null
+#  id            :bigint           not null, primary key
+#  data          :jsonb
+#  downloaded_at :datetime
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  episode_id    :bigint           not null
 #
 # Indexes
 #

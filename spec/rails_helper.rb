@@ -77,5 +77,6 @@ RSpec.configure do |config|
 
   config.include JobHelpers
   config.include ActiveJob::TestHelper
+  config.include ActiveSupport::Testing::TimeHelpers
   config.before { reset_enqueued_jobs }
 end
