@@ -21,17 +21,22 @@ class EpisodesController < ApplicationController
         # ETag caching https://api.rubyonrails.org/classes/ActionController/ConditionalGet.html#method-i-stale-3F
         format.html
         format.mp3 do
-          ActiveSupport::Notifications.instrument(:track_mp3_downloads) do |payload|
-            data = {}
-            data[:user_agent] = request.headers["User-Agent"]
-            data[:remote_ip] = request.remote_ip
-            data[:uuid] = request.uuid
-            payload[:downloaded_at] = Time.current
-            payload[:data] = data
-            payload[:episode_id] = episode_record.id
+          key = Base64.encode64("#{request.remote_ip}_#{request.headers["User-Agent"]}".squish.strip)
+
+          if !Rails.cache.exist?(key) && track_downloads?
+            Rails.cache.write(key, true, expires_in: 2.minutes)
+            ActiveSupport::Notifications.instrument(:track_mp3_downloads) do |payload|
+              data = {}
+              data[:user_agent] = request.headers["User-Agent"]
+              data[:remote_ip] = request.remote_ip
+              data[:uuid] = request.uuid
+              payload[:downloaded_at] = Time.current
+              payload[:data] = data
+              payload[:episode_id] = episode_record.id
+            end
+
           end
 
-          episode_record.increment! :downloads_count if track_downloads?
           redirect_to @episode.file_url
         end
       end

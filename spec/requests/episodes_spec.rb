@@ -128,6 +128,7 @@ RSpec.describe "episodes", type: :request do
     describe "download counter" do
       it "increment" do
         get episode.mp3_url
+        perform_enqueued_jobs_now!
 
         expect(response.body).to match(%r{<html><body>You are being <a href=.*>redirected</a>\.</body></html>})
         expect(response.body).to match(%r{http://wartenberger\.test\.com/.*/test-001\.mp3})
@@ -136,6 +137,7 @@ RSpec.describe "episodes", type: :request do
 
       it "dont increment with notracking flag" do
         get episode.mp3_url(notracking: true)
+        perform_enqueued_jobs_now!
 
         expect(response.body).to match(%r{<html><body>You are being <a href=.*>redirected</a>\.</body></html>})
         expect(response.body).to match(%r{http://wartenberger\.test\.com/.*/test-001\.mp3})
@@ -144,6 +146,14 @@ RSpec.describe "episodes", type: :request do
     end
 
     describe "log data" do
+      let(:memory_store) { ActiveSupport::Cache.lookup_store(:memory_store) }
+      let(:cache) { Rails.cache }
+
+      before do
+        allow(Rails).to receive(:cache).and_return(memory_store)
+        Rails.cache.clear
+      end
+
       it "enquese the event job" do
         expect {
           get episode.mp3_url
@@ -181,6 +191,25 @@ RSpec.describe "episodes", type: :request do
         event = Event.last
         expect(event).to_not be_nil
         expect(event.episode).to eq episode.reload
+      end
+
+      it "don't logs data when client downloads within 2 minutes" do
+        Rails.configuration.cache_store = :memory_store
+        ua = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.17 Safari/537.36"
+        headers = {"HTTP_USER_AGENT" => ua}
+
+        expect do
+          get episode.mp3_url, params: {}, headers: headers
+          sleep 1
+          get episode.mp3_url, params: {}, headers: headers
+          get episode.mp3_url, params: {}, headers: headers
+          travel_to 121.seconds.from_now do
+            get episode.mp3_url, params: {}, headers: headers
+          end
+        end.to have_enqueued_job(Mp3EventJob).exactly(:twice)
+        perform_enqueued_jobs_now!
+
+        expect(episode.reload.downloads_count).to eq 3
       end
     end
   end
