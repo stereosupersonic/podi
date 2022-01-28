@@ -1,7 +1,7 @@
 module Admin
   class Admin::EventsController < BaseController
     def index
-      @event_records = Event.order("created_at desc").paginate(page: params[:page], per_page: params[:per_page])
+      @event_records = Event.order(downloaded_at: :desc).paginate(page: params[:page], per_page: params[:per_page])
       @events = EventPresenter.wrap @event_records
     end
 

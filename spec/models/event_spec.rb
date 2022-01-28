@@ -11,7 +11,8 @@
 #
 # Indexes
 #
-#  index_events_on_episode_id  (episode_id)
+#  index_events_on_downloaded_at  (downloaded_at)
+#  index_events_on_episode_id     (episode_id)
 #
 # Foreign Keys
 #

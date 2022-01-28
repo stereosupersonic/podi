@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2021_12_15_152257) do
     t.datetime "downloaded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["downloaded_at"], name: "index_events_on_downloaded_at"
     t.index ["episode_id"], name: "index_events_on_episode_id"
   end
 

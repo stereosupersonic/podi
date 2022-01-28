@@ -11,6 +11,7 @@ describe "Events", type: :system do
     it "overview page" do
       episode = FactoryBot.create :episode, title: "Soli Wartenberg", number: 1
       event = FactoryBot.create(:event, episode: episode, downloaded_at: Time.zone.parse("2012-07-11 21:00"))
+      FactoryBot.create(:event, episode: episode, created_at: 1.day.ago, downloaded_at: Time.zone.parse("2021-01-01 21:00"))
 
       visit "/"
       click_on "Events"
@@ -21,13 +22,18 @@ describe "Events", type: :system do
           "Episode",
           "Info",
           ""],
+        ["01.01.2021 21:00",
+          "001 Soli Wartenberg",
+          "Chrome - desktop",
+          "Show"],
         ["11.07.2012 21:00",
           "001 Soli Wartenberg",
-          "",
+          "Chrome - desktop",
           "Show"]
       ])
-
-      click_on "Show"
+      within "#event-#{event.id}" do
+        click_on "Show"
+      end
       expect(page).to have_current_path("/admin/events/#{event.id}")
       expect(page).to have_selector "h1", text: "001 Soli Wartenberg"
       expect(page).to have_content "11.07.2012 21:00"
