@@ -21,7 +21,8 @@ class EpisodesController < ApplicationController
         # ETag caching https://api.rubyonrails.org/classes/ActionController/ConditionalGet.html#method-i-stale-3F
         format.html
         format.mp3 do
-          key = Base64.encode64("#{request.remote_ip}_#{request.headers["User-Agent"]}".squish.strip)
+          Rails.logger.warn("NO REMOTE IP") if request.remote_ip.blank?
+          key = Base64.encode64(request.remote_ip.presence || rand(1..100))
 
           if !Rails.cache.exist?(key) && track_downloads?
             Rails.cache.write(key, true, expires_in: 2.minutes)

@@ -195,18 +195,18 @@ RSpec.describe "episodes", type: :request do
 
       it "don't logs data when client downloads within 2 minutes" do
         Rails.configuration.cache_store = :memory_store
-        ua = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.17 Safari/537.36"
-        headers = {"HTTP_USER_AGENT" => ua}
+        episode.update downloads_count: 0
 
         expect do
-          get episode.mp3_url, params: {}, headers: headers
+          get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
           sleep 1
-          get episode.mp3_url, params: {}, headers: headers
-          get episode.mp3_url, params: {}, headers: headers
+          get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
+          get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
+          get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.1"}
           travel_to 121.seconds.from_now do
-            get episode.mp3_url, params: {}, headers: headers
+            get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
           end
-        end.to have_enqueued_job(Mp3EventJob).exactly(:twice)
+        end.to have_enqueued_job(Mp3EventJob).exactly(3)
         perform_enqueued_jobs_now!
 
         expect(episode.reload.downloads_count).to eq 3
