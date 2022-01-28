@@ -3,6 +3,7 @@ require "sidekiq/web"
 Sidekiq::Web.app_url = "/" # back link from sidekiq to the application
 
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => "/sidekiq"
   end

@@ -71,3 +71,7 @@ end
 group :test do
   gem "simplecov", require: false
 end
+
+gem "activeadmin", "~> 2.9"
+
+gem "sassc", "~> 2.4"
