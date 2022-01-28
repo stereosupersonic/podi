@@ -1,4 +1,12 @@
+require "sidekiq/web"
+
+Sidekiq::Web.app_url = "/" # back link from sidekiq to the application
+
 Rails.application.routes.draw do
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => "/sidekiq"
+  end
+
   devise_for :users
 
   devise_scope :user do
@@ -7,6 +15,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :episodes, only: %w[index edit update new create]
+    resources :events, only: %w[index show]
     resource :setting, only: %w[edit update]
   end
 

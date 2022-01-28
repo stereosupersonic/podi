@@ -30,6 +30,19 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
+module JobHelpers
+  def reset_enqueued_jobs
+    ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+  end
+
+  def perform_enqueued_jobs_now!
+    ActiveJob::Base.queue_adapter.enqueued_jobs.each do |job_data|
+      ActiveJob::Base.execute(job_data)
+    end
+  end
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -61,4 +74,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.include JobHelpers
+  config.include ActiveJob::TestHelper
+  config.include ActiveSupport::Testing::TimeHelpers
+  config.before { reset_enqueued_jobs }
 end

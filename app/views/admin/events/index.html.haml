@@ -1,0 +1,24 @@
+%h1
+  = "#{@event_records.count} Events"
+%h2 Stats
+%ul
+  %li= "last 24h: #{@event_records.where("downloaded_at >= ? ", 24.hours.ago).count}"
+  %li= "last 7d: #{@event_records.where("downloaded_at >= ? ", 7.days.ago).count}"
+  %li= "last 30d: #{@event_records.where("downloaded_at >= ? ", 30.days.ago).count}"
+%br
+%table.table.table-striped.table-bordered
+  %thead.thead-dark
+    %tr
+      %th Date
+      %th Episode
+      %th Info
+      %th
+  %tbody
+    - @events.each do |event|
+      %tr{ id: "event-#{event.id}", class: "text-nowrap" }
+        %td= event.downloaded_at
+        %td= event.episode_title
+        %td= event.info
+        %td= show_button admin_event_path(event)
+
+= will_paginate @event_records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

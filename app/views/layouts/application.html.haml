@@ -63,7 +63,11 @@
             - if user_signed_in?
               - if current_user&.admin?
                 = link_to "Administration", admin_episodes_path, class: "nav-link text-white"
+                = link_to "Events", admin_events_path, class: "nav-link text-white"
                 = link_to "Settings", edit_admin_setting_path, class: "nav-link text-white"
+                %div{"data-turbolinks" => "false"}
+                  = link_to "Sidekiq", "/sidekiq", class: "nav-link text-white"
+
               = link_to "Account", edit_user_registration_path, class: "nav-link text-white"
               = link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link text-white"
     %main

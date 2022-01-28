@@ -24,6 +24,7 @@
 #  index_episodes_on_slug          (slug) UNIQUE
 #  index_episodes_on_title         (title) UNIQUE
 #
+
 FactoryBot.define do
   factory :episode do
     sequence(:title) { |n| "Soli Wartenberg #{n}" }
@@ -36,5 +37,8 @@ FactoryBot.define do
     published_on { Time.current.to_date }
     sequence(:number)
     audio { Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/test-001.mp3"), "audio/mpeg") }
+    after :create do |episode|
+      episode.audio.analyze
+    end
   end
 end

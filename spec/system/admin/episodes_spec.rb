@@ -71,12 +71,17 @@ describe "Administrate Episodes", type: :system do
 
       fill_in "Artwork url", with: "https://test.com/001-test.png"
       attach_file "Audio", Rails.root.join("spec/fixtures/test-002.mp3")
+
       click_on "Save"
+      perform_enqueued_jobs_now!
+
       expect(page).to have_content "Episode was successfully created."
+      expect(page).to have_current_path "/admin/episodes"
 
       expect(last_episode.duration).to eq 8
       expect(last_episode.audio_size).to eq 114_031
-      expect(page).to have_content "Episode was successfully created."
+
+      visit "/admin/episodes"
       expect(page).to have_table_with_exact_data([
         ["Published",
           "Epsiode",
@@ -147,11 +152,15 @@ describe "Administrate Episodes", type: :system do
       # attach_file "Image", Rails.root.join("spec/fixtures/001-vorstellung.jpg")
 
       click_on "Save"
+      perform_enqueued_jobs_now!
+
+      expect(page).to have_content "Episode was successfully updated."
+      expect(page).to have_current_path "/admin/episodes"
 
       expect(episode2.reload.duration).to eq 8
       expect(episode2.reload.audio_size).to eq 114031
 
-      expect(page).to have_content "Episode was successfully updated."
+      visit "/admin/episodes"
       expect(page).to have_table_with_exact_data([
         ["Published",
           "Epsiode",
