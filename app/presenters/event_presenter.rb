@@ -9,6 +9,7 @@ class EventPresenter < ApplicationPresenter
 
   def info
     [
+      data[:remote_ip],
       data[:client_name],
       data[:client_device_type],
       data[:client_device_name].presence

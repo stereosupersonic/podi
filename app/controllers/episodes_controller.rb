@@ -22,7 +22,7 @@ class EpisodesController < ApplicationController
         format.html
         format.mp3 do
           Rails.logger.warn("NO REMOTE IP") if request.remote_ip.blank?
-          key = Base64.encode64(request.remote_ip.presence || rand(1..100))
+          key = Base64.encode64("episode_#{@episode.id}_#{request.remote_ip.presence || rand(1..100)}")
 
           if !Rails.cache.exist?(key) && track_downloads?
             Rails.cache.write(key, true, expires_in: 2.minutes)

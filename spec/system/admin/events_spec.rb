@@ -24,11 +24,11 @@ describe "Events", type: :system do
           ""],
         ["01.01.2021 21:00",
           "001 Soli Wartenberg",
-          "Chrome - desktop",
+          "127.0.0.1 - Chrome - desktop",
           "Show"],
         ["11.07.2012 21:00",
           "001 Soli Wartenberg",
-          "Chrome - desktop",
+          "127.0.0.1 - Chrome - desktop",
           "Show"]
       ])
       within "#event-#{event.id}" do

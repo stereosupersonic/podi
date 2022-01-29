@@ -195,21 +195,24 @@ RSpec.describe "episodes", type: :request do
 
       it "don't logs data when client downloads within 2 minutes" do
         Rails.configuration.cache_store = :memory_store
+        episode2 = EpisodePresenter.new FactoryBot.create :episode, number: 2, title: "Anton Müller", downloads_count: 0
         episode.update downloads_count: 0
 
         expect do
           get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
           sleep 1
           get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
+          get episode2.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
           get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
           get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.1"}
           travel_to 121.seconds.from_now do
             get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
           end
-        end.to have_enqueued_job(Mp3EventJob).exactly(3)
+        end.to have_enqueued_job(Mp3EventJob).exactly(4)
         perform_enqueued_jobs_now!
 
         expect(episode.reload.downloads_count).to eq 3
+        expect(episode2.reload.downloads_count).to eq 1
       end
     end
   end
