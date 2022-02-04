@@ -21,6 +21,8 @@ class FetchGeoipData < BaseService
   private
 
   def client
+    raise "MaxMind::GeoIP2 Config is missing" if ENV["GEOIP_ACCOUNT"].blank? || ENV["GEOIP_LICENSE_KEY"].blank?
+
     MaxMind::GeoIP2::Client.new(
       account_id: ENV["GEOIP_ACCOUNT"],
       license_key: ENV["GEOIP_LICENSE_KEY"]

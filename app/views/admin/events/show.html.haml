@@ -1,9 +1,16 @@
-%h1
-    = @event.episode_title
+%h1= @event.episode_title
 
 = @event.downloaded_at
 
-%h3 Data
-= debug @event.data
+.card
+  .card-body
+    %h3.card-title Data
+    %p.card-text=debug @event.data.to_hash
+
+.card
+  .card-body
+    %h3.card-title Geo Data
+    %p.card-text=debug @event.geo_data.to_hash
+
 
 = back_button admin_episodes_path

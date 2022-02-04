@@ -12,6 +12,7 @@
       %th Date
       %th Episode
       %th Info
+      %th Geo Info
       %th
   %tbody
     - @events.each do |event|
@@ -19,6 +20,7 @@
         %td= event.downloaded_at
         %td= event.episode_title
         %td= event.info
+        %td= event.geo_info
         %td= show_button admin_event_path(event)
 
 = will_paginate @event_records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
