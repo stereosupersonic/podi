@@ -5,6 +5,7 @@
 #  id            :bigint           not null, primary key
 #  data          :jsonb
 #  downloaded_at :datetime
+#  geo_data      :jsonb
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  episode_id    :bigint           not null
@@ -33,6 +34,20 @@ FactoryBot.define do
         client_os_full_version: "8",
         client_device_name: nil,
         client_device_type: "desktop"
+      }
+    }
+
+    geo_data {
+      {
+        country: "Germany",
+        county: "Bavaria",
+        iso_code: "DE",
+        city: "Moosburg",
+        plz: "85368",
+        latitude: "48.4668",
+        longitude: "11.9476",
+        accuracy_radiu: 10,
+        isp: "Deutsche Telekom AG"
       }
     }
   end
