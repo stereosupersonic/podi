@@ -5,7 +5,7 @@
 #  id            :bigint           not null, primary key
 #  data          :jsonb
 #  downloaded_at :datetime
-#  geo_data      :jsonb
+#  geo_data      :jsonb            default({})
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  episode_id    :bigint           not null
