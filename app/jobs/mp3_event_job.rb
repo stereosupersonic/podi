@@ -15,6 +15,7 @@ class Mp3EventJob < ApplicationJob
     data[:client_device_type] = client.device_type
     data[:client_bot] = client.bot?
 
-    Event.create! data: data, episode: episode, downloaded_at: payload[:downloaded_at]
+    geo_data = FetchGeoipData.call ip_address: data[:remote_ip]
+    Event.create! data: data, geo_data: geo_data, episode: episode, downloaded_at: payload[:downloaded_at]
   end
 end

@@ -10,7 +10,7 @@ describe "Events", type: :system do
 
     it "overview page" do
       episode = FactoryBot.create :episode, title: "Soli Wartenberg", number: 1
-      event = FactoryBot.create(:event, episode: episode, downloaded_at: Time.zone.parse("2012-07-11 21:00"))
+      event = FactoryBot.create(:event, episode: episode, geo_data: nil, downloaded_at: Time.zone.parse("2012-07-11 21:00"))
       FactoryBot.create(:event, episode: episode, created_at: 1.day.ago, downloaded_at: Time.zone.parse("2021-01-01 21:00"))
 
       visit "/"
@@ -21,14 +21,17 @@ describe "Events", type: :system do
         ["Date",
           "Episode",
           "Info",
+          "Geo Info",
           ""],
         ["01.01.2021 21:00",
           "001 Soli Wartenberg",
           "127.0.0.1 - Chrome - desktop",
+          "Germany - Bavaria - 85368 - Moosburg - Deutsche Telekom AG",
           "Show"],
         ["11.07.2012 21:00",
           "001 Soli Wartenberg",
           "127.0.0.1 - Chrome - desktop",
+          "",
           "Show"]
       ])
       within "#event-#{event.id}" do
