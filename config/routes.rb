@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :episodes, only: %w[index edit update new create]
     resources :events, only: %w[index show]
     resource :setting, only: %w[edit update]
+    resource :info, only: %w[show]
   end
 
   resources :episodes, only: %i[show index], param: :slug

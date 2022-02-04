@@ -1,0 +1,16 @@
+%h1 Info
+
+.card
+  .card-body
+    %h3.card-title Data
+    %p.card-text
+      = "Ruby-Version: #{`ruby -v`}"
+      %br
+      = "Rails-Version: #{Rails.version}"
+
+.card
+  .card-body
+    %h3.card-title ENV
+    %p.card-text= debug ENV.to_h.to_yaml
+
+= back_button root_path
