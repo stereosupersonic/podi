@@ -4,7 +4,7 @@ class EventPresenter < ApplicationPresenter
   end
 
   def data
-    (o.data.presence || {}).with_indifferent_access
+    (o.data || {}).with_indifferent_access
   end
 
   def geo_data
