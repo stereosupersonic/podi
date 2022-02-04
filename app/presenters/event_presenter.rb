@@ -4,13 +4,27 @@ class EventPresenter < ApplicationPresenter
   end
 
   def data
-    o.data.with_indifferent_access
+    (o.data || {}).with_indifferent_access
+  end
+
+  def geo_data
+    (o.geo_data || {}).with_indifferent_access
   end
 
   def info
     [
       data[:remote_ip],
       client_info
+    ].compact.join(" - ")
+  end
+
+  def geo_info
+    [
+      geo_data[:country],
+      geo_data[:county],
+      geo_data[:plz],
+      geo_data[:city],
+      geo_data[:isp]
     ].compact.join(" - ")
   end
 
