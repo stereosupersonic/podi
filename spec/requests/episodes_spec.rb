@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "episodes", type: :request do
-  before { allow(FetchGeoipData).to receive(:call).and_return({}) }
+  before { allow(FetchGeoData).to receive(:call).and_return({}) }
   describe "GET /episodes.rss" do
     let!(:setting) { FactoryBot.create(:setting) }
 
@@ -164,7 +164,7 @@ RSpec.describe "episodes", type: :request do
       it "logs valid data" do
         ua = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.17 Safari/537.36"
         headers = {"HTTP_USER_AGENT" => ua}
-        expect(FetchGeoipData).to receive(:call).with(ip_address: "127.0.0.1").and_return FactoryBot.build(:event).geo_data
+        expect(FetchGeoData).to receive(:call).with(ip_address: "127.0.0.1").and_return FactoryBot.build(:event).geo_data
         downloaded_at = Time.current
         travel_to downloaded_at do
           get episode.mp3_url, params: {}, headers: headers
