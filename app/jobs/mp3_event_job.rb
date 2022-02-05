@@ -1,6 +1,5 @@
 class Mp3EventJob < ApplicationJob
   def perform(payload)
-    Rails.logger.info "###### Mp3EventJob"
     episode = Episode.find payload[:episode_id]
     episode.increment! :downloads_count
     data = payload[:data]
@@ -15,7 +14,8 @@ class Mp3EventJob < ApplicationJob
     data[:client_device_type] = client.device_type
     data[:client_bot] = client.bot?
 
-    geo_data = FetchGeoipData.call ip_address: data[:remote_ip]
-    Event.create! data: data, geo_data: geo_data, episode: episode, downloaded_at: payload[:downloaded_at]
+    event = Event.create! data: data, episode: episode, downloaded_at: payload[:downloaded_at]
+
+    GeoDataJob.perform_later event.id, data[:remote_ip]
   end
 end
