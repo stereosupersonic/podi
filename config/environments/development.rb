@@ -3,9 +3,6 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # using docker database
-  ActiveRecord::Tasks::DatabaseTasks::LOCAL_HOSTS << "0.0.0.0"
-
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -16,7 +13,10 @@ Rails.application.configure do
 
   # Show full error reports.
   config.consider_all_requests_local = true
-  config.log_tags = [:request_id, lambda { |request| request.user_agent }]
+
+  # Enable server timing
+  config.server_timing = true
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
@@ -33,6 +33,9 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  # Store uploaded files on the local file system (see config/storage.yml for options).
+  config.active_storage.service = :local
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -48,25 +51,26 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
+  # Suppress logger output for asset requests.
+  config.assets.quiet = true
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
-  # Use an evented file watcher to asynchronously detect changes in source code,
-  # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # using docker database
+  ActiveRecord::Tasks::DatabaseTasks::LOCAL_HOSTS << "0.0.0.0"
 
   config.aws_access_key = ENV["S3_ACCESS_KEY"]
   config.aws_secret_key = ENV["S3_SECRET_KEY"]
   config.aws_bucket_name = ENV["S3_BUCKET_NAME"]
   config.aws_s3_region = ENV["S3_REGION"]
   config.aws_cloudfront_url = ENV["CLOUDFRONT_URL"]
-  config.active_storage.service = :local
 
   config.hosts << ENV["NGROK_HOST"] if ENV["NGROK_HOST"].present?
   config.cloudinary_cloud_name = ENV["CLOUDINARY_CLOUD_NAME"]

@@ -8,13 +8,13 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.cache_classes = false
-  config.action_view.cache_template_loading = true
+  # Turn false under Spring and add config.action_view.cache_template_loading = true.
+  config.cache_classes = true
 
-  # Do not eager load code on boot. This avoids loading your whole application
-  # just for the purpose of running a single test. If you are using a tool that
-  # preloads Rails for running tests, you may have to set it to true.
-  config.eager_load = false
+  # Eager loading loads your whole application. When running a single test locally,
+  # this probably isn't necessary. It's a good idea to do in a continuous integration
+  # system, or in some way before deploying your code.
+  config.eager_load = ENV["CI"].present?
 
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
@@ -32,6 +32,9 @@ Rails.application.configure do
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
+
+  # Store uploaded files on the local file system in a temporary directory.
+  config.active_storage.service = :test
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
@@ -52,12 +55,9 @@ Rails.application.configure do
   config.aws_bucket_name = nil
   config.aws_s3_region = nil
   config.aws_cloudfront_url = nil
-
   config.active_storage.service = :test
-
   config.cloudinary_cloud_name = nil
   config.cloudinary_api_key = nil
   config.cloudinary_api_secret = nil
-
   config.active_job.queue_adapter = :inline # test ?
 end
