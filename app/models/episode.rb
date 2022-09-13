@@ -61,7 +61,7 @@ class Episode < ApplicationRecord
   has_one_attached :audio
 
   def duration
-    audio.blob.metadata[:duration] if audio.attached?
+    audio.blob.metadata[:duration]&.to_i if audio.attached?
   end
 
   def audio_size
