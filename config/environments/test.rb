@@ -55,9 +55,10 @@ Rails.application.configure do
   config.aws_bucket_name = nil
   config.aws_s3_region = nil
   config.aws_cloudfront_url = nil
-  config.active_storage.service = :test
+
   config.cloudinary_cloud_name = nil
   config.cloudinary_api_key = nil
   config.cloudinary_api_secret = nil
+
   config.active_job.queue_adapter = :inline # test ?
 end
