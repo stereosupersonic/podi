@@ -1,5 +1,4 @@
 require "rails_helper"
-require "sidekiq/testing" # https://github.com/mperham/sidekiq/wiki/Testing
 
 module JobHelpers
   def reset_enqueued_jobs
