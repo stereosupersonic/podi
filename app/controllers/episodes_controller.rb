@@ -26,7 +26,7 @@ class EpisodesController < ApplicationController
 
           if !Rails.cache.exist?(key) && track_downloads?
             Rails.cache.write(key, true, expires_in: 2.minutes)
-            ActiveSupport::Notifications.instrument(:track_mp3_downloads) do |payload|
+            ActiveSupport::Notifications.instrument("track_mp3_downloads") do |payload|
               data = {}
               data[:user_agent] = request.headers["User-Agent"]
               data[:remote_ip] = request.remote_ip

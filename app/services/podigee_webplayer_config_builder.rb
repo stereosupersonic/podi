@@ -22,8 +22,8 @@ class PodigeeWebplayerConfigBuilder
         SubscribeBar: {}
       },
       episode: {media: {
-        mp3: episode.mp3_url
-      },
+                  mp3: episode.mp3_url
+                },
                 coverUrl: nil, # episode.artwork_url,
                 title: (@options[:title] ? episode.title : nil),
                 subtitle: nil,

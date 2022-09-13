@@ -4,7 +4,7 @@ ruby File.read(".ruby-version").strip
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem "rails", "~> 6.1.0"
+gem "rails", "~> 7.0.4"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "turbolinks", "~> 5"
@@ -12,7 +12,7 @@ gem "jbuilder", "~> 2.7"
 
 gem "cssbundling-rails", "~> 0.2.6"
 gem "jsbundling-rails", "~> 0.2.1"
-
+gem "sprockets-rails"
 gem "simple_form"
 
 gem "bootsnap", ">= 1.4.4", require: false

@@ -4,9 +4,9 @@ RSpec.describe Mp3EventJob, type: :job do
   let(:episode) { FactoryBot.create :episode }
   let(:payload) {
     {data: {
-      user_agent: "my ua",
-      remote_ip: "127.0.0.2"
-    },
+       user_agent: "my ua",
+       remote_ip: "127.0.0.2"
+     },
      episode_id: episode.id,
      downloaded_at: Time.current}
   }

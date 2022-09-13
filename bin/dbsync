@@ -27,7 +27,7 @@ end
 
 db_config_file = File.expand_path(File.join(File.dirname(__FILE__), "..", "config", "database.yml"))
 
-db_config = YAML.load(ERB.new(File.read(db_config_file)).result )
+db_config = YAML.load(ERB.new(File.read(db_config_file)).result , aliases: true)
 
 development_db_name     = db_config["development"]["database"]
 development_db_user     = db_config["development"]["username"]
