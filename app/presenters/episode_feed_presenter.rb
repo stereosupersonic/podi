@@ -75,7 +75,7 @@ class EpisodeFeedPresenter < EpisodePresenter
   end
 
   def description_with_show_notes_text
-    strip_tags(description_with_show_notes_html.gsub(/<br[\s]*\/?>/i, "\n")) + " #summary"
+    strip_tags(description_with_show_notes_html.gsub(/<br\s*\/?>/i, "\n")) + " #summary"
   end
 
   def sanitized_chapter_marks
