@@ -1,4 +1,6 @@
 class EpisodeFeedPresenter < EpisodePresenter
+  include ActionView::Helpers::SanitizeHelper
+
   delegate :author, to: :current_setting
 
   def duration
@@ -70,6 +72,10 @@ class EpisodeFeedPresenter < EpisodePresenter
       #{(["Kapitelmarken: "] + Array(sanitized_chapter_marks)).join("<br>")}
       </p>
     HTML
+  end
+
+  def description_with_show_notes_text
+    strip_tags(description_with_show_notes_html.gsub(/<br[\s]*\/?>/i, "\n")) + " #summary"
   end
 
   def sanitized_chapter_marks
