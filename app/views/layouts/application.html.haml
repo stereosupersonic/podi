@@ -35,7 +35,7 @@
     = csrf_meta_tags
     = csp_meta_tag
 
-    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+    = javascript_include_tag "application", "data-turbo-track": "reload"
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
 
   %body{id: "main", :class => "#{controller_name} #{action_name}"}
