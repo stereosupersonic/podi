@@ -47,7 +47,7 @@ RSpec.describe "episodes", type: :request do
             <itunes:category text="News">
               <itunes:category text="Politics"/>
             </itunes:category>
-            <itunes:explicit>false</itunes:explicit>
+            <itunes:explicit>False</itunes:explicit>
             <itunes:author>Michael Deimel, Thomas Rademacher</itunes:author>
             <link>http://wartenberger.test.com</link>
             <itunes:owner>
@@ -91,9 +91,9 @@ RSpec.describe "episodes", type: :request do
               <itunes:duration>321</itunes:duration>
               <link>http://wartenberger.test.com/episodes/002-anton-muller</link>
               <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/002-anton-muller.jpg"/>
-              <itunes:explicit>false</itunes:explicit>
+              <itunes:explicit>False</itunes:explicit>
               <itunes:episode>2</itunes:episode>
-              <itunes:episodeType:full/>
+              <itunes:episodeType>full</itunes:episodeType>
             </item>
             <item>
               <title>Soli Wartenberg</title>
@@ -124,9 +124,9 @@ RSpec.describe "episodes", type: :request do
               <itunes:duration>321</itunes:duration>
               <link>http://wartenberger.test.com/episodes/001-soli-wartenberg</link>
               <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/001-soli-wartenberg.jpg"/>
-              <itunes:explicit>false</itunes:explicit>
+              <itunes:explicit>False</itunes:explicit>
               <itunes:episode>1</itunes:episode>
-              <itunes:episodeType:full/>
+              <itunes:episodeType>full</itunes:episodeType>
             </item>
           </channel>
         </rss>)

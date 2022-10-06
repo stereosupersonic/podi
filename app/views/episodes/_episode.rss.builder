@@ -25,7 +25,7 @@ xml.item do
   xml.tag! "itunes:image", href: episode.artwork_url
 
   # The episode parental advisory information.
-  xml.tag! "itunes:explicit", false
+  xml.tag! "itunes:explicit", "False"
   xml.tag! "itunes:episode", episode.number
   xml.tag! "itunes:episodeType", "full"
 end

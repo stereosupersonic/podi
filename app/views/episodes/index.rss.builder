@@ -31,7 +31,7 @@ xml.rss("version" => "2.0",
     end
 
     # The podcast parental advisory information.
-    xml.tag! "itunes:explicit", false
+    xml.tag! "itunes:explicit", "False"
 
     # The group responsible for creating the show.
     xml.tag! "itunes:author", @feed.author
