@@ -54,9 +54,11 @@ class EpisodeFeedPresenter < EpisodePresenter
 
     [].tap do |result|
       result << render_markdown(o.description)
-      result << render_markdown("### Show Notes")
-      result << render_markdown(o.nodes.presence || "no notes available")
       result << render_markdown(chapter_list_html).html_safe if o.chapter_marks.present?
+      if o.nodes.present?
+        result << render_markdown("### Show Notes")
+        result << render_markdown(o.nodes.presence)
+      end
       result << stay_in_contact_html.html_safe
     end.compact.join("<br>").html_safe
   end

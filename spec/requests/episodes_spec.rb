@@ -62,9 +62,10 @@ RSpec.describe "episodes", type: :request do
               <guid>http://wartenberger.test.com/episodes/002-anton-muller.mp3</guid>
               <pubDate>#{episode2.published_on.to_date.rfc822}</pubDate>
               <description>
-                <![CDATA[<p>we talk about bikes and things</p> <br><h3>Show Notes</h3> <br><ul>
-                  <li><a href="https://test.com">link</a></li> <li><a href="https://test.com">link2</a></li> </ul>
+                <![CDATA[<p>we talk about bikes and things</p>
                   <br><p> Kapitelmarken: <br>• 00:00:00 - Intro<br>• 00:01:00 - Begrüßung<br>• 00:04:34 - Outro </p>
+                  <br><h3>Show Notes</h3> <br><ul>
+                  <li><a href="https://test.com">link</a></li> <li><a href="https://test.com">link2</a></li> </ul>
                   <br><br> <h2>Kontakt</h2> <p> <br> <b>Schreibt uns!</b>
                   <br> Schickt uns eure Themenwünsche und euer Feedback.<br>
                   <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br> <br> <b>Folgt uns!</b>
@@ -75,10 +76,11 @@ RSpec.describe "episodes", type: :request do
                   <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br> </p>]]>
               </description>
               <content:encoded>
-                <![CDATA[<p>we talk about bikes and things</p> <br><h3>Show Notes</h3> <br><ul>
+                <![CDATA[<p>we talk about bikes and things</p>
+                  <br><p> Kapitelmarken: <br>• 00:00:00 - Intro<br>• 00:01:00 - Begrüßung<br>• 00:04:34 - Outro </p>
+                  <br><h3>Show Notes</h3> <br><ul>
                   <li><a href="https://test.com">link</a></li>
                   <li><a href="https://test.com">link2</a></li> </ul>
-                  <br><p> Kapitelmarken: <br>• 00:00:00 - Intro<br>• 00:01:00 - Begrüßung<br>• 00:04:34 - Outro </p>
                   <br><br> <h2>Kontakt</h2> <p> <br> <b>Schreibt uns!</b>
                   <br> Schickt uns eure Themenwünsche und euer Feedback.<br>
                   <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br> <br>
