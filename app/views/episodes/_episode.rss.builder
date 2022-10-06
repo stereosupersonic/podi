@@ -26,4 +26,6 @@ xml.item do
 
   # The episode parental advisory information.
   xml.tag! "itunes:explicit", false
+  xml.tag! "itunes:episode", episode.number
+  xml.tag! "itunes:episodeType", :full
 end
