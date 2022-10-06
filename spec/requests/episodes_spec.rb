@@ -1,5 +1,5 @@
 require "rails_helper"
-
+require "equivalent-xml"
 RSpec.describe "episodes", type: :request do
   before { allow(FetchGeoData).to receive(:call).and_return({}) }
   describe "GET /episodes.rss" do
@@ -7,11 +7,19 @@ RSpec.describe "episodes", type: :request do
 
     it "generates a feed" do
       episode1 = FactoryBot.create :episode, number: 1, title: "Soli Wartenberg"
+
+      nodes = <<~MARKDOWN
+        * [link](https://test.com)
+        * [link2](https://test.com)
+      MARKDOWN
+      chapter_marks = <<~MARKDOWN
+        00:00:00.001 	Intro
+        00:01:00.001 	Begrüßung
+        00:04:34.001 	Outro
+      MARKDOWN
       episode2 = FactoryBot.create :episode, number: 2, title: "Anton Müller",
-        nodes: <<~MARKDOWN
-          * [link](https://test.com)
-          * [link2](https://test.com)
-        MARKDOWN
+        nodes: nodes, chapter_marks: chapter_marks
+
       FactoryBot.create :episode, number: 3, title: "Future", published_on: 1.day.since
       FactoryBot.create :episode, number: 4, title: "inactive", active: false
 
@@ -56,6 +64,7 @@ RSpec.describe "episodes", type: :request do
               <description>
                 <![CDATA[<p>we talk about bikes and things</p> <br><h3>Show Notes</h3> <br><ul>
                   <li><a href="https://test.com">link</a></li> <li><a href="https://test.com">link2</a></li> </ul>
+                  <br><p> Kapitelmarken: <br>• 00:00:00 - Intro<br>• 00:01:00 - Begrüßung<br>• 00:04:34 - Outro </p>
                   <br><br> <h2>Kontakt</h2> <p> <br> <b>Schreibt uns!</b>
                   <br> Schickt uns eure Themenwünsche und euer Feedback.<br>
                   <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br> <br> <b>Folgt uns!</b>
@@ -69,6 +78,7 @@ RSpec.describe "episodes", type: :request do
                 <![CDATA[<p>we talk about bikes and things</p> <br><h3>Show Notes</h3> <br><ul>
                   <li><a href="https://test.com">link</a></li>
                   <li><a href="https://test.com">link2</a></li> </ul>
+                  <br><p> Kapitelmarken: <br>• 00:00:00 - Intro<br>• 00:01:00 - Begrüßung<br>• 00:04:34 - Outro </p>
                   <br><br> <h2>Kontakt</h2> <p> <br> <b>Schreibt uns!</b>
                   <br> Schickt uns eure Themenwünsche und euer Feedback.<br>
                   <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br> <br>
@@ -82,6 +92,8 @@ RSpec.describe "episodes", type: :request do
               <link>http://wartenberger.test.com/episodes/002-anton-muller</link>
               <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/002-anton-muller.jpg"/>
               <itunes:explicit>false</itunes:explicit>
+              <itunes:episode>2</itunes:episode>
+              <itunes:episodeType:full/>
             </item>
             <item>
               <title>Soli Wartenberg</title>
@@ -113,14 +125,16 @@ RSpec.describe "episodes", type: :request do
               <link>http://wartenberger.test.com/episodes/001-soli-wartenberg</link>
               <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/001-soli-wartenberg.jpg"/>
               <itunes:explicit>false</itunes:explicit>
+              <itunes:episode>1</itunes:episode>
+              <itunes:episodeType:full/>
             </item>
           </channel>
         </rss>)
 
       # Debugging
-      File.write("response.xml", response.body.squish)
-      File.write("expected_xml.xml", expected_xml.squish)
-      expect(response.body.squish).to eq(expected_xml.squish)
+      # File.write("response.xml", response.body.squish)
+      # File.write("expected_xml.xml", expected_xml.squish)
+      expect(response.body.squish).to be_equivalent_to(expected_xml.squish)
     end
   end
 

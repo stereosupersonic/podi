@@ -51,12 +51,31 @@ class EpisodeFeedPresenter < EpisodePresenter
     #   <![CDATA[
     #     <a href="http://www.apple.com">Apple</a>
     #   ]]>
-    [
-      render_markdown(o.description),
-      render_markdown("### Show Notes"),
-      render_markdown(o.nodes.presence || "no notes available"),
-      stay_in_contact_html.html_safe
-    ].join("<br>").html_safe
+
+    [].tap do |result|
+      result << render_markdown(o.description)
+      result << render_markdown("### Show Notes")
+      result << render_markdown(o.nodes.presence || "no notes available")
+      result << render_markdown(chapter_list_html).html_safe if o.chapter_marks.present?
+      result << stay_in_contact_html.html_safe
+    end.compact.join("<br>").html_safe
+  end
+
+  def chapter_list_html
+    return if o.chapter_marks.blank?
+    <<~HTML.strip
+      <p>
+      #{(["Kapitelmarken: "] + Array(sanitized_chapter_marks)).join("<br>")}
+      </p>
+    HTML
+  end
+
+  def sanitized_chapter_marks
+    o.chapter_marks.split("\n").map do |chapter_mark|
+      timestamp, text = *chapter_mark.squish.split(/\s+/)
+      sanitized_timestamp = timestamp.gsub(/\.\d+/, "")
+      "• #{sanitized_timestamp} - #{text}"
+    end
   end
 
   def stay_in_contact_html
@@ -90,6 +109,10 @@ class EpisodeFeedPresenter < EpisodePresenter
   def pub_date
     # # The date and time when an episode was released. RFC 2822
     o.published_on.to_date.rfc822
+  end
+
+  def number
+    o.number.to_i
   end
 
   private

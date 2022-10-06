@@ -137,6 +137,8 @@ GEM
       railties (>= 3.2)
     down (5.3.1)
       addressable (~> 2.8)
+    equivalent-xml (0.6.0)
+      nokogiri (>= 1.4.3)
     erubi (1.11.0)
     erubis (2.7.0)
     factory_bot (6.2.1)
@@ -430,6 +432,7 @@ DEPENDENCIES
   device_detector!
   devise
   dotenv-rails
+  equivalent-xml
   factory_bot_rails
   foreman
   haml-rails (~> 2.0)
