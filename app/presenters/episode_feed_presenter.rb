@@ -1,3 +1,4 @@
+require "redcarpet/render_strip"
 class EpisodeFeedPresenter < EpisodePresenter
   include ActionView::Helpers::SanitizeHelper
 
@@ -55,63 +56,93 @@ class EpisodeFeedPresenter < EpisodePresenter
     #   ]]>
 
     [].tap do |result|
-      result << render_markdown(o.description)
-      result << render_markdown(chapter_list_html).html_safe if o.chapter_marks.present?
+      result << render_markdown_to_html(o.description)
+      result << render_markdown_to_html(chapter_list_html) if chapter_marks.present?
+
       if o.nodes.present?
-        result << render_markdown("### Show Notes")
-        result << render_markdown(o.nodes.presence)
+        result << render_markdown_to_html(show_notes)
       end
-      result << stay_in_contact_html.html_safe
-    end.compact.join("<br>").html_safe
+
+      result << stay_in_contact_html
+    end.compact.join("<br />").html_safe
+  end
+
+  def description_with_show_notes_text
+    [].tap do |result|
+      result << render_markdown_to_plain_text(o.description)
+      result << render_markdown_to_plain_text(chapter_list) if chapter_marks.present?
+
+      if o.nodes.present?
+        result << render_markdown_to_plain_text(show_notes)
+      end
+
+      result << render_markdown_to_plain_text(stay_in_contact_markdown)
+    end.compact.join("\n")
+  end
+
+  def chapter_list
+    return if o.chapter_marks.blank?
+    <<~MARKDOWN.strip
+      Kapitelmarken:
+      #{Array(sanitized_chapter_marks).join("\n")}
+    MARKDOWN
   end
 
   def chapter_list_html
     return if o.chapter_marks.blank?
-    <<~HTML.strip
-      <p>
-      #{(["Kapitelmarken: "] + Array(sanitized_chapter_marks)).join("<br>")}
-      </p>
-    HTML
+    (["Kapitelmarken:"] + Array(sanitized_chapter_marks)).join("<br />")
   end
 
-  def description_with_show_notes_text
-    strip_tags(description_with_show_notes_html.gsub(/<br\s*\/?>/i, "\n")) + " #summary"
+  def show_notes
+    ["### Show Notes", o.nodes.presence].join("\n")
   end
 
   def sanitized_chapter_marks
-    o.chapter_marks.split("\n").map do |chapter_mark|
-      timestamp, text = *chapter_mark.squish.split(/\s+/)
-      sanitized_timestamp = timestamp.gsub(/\.\d+/, "")
-      "• #{sanitized_timestamp} - #{text}"
-    end
+    ConvertChaptersToText.call(chapters: o.chapter_marks)
   end
 
   def stay_in_contact_html
     <<~HTML.strip
-      <br>
       <h2>Kontakt</h2>
       <p>
-        <br>
+        <br />
         <b>Schreibt uns!</b>
-        <br>
-        Schickt uns eure Themenwünsche und euer Feedback.<br>
+        <br />
+        Schickt uns eure Themenwünsche und euer Feedback.<br />
         <a href='mailto:#{current_setting.email}'>#{current_setting.email}</a>
-        <br>
-        <br>
+        <br />
+        <br />
         <b>Folgt uns!</b>
-        <br>
+        <br />
         Bleibt auf dem Laufenden über zukünftige Folgen
-        <br>
+        <br />
         <a href='#{current_setting.twitter_url}'>Twitter</a>
-        <br>
+        <br />
         <a href='#{current_setting.instagram_url}'>Instagram</a>
-        <br>
+        <br />
         <a href='#{current_setting.facebook_url}'>Facebook</a>
-        <br>
+        <br />
         <a href='#{current_setting.youtube_url}'>YouTube</a>
-        <br>
+        <br />
       </p>
     HTML
+  end
+
+  def stay_in_contact_markdown
+    <<~MARKDOWN.strip
+      ## Kontakt
+
+      **Schreibt uns!**
+      Schickt uns eure Themenwünsche und euer Feedback.
+      [#{current_setting.email}](mailto:#{current_setting.email})
+
+      **Folgt uns!**
+      Bleibt auf dem Laufenden über zukünftige Folgen
+      [Twitter](#{current_setting.twitter_url})
+      [Instagram](#{current_setting.instagram_url})
+      [Facebook](#{current_setting.facebook_url})
+      [YouTube](#{current_setting.youtube_url})
+    MARKDOWN
   end
 
   def pub_date
@@ -125,13 +156,23 @@ class EpisodeFeedPresenter < EpisodePresenter
 
   private
 
-  def render_markdown(text)
+  def render_markdown_to_html(text)
     return "" if text.blank?
 
-    markdown_processor.render(text.to_s).html_safe
+    markdown_processor.render(text)
+  end
+
+  def render_markdown_to_plain_text(text)
+    return "" if text.blank?
+
+    markdown_text_processor.render(text)
   end
 
   def markdown_processor
     @markdown_processor ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+  end
+
+  def markdown_text_processor
+    @markdown_text_processor ||= Redcarpet::Markdown.new(Redcarpet::Render::StripDown, autolink: true, tables: true)
   end
 end

@@ -73,5 +73,5 @@ end
 
 group :test do
   gem "simplecov", require: false
-  gem "equivalent-xml", require: false
+  gem "compare-xml"
 end
