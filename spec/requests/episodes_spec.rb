@@ -1,5 +1,5 @@
 require "rails_helper"
-require "equivalent-xml"
+
 RSpec.describe "episodes", type: :request do
   before { allow(FetchGeoData).to receive(:call).and_return({}) }
   describe "GET /episodes.rss" do
@@ -63,38 +63,42 @@ RSpec.describe "episodes", type: :request do
               <pubDate>#{episode2.published_on.to_date.rfc822}</pubDate>
               <description>
                 <![CDATA[<p>we talk about bikes and things</p>
-                  <br><p> Kapitelmarken: <br>• 00:00:00 - Intro<br>• 00:01:00 - Begrüßung<br>• 00:04:34 - Outro </p>
-                  <br><h3>Show Notes</h3> <br><ul>
+                  <br /><p>Kapitelmarken:<br />• 00:00:00 - Intro<br />• 00:01:00 - Begrüßung<br />• 00:04:34 - Outro</p>
+                  <br /><h3>Show Notes</h3> <ul>
                   <li><a href="https://test.com">link</a></li> <li><a href="https://test.com">link2</a></li> </ul>
-                  <br><br> <h2>Kontakt</h2> <p> <br> <b>Schreibt uns!</b>
-                  <br> Schickt uns eure Themenwünsche und euer Feedback.<br>
-                  <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br> <br> <b>Folgt uns!</b>
-                  <br> Bleibt auf dem Laufenden über zukünftige Folgen <br>
-                  <a href='https://twitter.com/WartenbergerPod'>Twitter</a> <br>
-                  <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a> <br>
-                  <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a> <br>
-                  <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br> </p>
+                  <br /><h2>Kontakt</h2> <p> <br /> <b>Schreibt uns!</b>
+                  <br /> Schickt uns eure Themenwünsche und euer Feedback.<br />
+                  <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br /> <br /> <b>Folgt uns!</b>
+                  <br /> Bleibt auf dem Laufenden über zukünftige Folgen <br />
+                  <a href='https://twitter.com/WartenbergerPod'>Twitter</a> <br />
+                  <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a> <br />
+                  <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a> <br />
+                  <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br /> </p>
                   <p>description</p>]]>
               </description>
               <content:encoded>
                 <![CDATA[<p>we talk about bikes and things</p>
-                  <br><p> Kapitelmarken: <br>• 00:00:00 - Intro<br>• 00:01:00 - Begrüßung<br>• 00:04:34 - Outro </p>
-                  <br><h3>Show Notes</h3> <br><ul>
+                  <br /><p>Kapitelmarken:<br />• 00:00:00 - Intro<br />• 00:01:00 - Begrüßung<br />• 00:04:34 - Outro</p>
+                  <br /><h3>Show Notes</h3> <ul>
                   <li><a href="https://test.com">link</a></li>
                   <li><a href="https://test.com">link2</a></li> </ul>
-                  <br><br> <h2>Kontakt</h2> <p> <br> <b>Schreibt uns!</b>
-                  <br> Schickt uns eure Themenwünsche und euer Feedback.<br>
-                  <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br> <br>
-                  <b>Folgt uns!</b> <br> Bleibt auf dem Laufenden über zukünftige Folgen <br>
-                  <a href='https://twitter.com/WartenbergerPod'>Twitter</a> <br>
-                  <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a> <br>
-                  <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a> <br>
-                  <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br> </p>
+                  <br /><h2>Kontakt</h2> <p> <br /> <b>Schreibt uns!</b>
+                  <br /> Schickt uns eure Themenwünsche und euer Feedback.<br />
+                  <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br /> <br />
+                  <b>Folgt uns!</b> <br /> Bleibt auf dem Laufenden über zukünftige Folgen <br />
+                  <a href='https://twitter.com/WartenbergerPod'>Twitter</a> <br />
+                  <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a> <br />
+                  <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a> <br />
+                  <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br /> </p>
                   <p>content</p>]]>
               </content:encoded>
-              <itunes:summary>
-              we talk about bikes and things Kapitelmarken: • 00:00:00 - Intro • 00:01:00 - Begrüßung • 00:04:34 - Outro Show Notes link link2 Kontakt Schreibt uns! Schickt uns eure Themenwünsche und euer Feedback. admin@wartenberger.de Folgt uns! Bleibt auf dem Laufenden über zukünftige Folgen Twitter Instagram Facebook YouTube #summary
-              </itunes:summary>
+              <itunes:summary>we talk about bikes and things Kapitelmarken: • 00:00:00 - Intro • 00:01:00 - Begrüßung • 00:04:34
+              - Outro Show Notes link (https://test.com) link2 (https://test.com) Kontakt Schreibt uns! Schickt uns eure
+              Themenwünsche und euer Feedback. admin@wartenberger.de (mailto:admin@wartenberger.de) Folgt uns! Bleibt auf dem
+              Laufenden über zukünftige Folgen Twitter (https://twitter.com/WartenbergerPod) Instagram
+              (https://www.instagram.com/wartenbergerpodcast) Facebook
+              (https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563) YouTube
+              (https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg) </itunes:summary>
               <itunes:duration>321</itunes:duration>
               <link>http://wartenberger.test.com/episodes/002-anton-muller</link>
               <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/002-anton-muller.jpg"/>
@@ -108,31 +112,17 @@ RSpec.describe "episodes", type: :request do
               <guid>http://wartenberger.test.com/episodes/001-soli-wartenberg.mp3</guid>
               <pubDate>#{episode1.published_on.to_date.rfc822}</pubDate>
               <description>
-                <![CDATA[<p>we talk about bikes and things</p> <br><h3>Show Notes</h3>
-                  <br><ul> <li>some nodes</li> </ul> <br><br> <h2>Kontakt</h2> <p> <br>
-                  <b>Schreibt uns!</b> <br> Schickt uns eure Themenwünsche und euer Feedback.<br>
-                  <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br> <br>
-                  <b>Folgt uns!</b> <br> Bleibt auf dem Laufenden über zukünftige Folgen <br>
-                  <a href='https://twitter.com/WartenbergerPod'>Twitter</a> <br>
-                  <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a> <br>
-                  <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a> <br>
-                  <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br> </p>
-                  <p>description</p>]]>
-              </description>
-              <content:encoded>
-              <![CDATA[<p>we talk about bikes and things</p> <br><h3>Show Notes</h3> <br><ul> <li>some nodes</li> </ul> <br><br>
-                  <h2>Kontakt</h2> <p> <br> <b>Schreibt uns!</b> <br> Schickt uns eure Themenwünsche und euer Feedback.<br>
-                  <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br> <br> <b>Folgt uns!</b> <br>
-                  Bleibt auf dem Laufenden über zukünftige Folgen <br>
-                  <a href='https://twitter.com/WartenbergerPod'>Twitter</a> <br>
-                  <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a> <br>
-                  <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a> <br>
-                  <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br> </p>
-                  <p>content</p>]]>
-              </content:encoded>
-              <itunes:summary>
-              we talk about bikes and things Show Notes some nodes Kontakt Schreibt uns! Schickt uns eure Themenwünsche und euer Feedback. admin@wartenberger.de Folgt uns! Bleibt auf dem Laufenden über zukünftige Folgen Twitter Instagram Facebook YouTube #summary
-              </itunes:summary>
+              <![CDATA[<p>we talk about bikes and things</p> <br /><h3>Show Notes</h3> <ul> <li>some nodes</li> </ul> <br /><h2>Kontakt</h2> <p> <br /> <b>Schreibt uns!</b> <br /> Schickt uns eure Themenwünsche und euer Feedback.<br /> <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br /> <br /> <b>Folgt uns!</b> <br /> Bleibt auf dem Laufenden über zukünftige Folgen <br /> <a href='https://twitter.com/WartenbergerPod'>Twitter</a> <br /> <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a> <br /> <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a> <br /> <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br /> </p> <p>description</p>]]>
+            </description>
+            <content:encoded>
+              <![CDATA[<p>we talk about bikes and things</p> <br /><h3>Show Notes</h3> <ul> <li>some nodes</li> </ul> <br /><h2>Kontakt</h2> <p> <br /> <b>Schreibt uns!</b> <br /> Schickt uns eure Themenwünsche und euer Feedback.<br /> <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br /> <br /> <b>Folgt uns!</b> <br /> Bleibt auf dem Laufenden über zukünftige Folgen <br /> <a href='https://twitter.com/WartenbergerPod'>Twitter</a> <br /> <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a> <br /> <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a> <br /> <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br /> </p> <p>content</p>]]>
+            </content:encoded>
+              <itunes:summary>we talk about bikes and things Show Notes some nodes Kontakt Schreibt uns! Schickt uns eure
+              Themenwünsche und euer Feedback. admin@wartenberger.de (mailto:admin@wartenberger.de) Folgt uns! Bleibt auf dem
+              Laufenden über zukünftige Folgen Twitter (https://twitter.com/WartenbergerPod) Instagram
+              (https://www.instagram.com/wartenbergerpodcast) Facebook
+              (https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563) YouTube
+              (https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg) </itunes:summary>
               <itunes:duration>321</itunes:duration>
               <link>http://wartenberger.test.com/episodes/001-soli-wartenberg</link>
               <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/001-soli-wartenberg.jpg"/>
@@ -144,9 +134,9 @@ RSpec.describe "episodes", type: :request do
         </rss>)
 
       # Debugging
-      # File.write("response.xml", response.body.squish)
-      # File.write("expected_xml.xml", expected_xml.squish)
-      expect(response.body.squish).to be_equivalent_to(expected_xml.squish)
+      File.write("response.xml", response.body.squish)
+      File.write("expected_xml.xml", expected_xml.squish)
+      expect(response.body).to match_xml(expected_xml)
     end
   end
 

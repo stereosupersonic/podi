@@ -40,18 +40,6 @@ class EpisodeFeedPresenter < EpisodePresenter
     mp3_url
   end
 
-  def description_with_show_notes_markdown
-    [].tap do |result|
-      result << o.description
-      result << ""
-      result << chapter_list if chapter_marks.present?
-
-      if o.nodes.present?
-        result << show_notes
-      end
-      result << stay_in_contact_markdown
-    end.compact.join("\n")
-  end
 
   def description_with_show_notes_html
     # An episode description.
@@ -68,11 +56,29 @@ class EpisodeFeedPresenter < EpisodePresenter
     #     <a href="http://www.apple.com">Apple</a>
     #   ]]>
 
-    render_markdown_to_html(description_with_show_notes_markdown)
+    [].tap do |result|
+      result << render_markdown_to_html(o.description)
+      result << render_markdown_to_html(chapter_list_html) if chapter_marks.present?
+
+      if o.nodes.present?
+        result << render_markdown_to_html(show_notes)
+      end
+
+      result << stay_in_contact_html
+    end.compact.join("<br />").html_safe
   end
 
   def description_with_show_notes_text
-    render_markdown_to_plain_text(description_with_show_notes_markdown)
+    [].tap do |result|
+      result << render_markdown_to_plain_text(o.description)
+      result << render_markdown_to_plain_text(chapter_list) if chapter_marks.present?
+
+      if o.nodes.present?
+        result << render_markdown_to_plain_text(show_notes)
+      end
+
+      result << render_markdown_to_plain_text(stay_in_contact_markdown)
+    end.compact.join("\n")
   end
 
   def chapter_list
@@ -83,19 +89,49 @@ class EpisodeFeedPresenter < EpisodePresenter
     MARKDOWN
   end
 
+  def chapter_list_html
+    return if o.chapter_marks.blank?
+    (["Kapitelmarken:"] + Array(sanitized_chapter_marks)).join("<br />")
+  end
+
   def show_notes
-    ["### Show Notes",
-      o.nodes.presence].join("\n")
+    ["### Show Notes", o.nodes.presence].join("\n")
   end
 
   def sanitized_chapter_marks
     ConvertChaptersToText.call(chapters: o.chapter_marks)
   end
 
+  def stay_in_contact_html
+    <<~HTML.strip
+      <h2>Kontakt</h2>
+      <p>
+        <br />
+        <b>Schreibt uns!</b>
+        <br />
+        Schickt uns eure Themenwünsche und euer Feedback.<br />
+        <a href='mailto:#{current_setting.email}'>#{current_setting.email}</a>
+        <br />
+        <br />
+        <b>Folgt uns!</b>
+        <br />
+        Bleibt auf dem Laufenden über zukünftige Folgen
+        <br />
+        <a href='#{current_setting.twitter_url}'>Twitter</a>
+        <br />
+        <a href='#{current_setting.instagram_url}'>Instagram</a>
+        <br />
+        <a href='#{current_setting.facebook_url}'>Facebook</a>
+        <br />
+        <a href='#{current_setting.youtube_url}'>YouTube</a>
+        <br />
+      </p>
+    HTML
+  end
+
   def stay_in_contact_markdown
     <<~MARKDOWN.strip
-      Kontakt
-      -------
+      ## Kontakt
 
       **Schreibt uns!**
       Schickt uns eure Themenwünsche und euer Feedback.
@@ -124,7 +160,7 @@ class EpisodeFeedPresenter < EpisodePresenter
   def render_markdown_to_html(text)
     return "" if text.blank?
 
-    markdown_processor.render(text).html_safe
+    markdown_processor.render(text)
   end
 
   def render_markdown_to_plain_text(text)

@@ -31,78 +31,58 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
     )
   end
 
-  it "generate a valid markdown description" do
-    expect(presenter.description_with_show_notes_markdown).to eq(
-      <<~MARKDOWN.strip
-        we talk about bikes and things
-
-        Kapitelmarken:
-        • 00:00:00 - Intro
-        • 00:01:00 - Begrüßung
-        • 00:04:34 - Outro
-        ### Show Notes
-        * [link](https://test.com)
-        * [link2](https://test.com)
-
-        Kontakt
-        -------
-
-        **Schreibt uns!**
-        Schickt uns eure Themenwünsche und euer Feedback.
-        [admin@wartenberger.de](mailto:admin@wartenberger.de)
-
-        **Folgt uns!**
-        Bleibt auf dem Laufenden über zukünftige Folgen
-        [Twitter](https://twitter.com/WartenbergerPod)
-        [Instagram](https://www.instagram.com/wartenbergerpodcast)
-        [Facebook](https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563)
-        [YouTube](https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg)
-      MARKDOWN
-    )
-  end
-
   it "generate a valid html description" do
     expected_html = <<~HTML.strip
-      <p>we talk about bikes and things</p>
-
-      <p>Kapitelmarken:
-      • 00:00:00 - Intro
-      • 00:01:00 - Begrüßung
-      • 00:04:34 - Outro</p>
-
-      <h3>Show Notes</h3>
-
-      <ul>
-      <li><a href="https://test.com">link</a></li>
-      <li><a href="https://test.com">link2</a></li>
-      </ul>
-
-      <h2>Kontakt</h2>
-
-      <p><strong>Schreibt uns!</strong>
-      Schickt uns eure Themenwünsche und euer Feedback.
-      <a href="mailto:admin@wartenberger.de">admin@wartenberger.de</a></p>
-
-      <p><strong>Folgt uns!</strong>
+    <p>we talk about bikes and things</p>
+    <br /><p>Kapitelmarken:<br />
+    • 00:00:00 - Intro<br />
+    • 00:01:00 - Begrüßung<br />
+    • 00:04:34 - Outro</p>
+    <br /><h3>Show Notes</h3>
+    <ul>
+    <li><a href="https://test.com">link</a></li>
+    <li><a href="https://test.com">link2</a></li>
+    </ul>
+    <br />
+    <h2>Kontakt</h2>
+    <p>
+      <br />
+      <b>Schreibt uns!</b>
+      <br />
+      Schickt uns eure Themenwünsche und euer Feedback.<br />
+      <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a>
+      <br />
+      <br />
+      <b>Folgt uns!</b>
+      <br />
       Bleibt auf dem Laufenden über zukünftige Folgen
-      <a href="https://twitter.com/WartenbergerPod">Twitter</a>
-      <a href="https://www.instagram.com/wartenbergerpodcast">Instagram</a>
-      <a href="https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563">Facebook</a>
-      <a href="https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg">YouTube</a></p>
+      <br />
+      <a href='https://twitter.com/WartenbergerPod'>Twitter</a>
+      <br />
+      <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a>
+      <br />
+      <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a>
+      <br />
+      <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a>
+      <br />
+    </p>
     HTML
-    expect(presenter.description_with_show_notes_html.squish).to eq(expected_html.squish)
+    expect(presenter.description_with_show_notes_html.squish).to match_html(expected_html)
   end
 
   it "generate a valid text description" do
     expected_text = <<~TEXT.strip
       we talk about bikes and things
+
       Kapitelmarken:
       • 00:00:00 - Intro
       • 00:01:00 - Begrüßung
       • 00:04:34 - Outro
+
       Show Notes
       link (https://test.com)
       link2 (https://test.com)
+
       Kontakt
       Schreibt uns!
       Schickt uns eure Themenwünsche und euer Feedback.
@@ -114,7 +94,7 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
       Facebook (https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563)
       YouTube (https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg)
     TEXT
-    puts presenter.description_with_show_notes_text
-    expect(presenter.description_with_show_notes_text.squish).to eq(expected_text.squish)
+
+    expect(presenter.description_with_show_notes_text.strip).to eq(expected_text.strip)
   end
 end

@@ -22,7 +22,7 @@ RSpec.describe ConvertChaptersToText do
 
   it "converts shorter timestamp" do
     chapters = %(00:01.001 \tIntro\r\n
-                 01:31.001 \tWer hatte die Idee?\r
+                 01:31.001 \tWer hatte die Idee? \r
                  53:58.001 \tOutro\r\n)
     expect(ConvertChaptersToText.call(chapters: chapters)).to eq(
       ["• 00:01 - Intro",
