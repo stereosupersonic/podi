@@ -79,11 +79,7 @@ class EpisodeFeedPresenter < EpisodePresenter
   end
 
   def sanitized_chapter_marks
-    o.chapter_marks.split("\n").map do |chapter_mark|
-      timestamp, text = *chapter_mark.squish.split(/\s+/)
-      sanitized_timestamp = timestamp.gsub(/\.\d+/, "")
-      "• #{sanitized_timestamp} - #{text}"
-    end
+    ConvertChaptersToText.call(chapters: o.chapter_marks)
   end
 
   def stay_in_contact_html
