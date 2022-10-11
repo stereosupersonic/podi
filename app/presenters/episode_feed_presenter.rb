@@ -1,3 +1,4 @@
+require "redcarpet/render_strip"
 class EpisodeFeedPresenter < EpisodePresenter
   include ActionView::Helpers::SanitizeHelper
 
@@ -39,6 +40,19 @@ class EpisodeFeedPresenter < EpisodePresenter
     mp3_url
   end
 
+  def description_with_show_notes_markdown
+    [].tap do |result|
+      result << o.description
+      result << ""
+      result << chapter_list if chapter_marks.present?
+
+      if o.nodes.present?
+        result << show_notes
+      end
+      result << stay_in_contact_markdown
+    end.compact.join("\n")
+  end
+
   def description_with_show_notes_html
     # An episode description.
     # description is text containing one or more sentences describing your episode to potential listeners.
@@ -54,60 +68,46 @@ class EpisodeFeedPresenter < EpisodePresenter
     #     <a href="http://www.apple.com">Apple</a>
     #   ]]>
 
-    [].tap do |result|
-      result << render_markdown(o.description)
-      result << render_markdown(chapter_list_html).html_safe if o.chapter_marks.present?
-      if o.nodes.present?
-        result << render_markdown("### Show Notes")
-        result << render_markdown(o.nodes.presence)
-      end
-      result << stay_in_contact_html.html_safe
-    end.compact.join("<br>").html_safe
-  end
-
-  def chapter_list_html
-    return if o.chapter_marks.blank?
-    <<~HTML.strip
-      <p>
-      #{(["Kapitelmarken: "] + Array(sanitized_chapter_marks)).join("<br>")}
-      </p>
-    HTML
+    render_markdown_to_html(description_with_show_notes_markdown)
   end
 
   def description_with_show_notes_text
-    strip_tags(description_with_show_notes_html.gsub(/<br\s*\/?>/i, "\n")) + " #summary"
+    render_markdown_to_plain_text(description_with_show_notes_markdown)
+  end
+
+  def chapter_list
+    return if o.chapter_marks.blank?
+    <<~MARKDOWN.strip
+      Kapitelmarken:
+      #{Array(sanitized_chapter_marks).join("\n")}
+    MARKDOWN
+  end
+
+  def show_notes
+    ["### Show Notes",
+      o.nodes.presence].join("\n")
   end
 
   def sanitized_chapter_marks
     ConvertChaptersToText.call(chapters: o.chapter_marks)
   end
 
-  def stay_in_contact_html
-    <<~HTML.strip
-      <br>
-      <h2>Kontakt</h2>
-      <p>
-        <br>
-        <b>Schreibt uns!</b>
-        <br>
-        Schickt uns eure Themenwünsche und euer Feedback.<br>
-        <a href='mailto:#{current_setting.email}'>#{current_setting.email}</a>
-        <br>
-        <br>
-        <b>Folgt uns!</b>
-        <br>
-        Bleibt auf dem Laufenden über zukünftige Folgen
-        <br>
-        <a href='#{current_setting.twitter_url}'>Twitter</a>
-        <br>
-        <a href='#{current_setting.instagram_url}'>Instagram</a>
-        <br>
-        <a href='#{current_setting.facebook_url}'>Facebook</a>
-        <br>
-        <a href='#{current_setting.youtube_url}'>YouTube</a>
-        <br>
-      </p>
-    HTML
+  def stay_in_contact_markdown
+    <<~MARKDOWN.strip
+      Kontakt
+      -------
+
+      **Schreibt uns!**
+      Schickt uns eure Themenwünsche und euer Feedback.
+      [#{current_setting.email}](mailto:#{current_setting.email})
+
+      **Folgt uns!**
+      Bleibt auf dem Laufenden über zukünftige Folgen
+      [Twitter](#{current_setting.twitter_url})
+      [Instagram](#{current_setting.instagram_url})
+      [Facebook](#{current_setting.facebook_url})
+      [YouTube](#{current_setting.youtube_url})
+    MARKDOWN
   end
 
   def pub_date
@@ -121,13 +121,23 @@ class EpisodeFeedPresenter < EpisodePresenter
 
   private
 
-  def render_markdown(text)
+  def render_markdown_to_html(text)
     return "" if text.blank?
 
-    markdown_processor.render(text.to_s).html_safe
+    markdown_processor.render(text).html_safe
+  end
+
+  def render_markdown_to_plain_text(text)
+    return "" if text.blank?
+
+    markdown_text_processor.render(text)
   end
 
   def markdown_processor
     @markdown_processor ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+  end
+
+  def markdown_text_processor
+    @markdown_text_processor ||= Redcarpet::Markdown.new(Redcarpet::Render::StripDown, autolink: true, tables: true)
   end
 end
