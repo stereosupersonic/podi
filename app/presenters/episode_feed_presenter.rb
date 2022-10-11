@@ -40,7 +40,6 @@ class EpisodeFeedPresenter < EpisodePresenter
     mp3_url
   end
 
-
   def description_with_show_notes_html
     # An episode description.
     # description is text containing one or more sentences describing your episode to potential listeners.

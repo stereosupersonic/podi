@@ -1,5 +1,5 @@
-require 'nokogiri'
-require 'compare-xml'
+require "nokogiri"
+require "compare-xml"
 
 RSpec::Matchers.define :match_html do |expected_html, **options|
   match do |actual_html|
@@ -10,7 +10,7 @@ RSpec::Matchers.define :match_html do |expected_html, **options|
     default_options = {
       collapse_whitespace: true,
       ignore_attr_order: true,
-      ignore_comments: true,
+      ignore_comments: true
     }
 
     options = default_options.merge(options).merge(verbose: true)

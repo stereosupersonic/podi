@@ -33,39 +33,39 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
 
   it "generate a valid html description" do
     expected_html = <<~HTML.strip
-    <p>we talk about bikes and things</p>
-    <br /><p>Kapitelmarken:<br />
-    • 00:00:00 - Intro<br />
-    • 00:01:00 - Begrüßung<br />
-    • 00:04:34 - Outro</p>
-    <br /><h3>Show Notes</h3>
-    <ul>
-    <li><a href="https://test.com">link</a></li>
-    <li><a href="https://test.com">link2</a></li>
-    </ul>
-    <br />
-    <h2>Kontakt</h2>
-    <p>
+      <p>we talk about bikes and things</p>
+      <br /><p>Kapitelmarken:<br />
+      • 00:00:00 - Intro<br />
+      • 00:01:00 - Begrüßung<br />
+      • 00:04:34 - Outro</p>
+      <br /><h3>Show Notes</h3>
+      <ul>
+      <li><a href="https://test.com">link</a></li>
+      <li><a href="https://test.com">link2</a></li>
+      </ul>
       <br />
-      <b>Schreibt uns!</b>
-      <br />
-      Schickt uns eure Themenwünsche und euer Feedback.<br />
-      <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a>
-      <br />
-      <br />
-      <b>Folgt uns!</b>
-      <br />
-      Bleibt auf dem Laufenden über zukünftige Folgen
-      <br />
-      <a href='https://twitter.com/WartenbergerPod'>Twitter</a>
-      <br />
-      <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a>
-      <br />
-      <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a>
-      <br />
-      <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a>
-      <br />
-    </p>
+      <h2>Kontakt</h2>
+      <p>
+        <br />
+        <b>Schreibt uns!</b>
+        <br />
+        Schickt uns eure Themenwünsche und euer Feedback.<br />
+        <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a>
+        <br />
+        <br />
+        <b>Folgt uns!</b>
+        <br />
+        Bleibt auf dem Laufenden über zukünftige Folgen
+        <br />
+        <a href='https://twitter.com/WartenbergerPod'>Twitter</a>
+        <br />
+        <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a>
+        <br />
+        <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a>
+        <br />
+        <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a>
+        <br />
+      </p>
     HTML
     expect(presenter.description_with_show_notes_html.squish).to match_html(expected_html)
   end
