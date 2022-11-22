@@ -121,7 +121,7 @@ GEM
     crass (1.0.6)
     cssbundling-rails (0.2.8)
       railties (>= 6.0.0)
-    dalli (3.2.2)
+    dalli (3.2.3)
     devise (4.8.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
