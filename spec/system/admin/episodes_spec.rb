@@ -18,6 +18,7 @@ describe "Administrate Episodes", type: :system do
 
       expect(page).to have_table_with_exact_data([
         ["Published",
+          "Visible",
           "Epsiode",
           "Cover",
           "Title",
@@ -25,10 +26,11 @@ describe "Administrate Episodes", type: :system do
           "Duration",
           "Filename",
           "Downloads",
-          "Published",
+          "Published on",
           "",
           ""],
         ["",
+          "Yes",
           "001",
           "",
           "Soli Wartenberg",
@@ -84,6 +86,7 @@ describe "Administrate Episodes", type: :system do
       visit "/admin/episodes"
       expect(page).to have_table_with_exact_data([
         ["Published",
+          "Visible",
           "Epsiode",
           "Cover",
           "Title",
@@ -91,10 +94,11 @@ describe "Administrate Episodes", type: :system do
           "Duration",
           "Filename",
           "Downloads",
-          "Published",
+          "Published on",
           "",
           ""],
         ["",
+          "Yes",
           "001",
           "",
           "Talk about shit",
@@ -139,7 +143,7 @@ describe "Administrate Episodes", type: :system do
 
       fill_in "Title", with: "test"
       fill_in "Nodes", with: "# my notes here *there*"
-
+      uncheck "Visible"
       fill_in "Published on", with: 1.day.ago
       fill_in "Description", with: "should be foo changed"
       fill_in "Chapter marks", with: %(
@@ -163,6 +167,7 @@ describe "Administrate Episodes", type: :system do
       visit "/admin/episodes"
       expect(page).to have_table_with_exact_data([
         ["Published",
+          "Visible",
           "Epsiode",
           "Cover",
           "Title",
@@ -170,10 +175,11 @@ describe "Administrate Episodes", type: :system do
           "Duration",
           "Filename",
           "Downloads",
-          "Published",
+          "Published on",
           "",
           ""],
         ["",
+          "No",
           "002",
           "",
           "test",
@@ -185,6 +191,7 @@ describe "Administrate Episodes", type: :system do
           "Edit",
           "Show"],
         ["",
+          "Yes",
           "001",
           "",
           "balh",

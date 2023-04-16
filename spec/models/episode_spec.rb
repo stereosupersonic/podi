@@ -14,6 +14,7 @@
 #  published_on    :date
 #  slug            :string           not null
 #  title           :string           not null
+#  visible         :boolean          default(TRUE)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -49,6 +50,12 @@ RSpec.describe Episode, type: :model do
 
     it "dont find inactive" do
       FactoryBot.create :episode, published_on: Time.zone.today, active: false
+
+      expect(described_class.published).to be_empty
+    end
+
+    it "dont find invisible" do
+      FactoryBot.create :episode, published_on: Time.zone.today, visible: false
 
       expect(described_class.published).to be_empty
     end

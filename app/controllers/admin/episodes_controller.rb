@@ -25,6 +25,7 @@ module Admin
 
     def update
       @episode = Episode.find_by!(slug: params[:id])
+
       if @episode.update(update_params) && @episode.update(slug: build_slug(@episode))
         redirect_to admin_episodes_path, notice: "Episode was successfully updated."
       else

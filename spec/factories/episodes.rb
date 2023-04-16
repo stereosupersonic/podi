@@ -14,6 +14,7 @@
 #  published_on    :date
 #  slug            :string           not null
 #  title           :string           not null
+#  visible         :boolean          default(TRUE)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

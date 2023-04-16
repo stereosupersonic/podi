@@ -5,6 +5,7 @@
     %thead.thead-dark
       %tr
         %th Published
+        %th Visible
         %th Epsiode
         %th Cover
         %th Title
@@ -12,13 +13,14 @@
         %th Duration
         %th Filename
         %th Downloads
-        %th Published
+        %th Published on
         %th
         %th
     %tbody
       - @episodes.each do |episode|
-        %tr{id: "episode-#{episode.id}", class: "text-nowrap #{'inactive' unless episode.published?}"}
+        %tr{id: "episode-#{episode.id}", class: "text-nowrap #{'inactive' if !episode.published?}"}
           %td= show_boolean_value episode.published?
+          %td= episode.visible? ? "Yes" : "No"
           %td= episode.number
           %td= image_tag(episode.artwork_url(size: 50), size: "50x50")
           %td= link_to truncate(episode.title), episode_path(episode)
