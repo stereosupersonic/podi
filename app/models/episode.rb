@@ -39,6 +39,7 @@ class Episode < ApplicationRecord
     chapter_marks
     artwork_url
     audio
+    visible
   ].freeze
 
   def to_param

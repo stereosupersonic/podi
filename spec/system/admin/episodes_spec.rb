@@ -18,6 +18,7 @@ describe "Administrate Episodes", type: :system do
 
       expect(page).to have_table_with_exact_data([
         ["Published",
+          "Visible",
           "Epsiode",
           "Cover",
           "Title",
@@ -26,10 +27,10 @@ describe "Administrate Episodes", type: :system do
           "Filename",
           "Downloads",
           "Published on",
-          "Visible",
           "",
           ""],
         ["",
+          "Yes",
           "001",
           "",
           "Soli Wartenberg",
@@ -38,7 +39,6 @@ describe "Administrate Episodes", type: :system do
           "test-001.mp3",
           "1",
           episode.published_on.strftime("%d.%m.%Y"),
-          "",
           "Edit",
           "Show"]
       ])
@@ -86,6 +86,7 @@ describe "Administrate Episodes", type: :system do
       visit "/admin/episodes"
       expect(page).to have_table_with_exact_data([
         ["Published",
+          "Visible",
           "Epsiode",
           "Cover",
           "Title",
@@ -94,10 +95,10 @@ describe "Administrate Episodes", type: :system do
           "Filename",
           "Downloads",
           "Published on",
-          "Visible",
           "",
           ""],
         ["",
+          "Yes",
           "001",
           "",
           "Talk about shit",
@@ -106,7 +107,6 @@ describe "Administrate Episodes", type: :system do
           "test-002.mp3",
           "0",
           published_on.strftime("%d.%m.%Y"),
-          "",
           "Edit",
           "Show"]
       ])
@@ -143,7 +143,7 @@ describe "Administrate Episodes", type: :system do
 
       fill_in "Title", with: "test"
       fill_in "Nodes", with: "# my notes here *there*"
-
+      uncheck "Visible"
       fill_in "Published on", with: 1.day.ago
       fill_in "Description", with: "should be foo changed"
       fill_in "Chapter marks", with: %(
@@ -167,6 +167,7 @@ describe "Administrate Episodes", type: :system do
       visit "/admin/episodes"
       expect(page).to have_table_with_exact_data([
         ["Published",
+          "Visible",
           "Epsiode",
           "Cover",
           "Title",
@@ -175,10 +176,10 @@ describe "Administrate Episodes", type: :system do
           "Filename",
           "Downloads",
           "Published on",
-          "Visible",
           "",
           ""],
         ["",
+          "No",
           "002",
           "",
           "test",
@@ -187,10 +188,10 @@ describe "Administrate Episodes", type: :system do
           "test-002.mp3",
           "1",
           1.day.ago.strftime("%d.%m.%Y"),
-          "",
           "Edit",
           "Show"],
         ["",
+          "Yes",
           "001",
           "",
           "balh",
@@ -199,7 +200,6 @@ describe "Administrate Episodes", type: :system do
           "test-001.mp3",
           "1",
           Time.current.strftime("%d.%m.%Y"),
-          "",
           "Edit",
           "Show"]
       ])

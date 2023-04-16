@@ -29,7 +29,7 @@
 FactoryBot.define do
   factory :episode do
     sequence(:title) { |n| "Soli Wartenberg #{n}" }
-    slug { "#{number.to_s.rjust(3, '0')} #{title}".parameterize }
+    slug { "#{number.to_s.rjust(3, "0")} #{title}".parameterize }
     description { "we talk about bikes and things" }
     artwork_url { "https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/#{slug}.jpg" }
     nodes { "* some nodes" }
