@@ -12,12 +12,13 @@
         %th Duration
         %th Filename
         %th Downloads
-        %th Published
+        %th Published on
+        %th Visible
         %th
         %th
     %tbody
       - @episodes.each do |episode|
-        %tr{id: "episode-#{episode.id}", class: "text-nowrap #{'inactive' unless episode.published?}"}
+        %tr{id: "episode-#{episode.id}", class: "text-nowrap #{'inactive' if !episode.published?}"}
           %td= show_boolean_value episode.published?
           %td= episode.number
           %td= image_tag(episode.artwork_url(size: 50), size: "50x50")
@@ -27,6 +28,7 @@
           %td= episode.audio_filename_formatted
           %td= episode.downloads_count
           %td= episode.published_on
+          %td= show_boolean_value episode.visible?
           %td= edit_button edit_admin_episode_path(episode)
           %td= show_button episode_path(episode)
   %br

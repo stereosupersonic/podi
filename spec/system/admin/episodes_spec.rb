@@ -25,7 +25,8 @@ describe "Administrate Episodes", type: :system do
           "Duration",
           "Filename",
           "Downloads",
-          "Published",
+          "Published on",
+          "Visible",
           "",
           ""],
         ["",
@@ -37,6 +38,7 @@ describe "Administrate Episodes", type: :system do
           "test-001.mp3",
           "1",
           episode.published_on.strftime("%d.%m.%Y"),
+          "",
           "Edit",
           "Show"]
       ])
@@ -91,7 +93,8 @@ describe "Administrate Episodes", type: :system do
           "Duration",
           "Filename",
           "Downloads",
-          "Published",
+          "Published on",
+          "Visible",
           "",
           ""],
         ["",
@@ -103,6 +106,7 @@ describe "Administrate Episodes", type: :system do
           "test-002.mp3",
           "0",
           published_on.strftime("%d.%m.%Y"),
+          "",
           "Edit",
           "Show"]
       ])
@@ -170,7 +174,8 @@ describe "Administrate Episodes", type: :system do
           "Duration",
           "Filename",
           "Downloads",
-          "Published",
+          "Published on",
+          "Visible",
           "",
           ""],
         ["",
@@ -182,6 +187,7 @@ describe "Administrate Episodes", type: :system do
           "test-002.mp3",
           "1",
           1.day.ago.strftime("%d.%m.%Y"),
+          "",
           "Edit",
           "Show"],
         ["",
@@ -193,6 +199,7 @@ describe "Administrate Episodes", type: :system do
           "test-001.mp3",
           "1",
           Time.current.strftime("%d.%m.%Y"),
+          "",
           "Edit",
           "Show"]
       ])

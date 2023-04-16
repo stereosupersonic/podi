@@ -48,6 +48,29 @@ describe "Episodes", type: :system do
       expect(page).to have_title "Blah Test"
     end
 
+    it "dont get an invisible epsiode by slug" do
+      FactoryBot.create :episode, title: "Blah Test", number: 1, active: false, visible: false
+
+      visit "/episodes/001-blah-test"
+
+      expect(page.status_code).to eq 404
+      expect(page).to have_content "The page you were looking for doesn't exist."
+    end
+
+    it "don't gets an epsiode by number" do
+      FactoryBot.create :episode, title: "Blah Test", number: 1, visible: false
+
+      visit "/episodes/001-old-title"
+
+      expect(page.status_code).to eq 404
+      expect(page).to have_content "The page you were looking for doesn't exist."
+
+      visit "/episodes/1"
+
+      expect(page.status_code).to eq 404
+      expect(page).to have_content "The page you were looking for doesn't exist."
+    end
+
     it "gets an epsiode by number" do
       FactoryBot.create :episode, title: "Blah Test", number: 1
 

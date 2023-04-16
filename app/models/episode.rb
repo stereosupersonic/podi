@@ -14,6 +14,7 @@
 #  published_on    :date
 #  slug            :string           not null
 #  title           :string           not null
+#  visible         :boolean          default(TRUE)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -44,7 +45,8 @@ class Episode < ApplicationRecord
     slug
   end
 
-  scope :published, -> { where(active: true).where("published_on <= ?", Time.zone.today).order(number: :desc) }
+  scope :published, -> { visible.where(active: true).where("published_on <= ?", Time.zone.today).order(number: :desc) }
+  scope :visible, -> { where(visible: true) }
 
   validates(:number, :title, :description, :nodes, :published_on, presence: true)
 
