@@ -1,3 +1,6 @@
+[![codecov](https://codecov.io/gh/stereosupersonic/podi/branch/master/graph/badge.svg?token=BW3VA5GCLZ)](https://codecov.io/gh/stereosupersonic/podi)
+
+===========
 # Podi
 
 podcast hosting
