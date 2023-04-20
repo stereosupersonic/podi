@@ -49,6 +49,8 @@ RUN apt-get update -qq \
     nodejs \
     yarn=$YARN_VERSION-1
 
+RUN mkdir -p /app
+WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
 COPY package.json yarn.lock ./
@@ -56,9 +58,6 @@ COPY package.json yarn.lock ./
 RUN gem update --system
 RUN bundle install -j $(nproc)
 RUN yarn install
-
-RUN mkdir -p /app
-WORKDIR /app
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
