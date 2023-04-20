@@ -49,6 +49,9 @@ RUN apt-get update -qq \
     nodejs \
     yarn=$YARN_VERSION-1
 
+# install heroku cli https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
+RUN curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+
 RUN mkdir -p /app
 WORKDIR /app
 
