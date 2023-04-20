@@ -23,7 +23,11 @@ jobs:
         docker-compose -f docker-compose.yml logs
 
     - name: prepare
-      run: docker-compose -f docker-compose.yml exec app bundle exec rails db:create db:test:prepare
+      run: |
+        docker-compose -f docker-compose.yml ps
+        docker-compose -f docker-compose.yml logs
+        docker-compose -f docker-compose.yml exec app bin/rails db:create --trace
+        docker-compose -f docker-compose.yml exec app bin/rails db:test:prepare --trace
 
     - name: Run rubocop
       run: docker-compose -f docker-compose.yml exec app bundle exec rubocop
