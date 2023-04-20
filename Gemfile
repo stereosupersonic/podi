@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby File.read(".ruby-version").strip
+ruby "3.1.4"
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 

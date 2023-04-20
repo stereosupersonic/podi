@@ -38,8 +38,7 @@ if ARGV[0] && File.file?(ARGV[0])
   dump_file_name = ARGV[0]
 else
   dump_file_name = "latest.dump"
-  safe_system("rm -rfv #{dump_file_name}")
-  safe_system("heroku pg:backups:download -a wartenberger")
+  safe_system("bin/dbdownload")
 end
 
 puts "start import dump file"
