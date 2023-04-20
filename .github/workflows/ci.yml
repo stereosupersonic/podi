@@ -36,7 +36,7 @@ jobs:
       run: |
         ci_env=`bash <(curl -s https://codecov.io/env)`
         ci_post_cov=`bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}`
-        docker-compose -f docker-compose.test.yml exec -e CI=true $ci_env -T app pi bash -c "bundle exec rspec . && $ci_post_cov"
+        docker-compose -f docker-compose.test.yml exec -e CI=true $ci_env -T app bash -c "bundle exec rspec . && $ci_post_cov"
 
     - name: Stop containers
       if: always()
