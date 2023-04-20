@@ -33,7 +33,10 @@ jobs:
       run: docker-compose -f docker-compose.test.yml exec -T app bundle exec rubocop
 
     - name: Run tests
-      run: docker-compose -f docker-compose.test.yml exec  -T app bundle exec rspec .
+      run: |
+        ci_env=`bash <(curl -s https://codecov.io/env)`
+        export CODECOV_TOKEN=${{ secrets.CODECOV_TOKEN }}
+        docker-compose -f docker-compose.test.yml exec -e CI=true $ci_env -T app bundle exec rspec .
 
     - name: Stop containers
       if: always()

@@ -73,5 +73,6 @@ end
 
 group :test do
   gem "simplecov", require: false
+  gem "codecov", require: false
   gem "compare-xml"
 end
