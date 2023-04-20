@@ -71,11 +71,6 @@ services:
     healthcheck:
       test: pg_isready -U postgres -h 127.0.0.1
       interval: 5s
-# volumes:
-#   bundle:
-#   node_modules:
-#   rails_cache:
-#   postgres:
-#   redis:
-#   packs:
-#   packs-test:
+volumes:
+  postgres:
+  redis:
