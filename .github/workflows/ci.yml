@@ -35,7 +35,7 @@ jobs:
     - name: Run tests
       run: |
         ci_env=`bash <(curl -s https://codecov.io/env)`
-        docker-compose -f docker-compose.test.yml exec CI=true $ci_env -T app bundle exec rspec .
+        docker-compose -f docker-compose.test.yml exec -e CI=true $ci_env -T app bundle exec rspec .
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
