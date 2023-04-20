@@ -20,6 +20,7 @@ jobs:
       run: |
         docker-compose -f docker-compose.yml up -d --build
         docker-compose -f docker-compose.yml ps
+        docker-compose -f docker-compose.yml logs
 
     - name: prepare
       run: docker-compose -f docker-compose.yml exec app bundle exec rails db:create db:test:prepare
