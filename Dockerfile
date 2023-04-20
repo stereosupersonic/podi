@@ -59,7 +59,8 @@ RUN gem update --system
 RUN bundle install -j $(nproc)
 RUN yarn install
 
-COPY . /app
+COPY . .
 
 EXPOSE 3000
+
 CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
