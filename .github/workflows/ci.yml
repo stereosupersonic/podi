@@ -8,99 +8,26 @@ on:
       - master
 
 jobs:
-  rubocop:
+  docker:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v1
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: .ruby-version
+    - name: Start containers
+      run: docker-compose -f docker-compose.yml up -d --build
 
-    - name: Rubocop
-      run: |
-        bundle install --jobs 4 --retry 3
-        bundle exec rubocop
+    - name: prepare
+      run: docker-compose -f docker-compose.yml exec app bin/rails db:create db:test:prepare
 
-  brakeman:
-    runs-on: ubuntu-latest
+    - name: Run rubocop
+      run: docker-compose -f docker-compose.yml exec app bundle exec rubocop
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Run tests
+      run: docker-compose -f docker-compose.yml exec app bundle exec rspec
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: .ruby-version
-
-    - name: Brakeman
-      run: |
-        gem install brakeman
-        brakeman
-
-  bundle_audit:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: .ruby-version
-
-    - name: Bundle Audit
-      run: |
-        gem install bundler-audit
-        bundle audit update
-        bundler-audit
-
-  test:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:12
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres_db
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-
-      - name: Install dependent libraries
-        run: sudo apt-get install libpq-dev
-
-      - name: Bundle install
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
-
-      - name: Setup Database
-        run: |
-          cp config/database.yml.github-actions config/database.yml
-          bundle exec rake db:create
-          bundle exec rake db:test:prepare
-        env:
-          RAILS_ENV: test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres_db
-
-      - name: Run RSpec
-        run: bundle exec rake assets:precompile && bundle exec rspec --profile -f d .
-        env:
-          RAILS_ENV: test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres_db
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f docker-compose.yml down

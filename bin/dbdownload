@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+dump_file_name='latest.dump'
+rm -rfv $dump_file_name
+
+heroku pg:backups:download -a wartenberger
