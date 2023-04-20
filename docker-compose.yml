@@ -11,8 +11,8 @@ x-base: &base
   tty: true
   volumes:
     - .:/app:cached
-    - bundle:/usr/local/bundle
-    - node_modules:/app/node_modules
+    # - bundle:/usr/local/bundle
+    # - node_modules:/app/node_modules
   environment:
     - DATABASE_HOST=postgres
     - DATABASE_PORT=5432
