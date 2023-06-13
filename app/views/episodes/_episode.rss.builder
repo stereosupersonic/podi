@@ -22,7 +22,7 @@ xml.item do
   # https://podlove.org/simple-chapters/
   if episode.chapter_objects.any?
     xml.tag!("psc:chapters", "xmlns:psc" => "http://podlove.org/simple-chapters", :version => "1.2") do
-      episode.chapter_objects.each do | chapter |
+      episode.chapter_objects.each do |chapter|
         xml.tag!("psc:chapter", start: chapter.start, title: chapter.title)
       end
     end
