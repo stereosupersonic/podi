@@ -23,7 +23,6 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
   it "generate a valid markdown  chapter_list" do
     expect(presenter.chapter_list).to eq(
       <<~MARKDOWN.strip
-        Kapitelmarken:
         (00:00:00) Intro
         (00:01:00) Begrüßung
         (00:04:34) Outro
@@ -34,8 +33,7 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
   it "generate a valid html description" do
     expected_html = <<~HTML.strip
       <p>we talk about bikes and things</p>
-      <br /><p>Kapitelmarken:<br />
-      (00:00:00) Intro<br />
+      <br /><p>(00:00:00) Intro<br />
       (00:01:00) Begrüßung<br />
       (00:04:34) Outro</p>
       <br /><h3>Show Notes</h3>
@@ -75,7 +73,6 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
     expected_text = <<~TEXT.strip
       we talk about bikes and things
 
-      Kapitelmarken:
       (00:00:00) Intro
       (00:01:00) Begrüßung
       (00:04:34) Outro

@@ -83,14 +83,13 @@ class EpisodeFeedPresenter < EpisodePresenter
   def chapter_list
     return if o.chapter_marks.blank?
     <<~MARKDOWN.strip
-      Kapitelmarken:
       #{Array(sanitized_chapter_marks).join("\n")}
     MARKDOWN
   end
 
   def chapter_list_html
     return if o.chapter_marks.blank?
-    (["Kapitelmarken:"] + Array(sanitized_chapter_marks)).join("<br />")
+    Array(sanitized_chapter_marks).join("<br />")
   end
 
   def show_notes
@@ -98,7 +97,11 @@ class EpisodeFeedPresenter < EpisodePresenter
   end
 
   def sanitized_chapter_marks
-    ConvertChaptersToText.call(chapters: o.chapter_marks)
+    @sanitized_chapter_marks ||= ConvertChaptersToText.call(chapters: o.chapter_marks)
+  end
+
+  def chapter_objects
+    @chapter_objects ||= ConvertChapters.call(chapters: o.chapter_marks)
   end
 
   def stay_in_contact_html
