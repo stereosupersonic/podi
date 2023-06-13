@@ -24,9 +24,9 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
     expect(presenter.chapter_list).to eq(
       <<~MARKDOWN.strip
         Kapitelmarken:
-        • 00:00:00 - Intro
-        • 00:01:00 - Begrüßung
-        • 00:04:34 - Outro
+        (00:00:00) Intro
+        (00:01:00) Begrüßung
+        (00:04:34) Outro
       MARKDOWN
     )
   end
@@ -35,9 +35,9 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
     expected_html = <<~HTML.strip
       <p>we talk about bikes and things</p>
       <br /><p>Kapitelmarken:<br />
-      • 00:00:00 - Intro<br />
-      • 00:01:00 - Begrüßung<br />
-      • 00:04:34 - Outro</p>
+      (00:00:00) Intro<br />
+      (00:01:00) Begrüßung<br />
+      (00:04:34) Outro</p>
       <br /><h3>Show Notes</h3>
       <ul>
       <li><a href="https://test.com">link</a></li>
@@ -67,6 +67,7 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
         <br />
       </p>
     HTML
+
     expect(presenter.description_with_show_notes_html.squish).to match_html(expected_html)
   end
 
@@ -75,9 +76,9 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
       we talk about bikes and things
 
       Kapitelmarken:
-      • 00:00:00 - Intro
-      • 00:01:00 - Begrüßung
-      • 00:04:34 - Outro
+      (00:00:00) Intro
+      (00:01:00) Begrüßung
+      (00:04:34) Outro
 
       Show Notes
       link (https://test.com)

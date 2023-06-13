@@ -63,7 +63,7 @@ RSpec.describe "episodes", type: :request do
               <pubDate>#{episode2.published_on.to_date.rfc822}</pubDate>
               <description>
                 <![CDATA[<p>we talk about bikes and things</p>
-                  <br /><p>Kapitelmarken:<br />• 00:00:00 - Intro<br />• 00:01:00 - Begrüßung<br />• 00:04:34 - Outro</p>
+                  <br /><p>Kapitelmarken:<br />(00:00:00) Intro<br />(00:01:00) Begrüßung<br />(00:04:34) Outro</p>
                   <br /><h3>Show Notes</h3> <ul>
                   <li><a href="https://test.com">link</a></li> <li><a href="https://test.com">link2</a></li> </ul>
                   <br /><h2>Kontakt</h2> <p> <br /> <b>Schreibt uns!</b>
@@ -78,7 +78,7 @@ RSpec.describe "episodes", type: :request do
               </description>
               <content:encoded>
                 <![CDATA[<p>we talk about bikes and things</p>
-                  <br /><p>Kapitelmarken:<br />• 00:00:00 - Intro<br />• 00:01:00 - Begrüßung<br />• 00:04:34 - Outro</p>
+                  <br /><p>Kapitelmarken:<br />(00:00:00) Intro<br />(00:01:00) Begrüßung<br />(00:04:34) Outro</p>
                   <br /><h3>Show Notes</h3> <ul>
                   <li><a href="https://test.com">link</a></li>
                   <li><a href="https://test.com">link2</a></li> </ul>
@@ -92,8 +92,8 @@ RSpec.describe "episodes", type: :request do
                   <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br /> </p>
                   <p>content</p>]]>
               </content:encoded>
-              <itunes:summary>we talk about bikes and things Kapitelmarken: • 00:00:00 - Intro • 00:01:00 - Begrüßung • 00:04:34
-              - Outro Show Notes link (https://test.com) link2 (https://test.com) Kontakt Schreibt uns! Schickt uns eure
+              <itunes:summary>we talk about bikes and things Kapitelmarken: (00:00:00) Intro (00:01:00) Begrüßung (00:04:34) Outro
+              Show Notes link (https://test.com) link2 (https://test.com) Kontakt Schreibt uns! Schickt uns eure
               Themenwünsche und euer Feedback. admin@wartenberger.de (mailto:admin@wartenberger.de) Folgt uns! Bleibt auf dem
               Laufenden über zukünftige Folgen Twitter (https://twitter.com/WartenbergerPod) Instagram
               (https://www.instagram.com/wartenbergerpodcast) Facebook

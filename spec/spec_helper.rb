@@ -2,10 +2,8 @@ ENV["RAILS_ENV"] ||= "test"
 
 if ENV.include? "CODECOV_TOKEN"
   require "codecov"
-  puts "############## codecov TRUE ##############"
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 else
-  puts "############## codecov FALSE ##############"
   require "simplecov"
 end
 
