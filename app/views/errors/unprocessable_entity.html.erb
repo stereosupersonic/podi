@@ -1,0 +1,78 @@
+<style>
+
+    .error_page {
+        border: 3px solid #7F7E7E;
+        border-radius: 10px;
+    }
+
+    .error_page .error_name {
+        float: right;
+        margin-bottom: 20px;
+        color: #ddd;
+        background-color: #7F7E7E;
+        width: 100%;
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .error_page .error_image {
+        width: 265px;
+        margin: 10px 15px 15px 15px;
+    }
+
+    .error_page .error_text_wrapper {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .error_page .error_text {
+        display: inline-block;
+    }
+
+    .error_page .error_text_1 {
+        width: 480px;
+        margin-bottom: 25px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .error_page .error_text_2 {
+        width: 480px;
+        margin-bottom: 20px;
+    }
+
+    .error_page .error_phone {
+        margin-right: 5px;
+        margin-top: 6px;
+    }
+
+    .error_mail {
+        margin-left: 15px;
+        margin-top: 6px;
+    }
+
+</style>
+
+<div class="error_page">
+
+  <div class="error_name">
+    Unprocessable Entity (422)
+  </div>
+
+  <%# <%= image_tag "errors/Frog#{rand(8) + 1}.jpg", alt: "", :class => 'error_image' %> %>
+
+  <div class="error_text_wrapper">
+      <div class="error_text">
+        <div class="error_text_1">
+          <%= t('unprocessable_entity_error_text_1').sanitized_html_safe %>
+        </div>
+
+        <div class="error_text_2">
+          <h2><%= t('unprocessable_entity_error_text_2').sanitized_html_safe %></h2>
+          <%= t('unprocessable_entity_error_text_3').sanitized_html_safe %>
+        </div>
+      </div>
+    </div>
+</div>
