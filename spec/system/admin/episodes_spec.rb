@@ -239,5 +239,13 @@ describe "Administrate Episodes", type: :system do
       visit "/admin/episodes"
       expect(page).to have_content "Access Denied"
     end
+
+    it "hack: get redirected to episode when admin show page is called" do
+      episode = FactoryBot.create :episode, title: "balh", number: 1
+
+      visit "/admin/episodes/#{episode.slug}"
+
+      expect(page).to have_current_path("/episodes/#{episode.slug}")
+    end
   end
 end
