@@ -1,4 +1,6 @@
 class EpisodesController < ApplicationController
+  skip_before_action :authorize_admin, only: [:show]
+
   def index
     @episodes_records = Episode.published.paginate(page: params[:page], per_page: params[:per_page])
     @episodes = EpisodePresenter.wrap @episodes_records
@@ -15,6 +17,10 @@ class EpisodesController < ApplicationController
   def show
     episode_record = Episode.visible.find_by(slug: params[:slug])
     episode_record ||= Episode.visible.find_by!(number: params[:slug][(/^\d+/)].to_i)
+
+    # hack for wrong url
+    redirect_to episode_path(episode_record.slug), status: :moved_permanently if current_user&.admin?
+
     @episode = EpisodePresenter.new episode_record
     if stale? episode_record, public: true
       respond_to do |format|
