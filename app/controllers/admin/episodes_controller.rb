@@ -1,8 +1,16 @@
 module Admin
   class EpisodesController < BaseController
+    skip_before_action :authorize_admin, only: [:show]
+
     def index
       @episode_records = Episode.order("number desc")
       @episodes = EpisodePresenter.wrap @episode_records
+    end
+
+    def show
+      episode_record = Episode.find_by!(slug: params[:id])
+      # hack for wrong url
+      redirect_to episode_path(episode_record.slug), status: :moved_permanently if current_user&.admin?
     end
 
     def new

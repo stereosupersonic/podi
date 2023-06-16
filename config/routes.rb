@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :episodes, only: %w[index edit update new create]
+    resources :episodes, only: %w[index show edit update new create]
     resources :events, only: %w[index show]
     resource :setting, only: %w[edit update]
     resource :info, only: %w[show]
