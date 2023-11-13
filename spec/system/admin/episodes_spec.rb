@@ -19,6 +19,7 @@ describe "Administrate Episodes", type: :system do
       expect(page).to have_table_with_exact_data([
         ["Published",
           "Visible",
+          "RSS-Feed",
           "Epsiode",
           "Cover",
           "Title",
@@ -30,6 +31,7 @@ describe "Administrate Episodes", type: :system do
           "",
           ""],
         ["",
+          "Yes",
           "Yes",
           "001",
           "",
@@ -87,6 +89,7 @@ describe "Administrate Episodes", type: :system do
       expect(page).to have_table_with_exact_data([
         ["Published",
           "Visible",
+          "RSS-Feed",
           "Epsiode",
           "Cover",
           "Title",
@@ -98,6 +101,7 @@ describe "Administrate Episodes", type: :system do
           "",
           ""],
         ["",
+          "Yes",
           "Yes",
           "001",
           "",
@@ -144,6 +148,7 @@ describe "Administrate Episodes", type: :system do
       fill_in "Title", with: "test"
       fill_in "Nodes", with: "# my notes here *there*"
       uncheck "Visible"
+      uncheck "Rss feed"
       fill_in "Published on", with: 1.day.ago
       fill_in "Description", with: "should be foo changed"
       fill_in "Chapter marks", with: %(
@@ -168,6 +173,7 @@ describe "Administrate Episodes", type: :system do
       expect(page).to have_table_with_exact_data([
         ["Published",
           "Visible",
+          "RSS-Feed",
           "Epsiode",
           "Cover",
           "Title",
@@ -179,6 +185,7 @@ describe "Administrate Episodes", type: :system do
           "",
           ""],
         ["",
+          "Yes",
           "No",
           "002",
           "",
@@ -191,6 +198,7 @@ describe "Administrate Episodes", type: :system do
           "Edit",
           "Show"],
         ["",
+          "Yes",
           "Yes",
           "001",
           "",

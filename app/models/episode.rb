@@ -12,6 +12,7 @@
 #  nodes           :text
 #  number          :integer          default(0), not null
 #  published_on    :date
+#  rss_feed        :boolean          default(TRUE)
 #  slug            :string           not null
 #  title           :string           not null
 #  visible         :boolean          default(TRUE)
@@ -22,6 +23,7 @@
 #
 #  index_episodes_on_number        (number) UNIQUE
 #  index_episodes_on_published_on  (published_on)
+#  index_episodes_on_rss_feed      (rss_feed)
 #  index_episodes_on_slug          (slug) UNIQUE
 #  index_episodes_on_title         (title) UNIQUE
 #
