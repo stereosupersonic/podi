@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe EpisodeFeedPresenter, type: :model do
-  let!(:setting) { FactoryBot.create(:setting) }
+  let!(:setting) { create(:setting) }
 
   let!(:nodes) do
     <<~MARKDOWN
@@ -18,7 +18,7 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
     MARKDOWN
   end
 
-  let(:episode) { FactoryBot.create :episode, nodes: nodes, chapter_marks: chapter_marks }
+  let(:episode) { create(:episode, nodes: nodes, chapter_marks: chapter_marks) }
   let(:presenter) { EpisodeFeedPresenter.new(episode) }
   it "generate a valid markdown  chapter_list" do
     expect(presenter.chapter_list).to eq(

@@ -1,10 +1,10 @@
 require "capybara_helper"
 
 describe "Setting", type: :system do
-  let!(:setting) { FactoryBot.create(:setting) }
+  let!(:setting) { create(:setting) }
 
   context "when logged in as admin" do
-    let(:admin) { FactoryBot.create :user, :admin }
+    let(:admin) { create(:user, :admin) }
 
     before { login_as admin }
 
@@ -73,7 +73,7 @@ describe "Setting", type: :system do
   end
 
   context "when logged in  as user" do
-    let(:user) { FactoryBot.create :user }
+    let(:user) { create(:user) }
 
     before { login_as user }
 

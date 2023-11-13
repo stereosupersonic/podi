@@ -1,7 +1,7 @@
 require "jobs_helper"
 
 RSpec.describe Mp3EventJob, type: :job do
-  let(:episode) { FactoryBot.create :episode }
+  let(:episode) { create(:episode) }
   let(:payload) {
     {data: {
        user_agent: "my ua",

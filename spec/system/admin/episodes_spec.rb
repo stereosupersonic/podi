@@ -1,16 +1,16 @@
 require "capybara_helper"
 
 describe "Administrate Episodes", type: :system do
-  let!(:setting) { FactoryBot.create(:setting) }
+  let!(:setting) { create(:setting) }
   let(:last_episode) { EpisodePresenter.new Episode.last }
 
   context "when logged in as admin" do
-    let(:admin) { FactoryBot.create :user, :admin }
+    let(:admin) { create(:user, :admin) }
 
     before { login_as admin }
 
     it "overview page" do
-      episode = FactoryBot.create :episode, title: "Soli Wartenberg", number: 1
+      episode = create(:episode, title: "Soli Wartenberg", number: 1)
 
       visit "/"
       click_on "Administration"
@@ -19,6 +19,7 @@ describe "Administrate Episodes", type: :system do
       expect(page).to have_table_with_exact_data([
         ["Published",
           "Visible",
+          "RSS-Feed",
           "Epsiode",
           "Cover",
           "Title",
@@ -30,6 +31,7 @@ describe "Administrate Episodes", type: :system do
           "",
           ""],
         ["",
+          "Yes",
           "Yes",
           "001",
           "",
@@ -87,6 +89,7 @@ describe "Administrate Episodes", type: :system do
       expect(page).to have_table_with_exact_data([
         ["Published",
           "Visible",
+          "RSS-Feed",
           "Epsiode",
           "Cover",
           "Title",
@@ -98,6 +101,7 @@ describe "Administrate Episodes", type: :system do
           "",
           ""],
         ["",
+          "Yes",
           "Yes",
           "001",
           "",
@@ -118,8 +122,8 @@ describe "Administrate Episodes", type: :system do
     end
 
     it "edits a existin episode" do
-      FactoryBot.create :episode, title: "balh", number: 1
-      episode2 = FactoryBot.create :episode, title: "foo", number: 2, description: "should be foo"
+      create(:episode, title: "balh", number: 1)
+      episode2 = create(:episode, title: "foo", number: 2, description: "should be foo")
 
       visit "/"
       click_on "Administration"
@@ -144,6 +148,7 @@ describe "Administrate Episodes", type: :system do
       fill_in "Title", with: "test"
       fill_in "Nodes", with: "# my notes here *there*"
       uncheck "Visible"
+      uncheck "Rss feed"
       fill_in "Published on", with: 1.day.ago
       fill_in "Description", with: "should be foo changed"
       fill_in "Chapter marks", with: %(
@@ -168,6 +173,7 @@ describe "Administrate Episodes", type: :system do
       expect(page).to have_table_with_exact_data([
         ["Published",
           "Visible",
+          "RSS-Feed",
           "Epsiode",
           "Cover",
           "Title",
@@ -179,6 +185,7 @@ describe "Administrate Episodes", type: :system do
           "",
           ""],
         ["",
+          "Yes",
           "No",
           "002",
           "",
@@ -191,6 +198,7 @@ describe "Administrate Episodes", type: :system do
           "Edit",
           "Show"],
         ["",
+          "Yes",
           "Yes",
           "001",
           "",
@@ -212,7 +220,7 @@ describe "Administrate Episodes", type: :system do
   end
 
   context "when logged in  as user" do
-    let(:user) { FactoryBot.create :user }
+    let(:user) { create(:user) }
 
     before { login_as user }
 
@@ -241,7 +249,7 @@ describe "Administrate Episodes", type: :system do
     end
 
     it "hack: get redirected to episode when admin show page is called" do
-      episode = FactoryBot.create :episode, title: "balh", number: 1
+      episode = create(:episode, title: "balh", number: 1)
 
       visit "/admin/episodes/#{episode.slug}"
 

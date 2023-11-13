@@ -6,6 +6,7 @@
       %tr
         %th Published
         %th Visible
+        %th RSS-Feed
         %th Epsiode
         %th Cover
         %th Title
@@ -20,6 +21,7 @@
       - @episodes.each do |episode|
         %tr{id: "episode-#{episode.id}", class: "text-nowrap #{'inactive' if !episode.published?}"}
           %td= show_boolean_value episode.published?
+          %td= episode.rss_feed? ? "Yes" : "No"
           %td= episode.visible? ? "Yes" : "No"
           %td= episode.number
           %td= image_tag(episode.artwork_url(size: 50), size: "50x50")

@@ -3,25 +3,25 @@ require "rails_helper"
 RSpec.describe "episodes", type: :request do
   before { allow(FetchGeoData).to receive(:call).and_return({}) }
   describe "GET /episodes.rss" do
-    let!(:setting) { FactoryBot.create(:setting) }
+    let!(:setting) { create(:setting) }
 
     it "generates a feed" do
-      episode1 = FactoryBot.create :episode, number: 1, title: "Soli Wartenberg"
+      episode1 = create(:episode, number: 1, title: "Soli Wartenberg")
 
       nodes = <<~MARKDOWN
         * [link](https://test.com)
         * [link2](https://test.com)
       MARKDOWN
       chapter_marks = <<~MARKDOWN
-        00:00:00.001 	Intro
-        00:01:00.001 	Begrüßung
-        00:04:34.001 	Outro
+        00:00:00.001  Intro
+        00:01:00.001  Begrüßung
+        00:04:34.001  Outro
       MARKDOWN
-      episode2 = FactoryBot.create :episode, number: 2, title: "Anton Müller",
-        nodes: nodes, chapter_marks: chapter_marks
+      episode2 = create(:episode, number: 2, title: "Anton Müller",
+        nodes: nodes, chapter_marks: chapter_marks)
 
-      FactoryBot.create :episode, number: 3, title: "Future", published_on: 1.day.since
-      FactoryBot.create :episode, number: 4, title: "inactive", active: false
+      create(:episode, number: 3, title: "Future", published_on: 1.day.since)
+      create(:episode, number: 4, title: "inactive", active: false)
 
       # update metadata because active_storage analysers are not running
       episode1.audio.blob.metadata[:duration] = 321
@@ -142,11 +142,71 @@ RSpec.describe "episodes", type: :request do
       File.write("response.xml", response.body.squish)
       File.write("expected_xml.xml", expected_xml.squish)
       expect(response.body).to match_xml(expected_xml)
+
+      # remove epsiode from rss feed
+      episode2.update! rss_feed: false
+      get "/episodes.rss"
+
+      expected_xml = %(<?xml version="1.0" encoding="UTF-8"?>
+        <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"
+                           xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+                           xmlns:admin="http://webns.net/mvcb/"
+                           xmlns:atom="http://www.w3.org/2005/Atom/"
+                           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                           xmlns:content="http://purl.org/rss/1.0/modules/content/"
+                          xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+          <channel>
+            <title>Wartenberger Podcast</title>
+            <description>Der Podcast über und um den Markt Wartenberg</description>
+            <itunes:image href="#{setting.logo_url}"/>
+            <language>de-de</language>
+            <itunes:category text="News">
+              <itunes:category text="Politics"/>
+            </itunes:category>
+            <itunes:explicit>False</itunes:explicit>
+            <itunes:author>Michael Deimel, Thomas Rademacher</itunes:author>
+            <link>http://wartenberger.test.com</link>
+            <itunes:owner>
+              <itunes:name>Michael Deimel</itunes:name>
+              <itunes:email>admin@wartenberger.de</itunes:email>
+            </itunes:owner>
+            <itunes:title>Wartenberger Podcast</itunes:title>
+            <copyright>Copyright #{Time.current.year} Michael Deimel</copyright>
+            <item>
+              <title>Soli Wartenberg</title>
+              <enclosure url="http://wartenberger.test.com/episodes/001-soli-wartenberg.mp3" length="52632" type="audio/mpeg"/>
+              <guid>http://wartenberger.test.com/episodes/001-soli-wartenberg.mp3</guid>
+              <pubDate>#{episode1.published_on.to_date.rfc822}</pubDate>
+              <description>
+              <![CDATA[<p>we talk about bikes and things</p> <br /><h3>Show Notes</h3> <ul> <li>some nodes</li> </ul> <br /><h2>Kontakt</h2> <p> <br /> <b>Schreibt uns!</b> <br /> Schickt uns eure Themenwünsche und euer Feedback.<br /> <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br /> <br /> <b>Folgt uns!</b> <br /> Bleibt auf dem Laufenden über zukünftige Folgen <br /> <a href='https://twitter.com/WartenbergerPod'>Twitter</a> <br /> <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a> <br /> <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a> <br /> <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br /> </p> <p>description</p>]]>
+            </description>
+            <content:encoded>
+              <![CDATA[<p>we talk about bikes and things</p> <br /><h3>Show Notes</h3> <ul> <li>some nodes</li> </ul> <br /><h2>Kontakt</h2> <p> <br /> <b>Schreibt uns!</b> <br /> Schickt uns eure Themenwünsche und euer Feedback.<br /> <a href='mailto:admin@wartenberger.de'>admin@wartenberger.de</a> <br /> <br /> <b>Folgt uns!</b> <br /> Bleibt auf dem Laufenden über zukünftige Folgen <br /> <a href='https://twitter.com/WartenbergerPod'>Twitter</a> <br /> <a href='https://www.instagram.com/wartenbergerpodcast'>Instagram</a> <br /> <a href='https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563'>Facebook</a> <br /> <a href='https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg'>YouTube</a> <br /> </p> <p>content</p>]]>
+            </content:encoded>
+              <itunes:summary>we talk about bikes and things Show Notes some nodes Kontakt Schreibt uns! Schickt uns eure
+              Themenwünsche und euer Feedback. admin@wartenberger.de (mailto:admin@wartenberger.de) Folgt uns! Bleibt auf dem
+              Laufenden über zukünftige Folgen Twitter (https://twitter.com/WartenbergerPod) Instagram
+              (https://www.instagram.com/wartenbergerpodcast) Facebook
+              (https://www.facebook.com/Wartenberger-Der-Podcast-102909105061563) YouTube
+              (https://www.youtube.com/channel/UCfnC8JiraR8N8QUkqzDsQFg) </itunes:summary>
+              <itunes:duration>321</itunes:duration>
+              <link>http://wartenberger.test.com/episodes/001-soli-wartenberg</link>
+              <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/001-soli-wartenberg.jpg"/>
+              <itunes:explicit>False</itunes:explicit>
+              <itunes:episode>1</itunes:episode>
+              <itunes:episodeType>full</itunes:episodeType>
+            </item>
+          </channel>
+        </rss>)
+
+      File.write("response.xml", response.body.squish)
+      File.write("expected_xml.xml", expected_xml.squish)
+      expect(response.body).to match_xml(expected_xml)
     end
   end
 
   describe "GET /episode.mp3" do
-    let(:episode) { EpisodePresenter.new FactoryBot.create :episode, downloads_count: 1, number: 4, title: :test }
+    let(:episode) { EpisodePresenter.new create :episode, downloads_count: 1, number: 4, title: :test }
     describe "download counter" do
       it "increment" do
         get episode.mp3_url
@@ -185,7 +245,7 @@ RSpec.describe "episodes", type: :request do
       it "logs valid data" do
         ua = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.17 Safari/537.36"
         headers = {"HTTP_USER_AGENT" => ua}
-        expect(FetchGeoData).to receive(:call).with(ip_address: "127.0.0.1").and_return FactoryBot.build(:event).geo_data
+        expect(FetchGeoData).to receive(:call).with(ip_address: "127.0.0.1").and_return build(:event).geo_data
         downloaded_at = Time.current
         travel_to downloaded_at do
           get episode.mp3_url, params: {}, headers: headers
@@ -229,7 +289,7 @@ RSpec.describe "episodes", type: :request do
 
       it "don't logs data when client downloads within 2 minutes" do
         Rails.configuration.cache_store = :memory_store
-        episode2 = EpisodePresenter.new FactoryBot.create :episode, number: 2, title: "Anton Müller", downloads_count: 0
+        episode2 = EpisodePresenter.new create :episode, number: 2, title: "Anton Müller", downloads_count: 0
         episode.update downloads_count: 0
 
         expect do

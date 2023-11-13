@@ -5,6 +5,8 @@ require:
   - rubocop-rails
   - rubocop-performance
   - rubocop-rspec
+  - rubocop-factory_bot
+  - rubocop-capybara
 
 AllCops:
   # Prevent RuboCop from exploding when it finds an older-than-2.4 .ruby-version
@@ -1205,3 +1207,30 @@ RSpec/LetSetup:
 
 RSpec/ContextWording:
   Enabled: false
+
+Capybara/MatchStyle:
+  Enabled: true
+
+Capybara/NegationMatcher:
+  Enabled: true
+
+Capybara/SpecificActions:
+  Enabled: true
+
+Capybara/SpecificFinders:
+  Enabled: true
+
+Capybara/SpecificMatcher:
+  Enabled: true
+
+RSpec/FactoryBot/ConsistentParenthesesStyle:
+  Enabled: true
+
+RSpec/FactoryBot/FactoryNameStyle:
+  Enabled: true
+
+RSpec/FactoryBot/SyntaxMethods:
+  Enabled: true
+
+RSpec/EmptyLineAfterExampleGroup:
+  Enabled: true

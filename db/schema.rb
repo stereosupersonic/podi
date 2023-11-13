@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_16_175638) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_13_085505) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,8 +57,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_16_175638) do
     t.text "chapter_marks"
     t.text "image_data"
     t.boolean "visible", default: true
+    t.boolean "rss_feed", default: true
     t.index ["number"], name: "index_episodes_on_number", unique: true
     t.index ["published_on"], name: "index_episodes_on_published_on"
+    t.index ["rss_feed"], name: "index_episodes_on_rss_feed"
     t.index ["slug"], name: "index_episodes_on_slug", unique: true
     t.index ["title"], name: "index_episodes_on_title", unique: true
   end

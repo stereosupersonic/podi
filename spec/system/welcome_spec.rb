@@ -1,7 +1,7 @@
 require "capybara_helper"
 
 describe "welcome", type: :system do
-  let!(:setting) { FactoryBot.create(:setting) }
+  let!(:setting) { create(:setting) }
 
   context "when not logged in" do
     it "shows some basic informations" do
@@ -91,12 +91,12 @@ describe "welcome", type: :system do
       end
 
       it "shows the last two episode" do
-        FactoryBot.create :episode, title: "future Test", number: 5, published_on: 1.day.since
-        FactoryBot.create :episode, title: "last Test", number: 4, published_on: Time.zone.today
-        FactoryBot.create :episode, title: "inactive Test", number: 3, published_on: Time.zone.today, active: false
-        FactoryBot.create :episode, title: "second Test", number: 2, published_on: 1.day.ago
-        FactoryBot.create :episode, title: "first Test", number: 1, published_on: 2.weeks.ago
-        FactoryBot.create :episode, title: "about us", number: 0, published_on: 3.weeks.ago
+        create(:episode, title: "future Test", number: 5, published_on: 1.day.since)
+        create(:episode, title: "last Test", number: 4, published_on: Time.zone.today)
+        create(:episode, title: "inactive Test", number: 3, published_on: Time.zone.today, active: false)
+        create(:episode, title: "second Test", number: 2, published_on: 1.day.ago)
+        create(:episode, title: "first Test", number: 1, published_on: 2.weeks.ago)
+        create(:episode, title: "about us", number: 0, published_on: 3.weeks.ago)
         visit "/"
 
         expect(page).to have_css("#last-episodes")
@@ -119,8 +119,8 @@ describe "welcome", type: :system do
       end
 
       it "shows the last episode" do
-        FactoryBot.create :episode, title: "last Test", number: 2, published_on: Time.zone.today
-        FactoryBot.create :episode, title: "first Test", number: 1, published_on: 2.weeks.ago
+        create(:episode, title: "last Test", number: 2, published_on: Time.zone.today)
+        create(:episode, title: "first Test", number: 1, published_on: 2.weeks.ago)
         visit "/"
 
         expect(page).to have_css("#last-episode")
@@ -129,8 +129,8 @@ describe "welcome", type: :system do
       end
 
       it "shows the last episode not inactive" do
-        FactoryBot.create :episode, title: "last Test", number: 2, published_on: Time.zone.today, active: false
-        FactoryBot.create :episode, title: "first Test", number: 1, published_on: 2.weeks.ago
+        create(:episode, title: "last Test", number: 2, published_on: Time.zone.today, active: false)
+        create(:episode, title: "first Test", number: 1, published_on: 2.weeks.ago)
         visit "/"
 
         expect(page).to have_css("#last-episode")
@@ -139,8 +139,8 @@ describe "welcome", type: :system do
       end
 
       it "shows the last episode not published" do
-        FactoryBot.create :episode, title: "last Test", number: 2, published_on: 1.day.since
-        FactoryBot.create :episode, title: "first Test", number: 1, published_on: 2.weeks.ago
+        create(:episode, title: "last Test", number: 2, published_on: 1.day.since)
+        create(:episode, title: "first Test", number: 1, published_on: 2.weeks.ago)
         visit "/"
 
         expect(page).to have_css("#last-episode")
@@ -149,7 +149,7 @@ describe "welcome", type: :system do
       end
 
       it "has an short cut with the nummer" do
-        FactoryBot.create :episode, title: "first Test", number: 1, published_on: 2.weeks.ago
+        create(:episode, title: "first Test", number: 1, published_on: 2.weeks.ago)
         visit "/001"
 
         expect(page).to have_title "first Test"
@@ -165,7 +165,7 @@ describe "welcome", type: :system do
   end
 
   context "when logged in as user" do
-    let(:user) { FactoryBot.create :user }
+    let(:user) { create(:user) }
 
     before { login_as user }
 
@@ -184,7 +184,7 @@ describe "welcome", type: :system do
   end
 
   context "when logged in as admin" do
-    let(:admin) { FactoryBot.create :user, :admin }
+    let(:admin) { create(:user, :admin) }
 
     before { login_as admin }
 
