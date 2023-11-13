@@ -1,15 +1,15 @@
 require "capybara_helper"
 
 describe "Episodes", type: :system do
-  let!(:setting) { FactoryBot.create(:setting) }
+  let!(:setting) { create(:setting) }
 
   context "overview page" do
     it "shows only active episodes" do
-      FactoryBot.create :episode, title: "future Test", number: 5, published_on: 1.day.since
-      FactoryBot.create :episode, title: "last Test", number: 4, published_on: Time.zone.today
-      FactoryBot.create :episode, title: "inactive Test", number: 3, published_on: Time.zone.today, active: false
-      FactoryBot.create :episode, title: "second Test", number: 2, published_on: 1.day.ago
-      FactoryBot.create :episode, title: "first Test", number: 1, published_on: 2.weeks.ago
+      create(:episode, title: "future Test", number: 5, published_on: 1.day.since)
+      create(:episode, title: "last Test", number: 4, published_on: Time.zone.today)
+      create(:episode, title: "inactive Test", number: 3, published_on: Time.zone.today, active: false)
+      create(:episode, title: "second Test", number: 2, published_on: 1.day.ago)
+      create(:episode, title: "first Test", number: 1, published_on: 2.weeks.ago)
 
       visit "/episodes"
 
@@ -25,7 +25,7 @@ describe "Episodes", type: :system do
 
   context "show page" do
     it "gets an epsiode by slug" do
-      FactoryBot.create :episode, title: "Blah Test", number: 1
+      create(:episode, title: "Blah Test", number: 1)
 
       visit "/episodes/001-blah-test"
 
@@ -40,7 +40,7 @@ describe "Episodes", type: :system do
     end
 
     it "gets an inactive epsiode by slug" do
-      FactoryBot.create :episode, title: "Blah Test", number: 1, active: false
+      create(:episode, title: "Blah Test", number: 1, active: false)
 
       visit "/episodes/001-blah-test"
 
@@ -49,7 +49,7 @@ describe "Episodes", type: :system do
     end
 
     it "dont get an invisible epsiode by slug" do
-      FactoryBot.create :episode, title: "Blah Test", number: 1, active: false, visible: false
+      create(:episode, title: "Blah Test", number: 1, active: false, visible: false)
 
       visit "/episodes/001-blah-test"
 
@@ -58,7 +58,7 @@ describe "Episodes", type: :system do
     end
 
     it "don't gets an epsiode by number" do
-      FactoryBot.create :episode, title: "Blah Test", number: 1, visible: false
+      create(:episode, title: "Blah Test", number: 1, visible: false)
 
       visit "/episodes/001-old-title"
 
@@ -72,7 +72,7 @@ describe "Episodes", type: :system do
     end
 
     it "gets an epsiode by number" do
-      FactoryBot.create :episode, title: "Blah Test", number: 1
+      create(:episode, title: "Blah Test", number: 1)
 
       visit "/episodes/001-old-title"
 
@@ -86,7 +86,7 @@ describe "Episodes", type: :system do
     end
 
     it "gets an future epsiode by slug" do
-      FactoryBot.create :episode, title: "Blah Test", number: 1, published_on: 1.day.since
+      create(:episode, title: "Blah Test", number: 1, published_on: 1.day.since)
 
       visit "/episodes/001-blah-test"
 

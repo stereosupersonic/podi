@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe PodigeeWebplayerConfigBuilder do
-  let(:episode) { EpisodePresenter.new(FactoryBot.create(:episode)) }
+  let(:episode) { EpisodePresenter.new(create(:episode)) }
 
   it "builds a valid config as json" do
     json_config = described_class.new(episode).to_json

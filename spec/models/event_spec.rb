@@ -23,7 +23,7 @@ require "rails_helper"
 
 RSpec.describe Event, type: :model do
   it "has a valid factory" do
-    user = FactoryBot.build :event
+    user = build(:event)
 
     expect(user).to be_valid
     assert user.save!

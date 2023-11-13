@@ -1,17 +1,17 @@
 require "capybara_helper"
 
 describe "Events", type: :system do
-  let!(:setting) { FactoryBot.create(:setting) }
+  let!(:setting) { create(:setting) }
 
   context "when logged in as admin" do
-    let(:admin) { FactoryBot.create :user, :admin }
+    let(:admin) { create(:user, :admin) }
 
     before { login_as admin }
 
     it "overview page" do
-      episode = FactoryBot.create :episode, title: "Soli Wartenberg", number: 1
-      event = FactoryBot.create(:event, episode: episode, geo_data: nil, downloaded_at: Time.zone.parse("2012-07-11 21:00"))
-      FactoryBot.create(:event, episode: episode, created_at: 1.day.ago, downloaded_at: Time.zone.parse("2021-01-01 21:00"))
+      episode = create(:episode, title: "Soli Wartenberg", number: 1)
+      event = create(:event, episode: episode, geo_data: nil, downloaded_at: Time.zone.parse("2012-07-11 21:00"))
+      create(:event, episode: episode, created_at: 1.day.ago, downloaded_at: Time.zone.parse("2021-01-01 21:00"))
 
       visit "/"
       click_on "Events"
@@ -45,8 +45,9 @@ describe "Events", type: :system do
       expect(page).to have_content "client_name: Chrome"
     end
   end
+
   context "when logged in  as user" do
-    let(:user) { FactoryBot.create :user }
+    let(:user) { create(:user) }
 
     before { login_as user }
 

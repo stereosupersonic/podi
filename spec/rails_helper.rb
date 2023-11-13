@@ -78,5 +78,6 @@ RSpec.configure do |config|
   config.include JobHelpers
   config.include ActiveJob::TestHelper
   config.include ActiveSupport::Testing::TimeHelpers
+  config.include FactoryBot::Syntax::Methods
   config.before { reset_enqueued_jobs }
 end

@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe "episodes", type: :request do
   before { allow(FetchGeoData).to receive(:call).and_return({}) }
   describe "GET /episodes.rss" do
-    let!(:setting) { FactoryBot.create(:setting) }
+    let!(:setting) { create(:setting) }
 
     it "generates a feed" do
-      episode1 = FactoryBot.create :episode, number: 1, title: "Soli Wartenberg"
+      episode1 = create(:episode, number: 1, title: "Soli Wartenberg")
 
       nodes = <<~MARKDOWN
         * [link](https://test.com)
@@ -17,11 +17,11 @@ RSpec.describe "episodes", type: :request do
         00:01:00.001  Begrüßung
         00:04:34.001  Outro
       MARKDOWN
-      episode2 = FactoryBot.create :episode, number: 2, title: "Anton Müller",
-        nodes: nodes, chapter_marks: chapter_marks
+      episode2 = create(:episode, number: 2, title: "Anton Müller",
+        nodes: nodes, chapter_marks: chapter_marks)
 
-      FactoryBot.create :episode, number: 3, title: "Future", published_on: 1.day.since
-      FactoryBot.create :episode, number: 4, title: "inactive", active: false
+      create(:episode, number: 3, title: "Future", published_on: 1.day.since)
+      create(:episode, number: 4, title: "inactive", active: false)
 
       # update metadata because active_storage analysers are not running
       episode1.audio.blob.metadata[:duration] = 321
@@ -206,7 +206,7 @@ RSpec.describe "episodes", type: :request do
   end
 
   describe "GET /episode.mp3" do
-    let(:episode) { EpisodePresenter.new FactoryBot.create :episode, downloads_count: 1, number: 4, title: :test }
+    let(:episode) { EpisodePresenter.new create :episode, downloads_count: 1, number: 4, title: :test }
     describe "download counter" do
       it "increment" do
         get episode.mp3_url
@@ -245,7 +245,7 @@ RSpec.describe "episodes", type: :request do
       it "logs valid data" do
         ua = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.17 Safari/537.36"
         headers = {"HTTP_USER_AGENT" => ua}
-        expect(FetchGeoData).to receive(:call).with(ip_address: "127.0.0.1").and_return FactoryBot.build(:event).geo_data
+        expect(FetchGeoData).to receive(:call).with(ip_address: "127.0.0.1").and_return build(:event).geo_data
         downloaded_at = Time.current
         travel_to downloaded_at do
           get episode.mp3_url, params: {}, headers: headers
@@ -289,7 +289,7 @@ RSpec.describe "episodes", type: :request do
 
       it "don't logs data when client downloads within 2 minutes" do
         Rails.configuration.cache_store = :memory_store
-        episode2 = EpisodePresenter.new FactoryBot.create :episode, number: 2, title: "Anton Müller", downloads_count: 0
+        episode2 = EpisodePresenter.new create :episode, number: 2, title: "Anton Müller", downloads_count: 0
         episode.update downloads_count: 0
 
         expect do

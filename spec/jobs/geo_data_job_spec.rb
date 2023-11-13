@@ -1,7 +1,7 @@
 require "jobs_helper"
 
 RSpec.describe GeoDataJob, type: :job do
-  let(:event) { FactoryBot.create :event }
+  let(:event) { create(:event) }
   let(:ip) { "127.0.0.1" }
 
   subject(:job) do
