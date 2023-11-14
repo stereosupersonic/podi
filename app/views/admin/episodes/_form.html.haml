@@ -1,7 +1,7 @@
 = f.input :title
 = show_button "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet", "Markdown Help"
-= f.input :description, as: :text, input_html: { cols: 5, rows: 10 }
-= f.input :nodes, as: :text, input_html: { cols: 5, rows: 10 }
+= f.input :description, as: :text, input_html: { cols: 5, rows: 10 }, hint: "Descriptionin markdown format"
+= f.input :nodes, as: :text, input_html: { cols: 5, rows: 10 }, hint: "Show notes in markdown format"
 = f.input :chapter_marks, as: :text, input_html: { cols: 5, rows: 10 }, hint: "chapter marks format: 00:00:41.018 Intro"
 
 = f.hidden_field :image, value: f.object.cached_image_data
@@ -15,6 +15,6 @@
 = f.input :audio, as: :file
 = f.input :downloads_count, as: :text
 = f.input :published_on, as: :date, html5: true
-= f.input :active, as: :boolean
-= f.input :visible, as: :boolean
-= f.input :rss_feed, as: :boolean
+= f.input :active, as: :boolean, hint: "is the episode live, but depends on the published_on date"
+= f.input :visible, as: :boolean, hint: "is the episode visible on the website and RSS feed"
+= f.input :rss_feed, as: :boolean, hint: "Include this episode in the RSS feed (Spotify, Itunes, etc)"

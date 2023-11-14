@@ -185,7 +185,7 @@ describe "Administrate Episodes", type: :system do
           "",
           ""],
         ["",
-          "Yes",
+          "No",
           "No",
           "002",
           "",

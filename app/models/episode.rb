@@ -42,6 +42,7 @@ class Episode < ApplicationRecord
     artwork_url
     audio
     visible
+    rss_feed
   ].freeze
 
   def to_param
