@@ -15,6 +15,6 @@
 = f.input :audio, as: :file
 = f.input :downloads_count, as: :text
 = f.input :published_on, as: :date, html5: true
-= f.input :active, as: :boolean
-= f.input :visible, as: :boolean
-= f.input :rss_feed, as: :boolean
+= f.input :active, as: :boolean, hint: "is the episode live"
+= f.input :visible, as: :boolean, hint: "is the episode visible on the website and RSS feed"
+= f.input :rss_feed, as: :boolean, hint: "Include this episode in the RSS feed (Spotify, Itunes, etc)"
