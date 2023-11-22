@@ -6,7 +6,7 @@ class EpisodesController < ApplicationController
     respond_to do |format|
       format.html
       format.rss do
-        @episodes = @episodes_records.where(rss_feed: true)
+        @episodes = Episode.published.where(rss_feed: true)
 
         @feed = PodcastFeedPresenter.new(@episodes)
         render layout: false, content_type: "application/xml"
