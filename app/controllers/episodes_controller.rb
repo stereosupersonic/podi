@@ -1,14 +1,14 @@
 class EpisodesController < ApplicationController
   def index
-    @episodes_records = Episode.published.paginate(page: params[:page], per_page: params[:per_page])
+    published = Episode.published
+    @episodes_records = published.paginate(page: params[:page], per_page: params[:per_page])
     @episodes = EpisodePresenter.wrap @episodes_records
 
     respond_to do |format|
       format.html
       format.rss do
-        @episodes = Episode.published.where(rss_feed: true)
-
-        @feed = PodcastFeedPresenter.new(@episodes)
+        @episodes_records = published.where(rss_feed: true)
+        @feed = PodcastFeedPresenter.new(@episodes_records)
         render layout: false, content_type: "application/xml"
       end
     end
