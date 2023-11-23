@@ -203,6 +203,15 @@ RSpec.describe "episodes", type: :request do
       File.write("expected_xml.xml", expected_xml.squish)
       expect(response.body).to match_xml(expected_xml)
     end
+
+    it "generate a feed with all avilabel episodes" do
+      create_list(:episode, 35)
+
+      get "/episodes.rss"
+
+      feed = Hash.from_xml(response.body)
+      expect(feed["rss"]["channel"]["item"].size).to eq 35
+    end
   end
 
   describe "GET /episode.mp3" do
