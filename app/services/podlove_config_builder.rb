@@ -9,7 +9,7 @@ class PodloveConfigBuilder
   def config_json
     {
       :version => 5,
-      :base => "player/",
+      :base => "/podlove-web-player/",
       :activeTab => "chapters", # default active tab, can be set to [chapters, files, share, playlist]
       :theme => {
         # /**
@@ -29,57 +29,57 @@ class PodloveConfigBuilder
           alt: "#fff"
         },
 
-        # /**
-        #  * Fonts
-        #  * - by default the system font stack is used (https://css-tricks.com/snippets/css/system-font-stack/)
-        #  *
-        #  * font:
-        #  * - name: font name that is used in the font stack
-        #  * - family: list of fonts in a fallback order
-        #  * - weight: font weight of the defined font
-        #  * - src: list of web font sources (allowed: woff, woff2, ttf, eot, svg)
-        #  */
-        fonts: {
-          ci: {
-            name: "RobotoBlack",
-            family: [
-              "RobotoBlack",
-              "Calibri",
-              "Candara",
-              "Arial",
-              "Helvetica",
-              "sans-serif"
-            ],
-            weight: 900
-            # src: ["./assets/Roboto-Black.ttf"]
-          },
-          regular: {
-            name: "FiraSansLight",
-            family: [
-              "FiraSansLight",
-              "Calibri",
-              "Candara",
-              "Arial",
-              "Helvetica",
-              "sans-serif"
-            ],
-            weight: 300,
-            src: ["./assets/FiraSans-Light.ttf"]
-          },
-          bold: {
-            name: "FiraSansBold",
-            family: [
-              "FiraSansBold",
-              "Calibri",
-              "Candara",
-              "Arial",
-              "Helvetica",
-              "sans-serif"
-            ],
-            weight: 700
-            # src: ["./assets/FiraSans-Bold.ttf"]
-          }
-        }
+        # # /**
+        # #  * Fonts
+        # #  * - by default the system font stack is used (https://css-tricks.com/snippets/css/system-font-stack/)
+        # #  *
+        # #  * font:
+        # #  * - name: font name that is used in the font stack
+        # #  * - family: list of fonts in a fallback order
+        # #  * - weight: font weight of the defined font
+        # #  * - src: list of web font sources (allowed: woff, woff2, ttf, eot, svg)
+        # #  */
+        # fonts: {
+        #   ci: {
+        #     name: "RobotoBlack",
+        #     family: [
+        #       "RobotoBlack",
+        #       "Calibri",
+        #       "Candara",
+        #       "Arial",
+        #       "Helvetica",
+        #       "sans-serif"
+        #     ],
+        #     weight: 900
+        #     # src: ["./assets/Roboto-Black.ttf"]
+        #   },
+        #   regular: {
+        #     name: "FiraSansLight",
+        #     family: [
+        #       "FiraSansLight",
+        #       "Calibri",
+        #       "Candara",
+        #       "Arial",
+        #       "Helvetica",
+        #       "sans-serif"
+        #     ],
+        #     weight: 300,
+        #     src: ["./assets/FiraSans-Light.ttf"]
+        #   },
+        #   bold: {
+        #     name: "FiraSansBold",
+        #     family: [
+        #       "FiraSansBold",
+        #       "Calibri",
+        #       "Candara",
+        #       "Arial",
+        #       "Helvetica",
+        #       "sans-serif"
+        #     ],
+        #     weight: 700
+        #     # src: ["./assets/FiraSans-Bold.ttf"]
+        #   }
+        # }
       },
 
       # /**
@@ -87,8 +87,8 @@ class PodloveConfigBuilder
       #  * - configuration for the subsscribe button overlay
       #  * - if not defined the subscribe button won't be rendered
       #  */
-      "subscribe-button" => {
-        feed: "https://feeds.podlovers.org/mp3", # Rss feed
+      # "subscribe-button" => {
+      #   feed: "https://feeds.podlovers.org/mp3", # Rss feed
 
         # /**
         #  * Clients
@@ -96,89 +96,88 @@ class PodloveConfigBuilder
         #  * - only available clients on the used os/platform are shown
         #  * - order in list determines rendered order
         #  */
-        clients: [
-          {
-            id: "apple-podcasts"
-            ##
-          },
-          {
-            id: "antenna-pod"
-          },
-          {
-            id: "beyond-pod"
-          },
-          {
-            id: "castbox"
-            # service: "castbox-id"
-          },
-          {
-            id: "castro"
-          },
-          {
-            id: "clementine"
-          },
-          {
-            id: "downcast"
-          },
-          {
-            id: "google-podcasts"
-            # service: "https://feeds.podlovers.org/mp3" # // feed
-          },
-          {
-            id: "gpodder"
-          },
-          {
-            id: "itunes"
-          },
-          {
-            id: "i-catcher"
-          },
-          {
-            id: "instacast"
-          },
-          {
-            id: "overcast"
-          },
-          {
-            id: "player-fm"
-          },
-          {
-            id: "pocket-casts"
-          },
-          {
-            id: "pocket-casts"
-            # service: "https://feeds.podlovers.org/mp3" # // feed
-          },
-          {
-            id: "pod-grasp"
-          },
-          {
-            id: "podcast-addict"
-          },
-          {
-            id: "podcast-republic"
-          },
-          {
-            id: "podcat"
-          },
-          {
-            id: "podscout"
-          },
-          {
-            id: "rss-radio"
-          },
-          {
-            id: "rss"
-          }
-        ]
-      },
+        # clients: [
+        #   {
+        #     id: "apple-podcasts"
+        #     ##
+        #   },
+        #   {
+        #     id: "antenna-pod"
+        #   },
+        #   {
+        #     id: "beyond-pod"
+        #   },
+        #   {
+        #     id: "castbox"
+        #     # service: "castbox-id"
+        #   },
+        #   {
+        #     id: "castro"
+        #   },
+        #   {
+        #     id: "clementine"
+        #   },
+        #   {
+        #     id: "downcast"
+        #   },
+        #   {
+        #     id: "google-podcasts"
+        #     # service: "https://feeds.podlovers.org/mp3" # // feed
+        #   },
+        #   {
+        #     id: "gpodder"
+        #   },
+        #   {
+        #     id: "itunes"
+        #   },
+        #   {
+        #     id: "i-catcher"
+        #   },
+        #   {
+        #     id: "instacast"
+        #   },
+        #   {
+        #     id: "overcast"
+        #   },
+        #   {
+        #     id: "player-fm"
+        #   },
+        #   {
+        #     id: "pocket-casts"
+        #   },
+        #   {
+        #     id: "pocket-casts"
+        #     # service: "https://feeds.podlovers.org/mp3" # // feed
+        #   },
+        #   {
+        #     id: "pod-grasp"
+        #   },
+        #   {
+        #     id: "podcast-addict"
+        #   },
+        #   {
+        #     id: "podcast-republic"
+        #   },
+        #   {
+        #     id: "podcat"
+        #   },
+        #   {
+        #     id: "podscout"
+        #   },
+        #   {
+        #     id: "rss-radio"
+        #   },
+        #   {
+        #     id: "rss"
+        #   }
+        # ]
 
       # /**
       #  * Playlist:
       #  * - can be a plain list or a reference to a json file
       #  * - if present playlist tab will be available
       #  */
-      :playlist => [],
+      #:playlist => [],
 
       # /*
       #   Share Tab
@@ -189,22 +188,17 @@ class PodloveConfigBuilder
         #  * - list of available channels in share tab
         #  */
         channels: [
-          # // "facebook",
-          # "twitter",
-          # // "whats-app",
-          # // "linkedin",
-          # // "pinterest",
-          # // "xing",
-          # "mail",
-          # "link"
+          "twitter",
+          "mail",
+          "link"
         ],
-        sharePlaytime: false
+        sharePlaytime: true,
         # /**
         #  * Share Outlet
         #  * - outlet path required in order to provide embed snippet
         #  * - also ensure that the configuration as well as the episode is available via urls to enable embedding
         # **/
-        # outlet: "/share.html"
+        outlet: "/share.html"
       }
     }.to_json
   end
