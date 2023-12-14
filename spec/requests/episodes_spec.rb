@@ -223,6 +223,7 @@ RSpec.describe "episodes", type: :request do
 
       expect(response).to have_http_status(302)
       expect(response).to redirect_to(episode.file_url)
+      expect(response.body).to be_blank # https://github.com/rails/rails/commit/c2e756a944fd3ca2efa58bd285c0e75e0b4794ab
     end
 
     describe "download counter" do
