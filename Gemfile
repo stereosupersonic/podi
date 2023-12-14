@@ -1,9 +1,7 @@
 source "https://rubygems.org"
-source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.2"
-
 
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
@@ -66,7 +64,7 @@ group :development, :test do
   gem "pry-nav"
   gem "pry-rails"
 
-  gem "factory_bot_rails"
+  gem "factory_bot_rails", "~> 6.4.2"
   gem "rspec-rails"
 
   gem "capybara"

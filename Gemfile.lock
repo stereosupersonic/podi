@@ -466,7 +466,7 @@ DEPENDENCIES
   device_detector!
   devise
   dotenv-rails
-  factory_bot_rails
+  factory_bot_rails (~> 6.4.2)
   foreman
   haml-rails (~> 2.0)
   haml_lint
