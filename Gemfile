@@ -78,3 +78,5 @@ group :test do
   gem "codecov", require: false
   gem "compare-xml"
 end
+
+gem "scenic", "~> 1.7"

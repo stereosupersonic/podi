@@ -72,7 +72,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    addressable (2.8.5)
+    addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
@@ -213,7 +213,7 @@ GEM
     method_source (1.0.0)
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2023.1003)
+    mime-types-data (3.2023.1205)
     mini_mime (1.1.5)
     mini_portile2 (2.8.5)
     minitest (5.18.1)
@@ -293,7 +293,7 @@ GEM
       ffi (~> 1.0)
     redcarpet (3.6.0)
     redis (4.8.1)
-    regexp_parser (2.8.2)
+    regexp_parser (2.8.3)
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
@@ -303,7 +303,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.2.6)
-    rollbar (3.4.1)
+    rollbar (3.4.2)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.3)
@@ -351,6 +351,9 @@ GEM
     ruby-mp3info (0.8.10)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
+    scenic (1.7.0)
+      activerecord (>= 4.0.0)
+      railties (>= 4.0.0)
     selenium-webdriver (4.8.6)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -460,6 +463,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   ruby-mp3info
+  scenic (~> 1.7)
   shrine (~> 3.0)
   shrine-cloudinary (~> 1.1)
   sidekiq (~> 6.4)
@@ -476,4 +480,4 @@ RUBY VERSION
    ruby 3.1.4p223
 
 BUNDLED WITH
-   2.4.20
+   2.4.22

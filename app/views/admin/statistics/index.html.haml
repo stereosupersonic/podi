@@ -1,0 +1,25 @@
+.bg-ligh
+
+  %h1 Episodes Statistics
+  %table.table.table-striped.table-bordered.statistics
+    %thead.thead-dark
+      %tr
+        %th Titel
+        %th=link_to("Published", sort: "published_on")
+        %th=link_to("After 1 day", sort: "a1d")
+        %th=link_to("After 3 days", sort: "a3d")
+        %th=link_to("After 1 week", sort: "a7d")
+        %th=link_to("After 30 days", sort: "a30d")
+        %th=link_to("After 60 days", sort: "a60d")
+        %th=link_to("overall", sort: "cnt")
+    %tbody
+      - @episode_statistics.each do |es|
+        %tr{id: "episode-#{es.episode_id}", class: "text-nowrap"}
+          %td=es.title
+          %td=time_ago_in_words(es.published_on)
+          %td=es.a1d
+          %td=es.a3d
+          %td=es.a7d
+          %td=es.a30d
+          %td=es.a60d
+          %td=es.cnt

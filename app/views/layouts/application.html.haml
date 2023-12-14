@@ -35,8 +35,8 @@
     = csrf_meta_tags
     = csp_meta_tag
 
-    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
-    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application', defer: true
 
   %body{id: "main", :class => "#{controller_name} #{action_name}"}
     %header
@@ -63,6 +63,7 @@
             - if user_signed_in?
               - if current_user&.admin?
                 = link_to "Administration", admin_episodes_path, class: "nav-link text-white"
+                = link_to "Statistics", admin_statistics_path, class: "nav-link text-white"
                 = link_to "Events", admin_events_path, class: "nav-link text-white"
                 = link_to "Settings", edit_admin_setting_path, class: "nav-link text-white"
                 = link_to "Info", admin_info_path, class: "nav-link text-white"
