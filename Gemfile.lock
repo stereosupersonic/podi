@@ -483,7 +483,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rack-attack
   rack-mini-profiler (~> 2.0)
-  rails (~> 7.1.0)
+  rails (~> 7.1.2)
   rails-i18n
   redcarpet
   rollbar
@@ -506,9 +506,6 @@ DEPENDENCIES
   webdrivers
   will_paginate
   will_paginate-bootstrap4
-
-RUBY VERSION
-   ruby 3.1.4p223
 
 BUNDLED WITH
    2.4.22

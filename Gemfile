@@ -1,10 +1,10 @@
 source "https://rubygems.org"
+source "https://rubygems.org"
 
-ruby "3.1.4"
+# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+gem "rails", "~> 7.1.2"
 
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem "rails", "~> 7.1.0"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 
