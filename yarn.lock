@@ -2,10 +2,30 @@
 # yarn lockfile v1
 
 
-"@fortawesome/fontawesome-free@^5.15.4":
-  version "5.15.4"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.4.tgz#ecda5712b61ac852c760d8b3c79c96adca5554e5"
-  integrity sha512-eYm8vijH/hpzr/6/1CJ/V/Eb1xQFW2nnUKArb3z+yUWv7HTwj6M7SP957oMjfZjAHU6qpoNc2wQvIxBLWYa/Jg==
+"@fortawesome/fontawesome-free@^6.4.2":
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-6.5.1.tgz#55cc8410abf1003b726324661ce5b0d1c10de258"
+  integrity sha512-CNy5vSwN3fsUStPRLX7fUYojyuzoEMSXPl7zSLJ8TgtRfjv24LOnOWKT2zYwaHZCJGkdyRnTmstR0P+Ah503Gw==
+
+"@hotwired/stimulus@^3.2.2":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.2.2.tgz#071aab59c600fed95b97939e605ff261a4251608"
+  integrity sha512-eGeIqNOQpXoPAIP7tC1+1Yc1yl1xnwYqg+3mzqxyrbE5pg5YFBZcA6YoTiByJB6DKAEsiWtl6tjTJS4IYtbB7A==
+
+"@hotwired/turbo-rails@8.0.0-beta.1":
+  version "8.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-8.0.0-beta.1.tgz#7d5bd2843caa5d8d224eb36f22078311163128bd"
+  integrity sha512-x9G95vehf5LR4yYGvhD4z6wBMbmAVi0V87FTfenrmXPru4SfOVDsCwdEINBWsLqOvCgRPQD9eY2nGyDfZlsukg==
+  dependencies:
+    "@hotwired/turbo" "^8.0.0-beta.1"
+    "@rails/actioncable" "^7.0"
+
+"@hotwired/turbo@^8.0.0-beta.1":
+  version "8.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-8.0.0-beta.1.tgz#35a7086c4c959445db059ea4a9b9af85cdafa616"
+  integrity sha512-g66YmO/Oa+EThB3KkNDhrM9mFnNyRn6tqgwGiBHh4Vf+d3XjCznuWSG2o2e2cO/RlddVRtCwvBSMuG6sYQWX+g==
+  dependencies:
+    idiomorph "https://github.com/basecamp/idiomorph#rollout-build"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -28,10 +48,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@rails/ujs@^6.0.0":
-  version "6.1.7"
-  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-6.1.7.tgz#b09dc5b2105dd267e8374c47e4490240451dc7f6"
-  integrity sha512-0e7WQ4LE/+LEfW2zfAw9ppsB6A8RmxbdAUPAF++UT80epY+7emuQDkKXmaK0a9lp6An50RvzezI0cIQjp1A58w==
+"@rails/actioncable@^7.0":
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-7.1.2.tgz#d261ff4b72844f5af496671346ec478798f4ac2c"
+  integrity sha512-KGziTZfbmGm8/fHOpj515xupbYU+49hsp4etfdpoDJ/CEY2bRZR0cyFcJkpK6n0t/sxOHNWY6bo9vSgXZvT7Mg==
 
 abbrev@1:
   version "1.1.1"
@@ -395,6 +415,10 @@ has-flag@^3.0.0:
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
   integrity sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw==
 
+"idiomorph@git+https://github.com/basecamp/idiomorph.git#rollout-build":
+  version "0.0.8"
+  resolved "git+https://github.com/basecamp/idiomorph.git#e906820368e4c9c52489a3336b8c3826b1bf6de5"
+
 ignore-by-default@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ignore-by-default/-/ignore-by-default-1.0.1.tgz#48ca6d72f6c6a3af00a9ad4ae6876be3889e2b09"
@@ -736,11 +760,6 @@ touch@^3.1.0:
   integrity sha512-WBx8Uy5TLtOSRtIq+M03/sKDrXCLHxwDcquSP2c43Le03/9serjQBIztjRz6FkJez9D/hleyAXTBGLwwZUw9lA==
   dependencies:
     nopt "~1.0.10"
-
-turbolinks@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/turbolinks/-/turbolinks-5.2.0.tgz#e6877a55ea5c1cb3bb225f0a4ae303d6d32ff77c"
-  integrity sha512-pMiez3tyBo6uRHFNNZoYMmrES/IaGgMhQQM+VFF36keryjb5ms0XkVpmKHkfW/4Vy96qiGW3K9bz0tF5sK9bBw==
 
 undefsafe@^2.0.5:
   version "2.0.5"
