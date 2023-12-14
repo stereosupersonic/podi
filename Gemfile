@@ -65,7 +65,7 @@ group :development, :test do
   gem "pry-nav"
   gem "pry-rails"
 
-  gem "factory_bot_rails"
+  gem "factory_bot_rails", "~> 6.4.2"
   gem "rspec-rails"
 
   gem "capybara"

@@ -214,15 +214,22 @@ RSpec.describe "episodes", type: :request do
     end
   end
 
-  describe "GET /episode.mp3" do
+  describe "GET /episode.mp3", focus: true do
     let(:episode) { EpisodePresenter.new create :episode, downloads_count: 1, number: 4, title: :test }
+
+    it "redirects to the file" do
+      get episode.mp3_url
+      perform_enqueued_jobs_now!
+
+      expect(response).to have_http_status(302)
+      expect(response).to redirect_to(episode.file_url)
+    end
+
     describe "download counter" do
       it "increment" do
         get episode.mp3_url
         perform_enqueued_jobs_now!
 
-        expect(response.body).to match(%r{<html><body>You are being <a href=.*>redirected</a>\.</body></html>})
-        expect(response.body).to match(%r{http://wartenberger\.test\.com/.*/test-001\.mp3})
         expect(episode.reload.downloads_count).to eq 2
       end
 
@@ -230,8 +237,6 @@ RSpec.describe "episodes", type: :request do
         get episode.mp3_url(notracking: true)
         perform_enqueued_jobs_now!
 
-        expect(response.body).to match(%r{<html><body>You are being <a href=.*>redirected</a>\.</body></html>})
-        expect(response.body).to match(%r{http://wartenberger\.test\.com/.*/test-001\.mp3})
         expect(episode.reload.downloads_count).to eq 1
       end
     end
