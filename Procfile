@@ -1,4 +1,2 @@
-web: bin/server
-js: yarn build --watch
-css: yarn watch:css
-sidekiq: bin/sidekiq
+web: bundle exec puma -C config/puma.rb
+worker: bin/sidekiq
