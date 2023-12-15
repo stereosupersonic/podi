@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: episode_statistics
+# Table name: episode_current_statistics
 #
 #  a12h         :bigint
 #  a12m         :bigint
@@ -23,6 +23,6 @@
 #  year         :integer
 #  episode_id   :bigint
 #
-class EpisodeStatistic < ApplicationRecord
+class EpisodeCurrentStatistic < ApplicationRecord
   belongs_to :episode
 end

@@ -1,6 +1,6 @@
-class Admin::StatisticsController <  Admin::BaseController
+class Admin::StatisticsController < Admin::BaseController
   def index
-    sort_column = params.fetch(:sort, :cnt)
-    @episode_statistics = EpisodeStatistic.all.order("#{sort_column} DESC")
+    @episode_current_statistics = StatisticPresenter.wrap EpisodeCurrentStatistic.all.order("#{params.fetch(:sort_current, :a1d)} DESC")
+    @episode_statistics = StatisticPresenter.wrap EpisodeStatistic.all.order("#{params.fetch(:sort, :a1d)} DESC")
   end
 end

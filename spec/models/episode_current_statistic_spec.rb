@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: episode_statistics
+# Table name: episode_current_statistics
 #
 #  a12h         :bigint
 #  a12m         :bigint
@@ -23,6 +23,8 @@
 #  year         :integer
 #  episode_id   :bigint
 #
-class EpisodeStatistic < ApplicationRecord
-  belongs_to :episode
+require "rails_helper"
+
+RSpec.describe EpisodeCurrentStatistic, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

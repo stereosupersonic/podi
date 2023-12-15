@@ -29,7 +29,23 @@
           %td= episode.audio_size_formatted
           %td= episode.duration_formatted
           %td= episode.audio_filename_formatted
-          %td= episode.downloads_count
+          %td
+            = episode.downloads_count
+            - if episode.episode_current_statistic&.a1d.to_i > 0
+              %span
+                .badge.badge-pill.badge-success{"data-toggle" => "tooltip", "data-placement"=>"top", "title"=>"Last 24h"}
+                  = episode.episode_current_statistic&.a1d.to_i
+
+            - if episode.episode_current_statistic&.a3d.to_i > 0
+              %span
+                .badge.badge-pill.badge-primary{"data-toggle" => "tooltip", "data-placement"=>"top", "title"=>"Last 3 days"}
+                  =episode.episode_current_statistic&.a3d.to_i
+
+            - if episode.episode_current_statistic&.a7d.to_i > 0
+              %span
+                .badge.badge-pill.badge-info{"data-toggle" => "tooltip", "data-placement"=>"top", "title"=>"Last 7 days"}
+                  =episode.episode_current_statistic&.a7d.to_i
+
           %td= episode.published_on
           %td= edit_button edit_admin_episode_path(episode)
           %td= show_button episode_path(episode)
