@@ -15,7 +15,9 @@ describe "Events", type: :system do
 
       visit "/"
       click_on "Events"
+
       expect(page).to have_selector "h1", text: "Events"
+      expect(page).to have_text("2 Events")
 
       expect(page).to have_table_with_exact_data([
         ["Date",
@@ -44,6 +46,32 @@ describe "Events", type: :system do
       expect(page).to have_selector "h3", text: "Data"
       expect(page).to have_content "client_name: Chrome"
     end
+
+    it "filter overview page by episode" do
+      episode = create(:episode, title: "Soli Wartenberg", number: 1)
+      episode2 = create(:episode, title: "Feuerwehr Wartenberg", number: 2)
+      create(:event, episode: episode, geo_data: nil, downloaded_at: Time.zone.parse("2012-07-11 21:00"))
+      create(:event, episode: episode2, created_at: 1.day.ago, downloaded_at: Time.zone.parse("2021-01-01 21:00"))
+      create(:event, episode: episode2, created_at: 1.day.ago, downloaded_at: Time.zone.parse("2021-01-02 21:00"))
+
+      visit "/admin/events?episode_id=#{episode.id}"
+
+      expect(page).to have_selector "h1", text: "Events"
+      expect(page).to have_text("1 Events")
+
+      expect(page).to have_table_with_exact_data([
+        ["Date",
+          "Episode",
+          "Info",
+          "Geo Info",
+          ""],
+        ["01.01.2021 21:00",
+          "001 Soli Wartenberg",
+          "127.0.0.1 - Chrome - desktop",
+          "Germany - Bavaria - 85368 - Moosburg - Deutsche Telekom AG",
+          "Show"]
+      ])
+    end
   end
 
   context "when logged in  as user" do
@@ -57,7 +85,7 @@ describe "Events", type: :system do
       expect(page).not_to have_link "Events"
     end
 
-    it "gets  Access Denied for admin functions" do
+    it "gets Access Denied for admin functions" do
       visit "/admin/events"
       expect(page).to have_content "Access Denied"
     end
@@ -70,7 +98,7 @@ describe "Events", type: :system do
       expect(page).not_to have_link "Events"
     end
 
-    it "gets  Access Denied for admin functions" do
+    it "gets Access Denied for admin functions" do
       visit "/admin/events"
       expect(page).to have_content "Access Denied"
     end

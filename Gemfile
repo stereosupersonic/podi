@@ -46,12 +46,14 @@ gem "sidekiq", "~> 6.4"
 
 gem "maxmind-geoip2", "~> 1.1"
 
+gem "scenic", "~> 1.7" # for views in db
+
 group :development do
+  gem "annotate"
+  gem "haml_lint"
   gem "listen", "~> 3.3"
   gem "rack-mini-profiler", "~> 2.0"
-  gem "annotate"
 
-  gem "haml_lint"
   gem "rubocop"
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false
@@ -79,5 +81,3 @@ group :test do
   gem "codecov", require: false
   gem "compare-xml"
 end
-
-gem "scenic", "~> 1.7"

@@ -31,20 +31,15 @@
           %td= episode.audio_filename_formatted
           %td
             = episode.downloads_count
-            - if episode.episode_current_statistic&.a1d.to_i > 0
-              %span
-                .badge.badge-pill.badge-success{"data-toggle" => "tooltip", "data-placement"=>"top", "title"=>"Last 24h"}
-                  = episode.episode_current_statistic&.a1d.to_i
+            - [ { counter: :a1d, title: "Last 24h", class: "success"},
+                { counter: :a3d, title: "Last 3 days", class: "primary"},
+                { counter: :a7d, title: "Last 7 days", class: "info"},
+                { counter: :a30d, title: "Last 30 days", class: "light"} ].each do |counter|
 
-            - if episode.episode_current_statistic&.a3d.to_i > 0
-              %span
-                .badge.badge-pill.badge-primary{"data-toggle" => "tooltip", "data-placement"=>"top", "title"=>"Last 3 days"}
-                  =episode.episode_current_statistic&.a3d.to_i
-
-            - if episode.episode_current_statistic&.a7d.to_i > 0
-              %span
-                .badge.badge-pill.badge-info{"data-toggle" => "tooltip", "data-placement"=>"top", "title"=>"Last 7 days"}
-                  =episode.episode_current_statistic&.a7d.to_i
+              - if episode.episode_current_statistic&.send(counter[:counter]).to_i > 0
+                %span
+                  .badge.badge-pill{class: "badge-#{counter[:class]}","data-toggle" => "tooltip", "data-placement"=>"top", "title"=>counter[:title]}
+                    = link_to episode.episode_current_statistic&.send(counter[:counter]).to_i, admin_events_path(episode_id: episode.id, counter: counter[:counter])
 
           %td= episode.published_on
           %td= edit_button edit_admin_episode_path(episode)

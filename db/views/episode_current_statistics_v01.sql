@@ -22,7 +22,7 @@ select
 FROM
   episodes e
   LEFT JOIN events ev ON e.id = ev.episode_id
-where e.published_on  >= (select created_at from events order by created_at limit(1))
+where e.published_on >= (select created_at from events order by created_at limit(1))
 GROUP BY
   e.id
  order by a1d desc
