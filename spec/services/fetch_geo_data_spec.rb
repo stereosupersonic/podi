@@ -6,19 +6,19 @@ RSpec.describe FetchGeoData do
   it "raises an error if config is missing" do
     stub_const("ENV", {"GEOIP_LICENSE_KEY" => "", "GEOIP_ACCOUNT" => "x"})
     expect do
-      FetchGeoData.call(ip_address: "127.0.0.1")
+      described_class.call(ip_address: "127.0.0.1")
     end.to raise_error("MaxMind::GeoIP2 GEOIP_ACCOUNT or GEOIP_LICENSE_KEY is not set")
   end
 
   it "returns an empty hash if ip is blank" do
-    expect(FetchGeoData.call(ip_address: nil)).to eq({})
+    expect(described_class.call(ip_address: nil)).to eq({})
   end
 
   it "returns an empty hash if ip is blank" do
     client = double(MaxMind::GeoIP2::Client, city: nil)
     expect(MaxMind::GeoIP2::Client).to receive(:new).and_return client
 
-    expect(FetchGeoData.call(ip_address: "127.0.0.1")).to eq({})
+    expect(described_class.call(ip_address: "127.0.0.1")).to eq({})
   end
 
   it "returns valid data even if not data available" do
@@ -26,6 +26,6 @@ RSpec.describe FetchGeoData do
     client = double(MaxMind::GeoIP2::Client, city: city)
     expect(MaxMind::GeoIP2::Client).to receive(:new).and_return client
 
-    expect(FetchGeoData.call(ip_address: "127.0.0.1")).to include(country: "Spain", iso_code: "ESP")
+    expect(described_class.call(ip_address: "127.0.0.1")).to include(country: "Spain", iso_code: "ESP")
   end
 end

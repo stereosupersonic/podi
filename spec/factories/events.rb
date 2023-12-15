@@ -23,7 +23,7 @@ FactoryBot.define do
   factory :event do
     episode
     downloaded_at { Time.current }
-    data {
+    data do
       {
         user_agent: "Mozilla\5.0",
         remote_ip: "127.0.0.1",
@@ -35,9 +35,9 @@ FactoryBot.define do
         client_device_name: nil,
         client_device_type: "desktop"
       }
-    }
+    end
 
-    geo_data {
+    geo_data do
       {
         country: "Germany",
         county: "Bavaria",
@@ -49,6 +49,6 @@ FactoryBot.define do
         accuracy_radiu: 10,
         isp: "Deutsche Telekom AG"
       }
-    }
+    end
   end
 end

@@ -167,7 +167,7 @@ describe "Administrate Episodes", type: :system do
       expect(page).to have_current_path "/admin/episodes"
 
       expect(episode2.reload.duration).to eq 8
-      expect(episode2.reload.audio_size).to eq 114031
+      expect(episode2.reload.audio_size).to eq 114_031
 
       visit "/admin/episodes"
       expect(page).to have_table_with_exact_data([
@@ -230,7 +230,7 @@ describe "Administrate Episodes", type: :system do
       expect(page).not_to have_link "Administration"
     end
 
-    it "gets  Access Denied for admin functions" do
+    it "gets Access Denied for admin functions" do
       visit "/admin/episodes"
       expect(page).to have_content "Access Denied"
     end
@@ -243,7 +243,7 @@ describe "Administrate Episodes", type: :system do
       expect(page).not_to have_link "Administration"
     end
 
-    it "gets  Access Denied for admin functions" do
+    it "gets Access Denied for admin functions" do
       visit "/admin/episodes"
       expect(page).to have_content "Access Denied"
     end

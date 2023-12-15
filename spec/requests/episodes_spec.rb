@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "episodes", type: :request do
   before { allow(FetchGeoData).to receive(:call).and_return({}) }
+
   describe "GET /episodes.rss" do
     let!(:setting) { create(:setting) }
 
@@ -214,14 +215,14 @@ RSpec.describe "episodes", type: :request do
     end
   end
 
-  describe "GET /episode.mp3", focus: true do
+  describe "GET /episode.mp3" do
     let(:episode) { EpisodePresenter.new create :episode, downloads_count: 1, number: 4, title: :test }
 
     it "redirects to the file" do
       get episode.mp3_url
       perform_enqueued_jobs_now!
 
-      expect(response).to have_http_status(302)
+      expect(response).to have_http_status(:found)
       expect(response).to redirect_to(episode.file_url)
       expect(response.body).to be_blank # https://github.com/rails/rails/commit/c2e756a944fd3ca2efa58bd285c0e75e0b4794ab
     end
@@ -252,9 +253,9 @@ RSpec.describe "episodes", type: :request do
       end
 
       it "enquese the event job" do
-        expect {
+        expect do
           get episode.mp3_url
-        }.to enqueue_job(Mp3EventJob)
+        end.to enqueue_job(Mp3EventJob)
       end
 
       it "logs valid data" do
@@ -267,11 +268,11 @@ RSpec.describe "episodes", type: :request do
           perform_enqueued_jobs_now!
         end
         event = Event.last
-        expect(event).to_not be_nil
+        expect(event).not_to be_nil
         expect(event.episode).to eq episode.reload
         expect(event.downloaded_at).to be_within(1.second).of downloaded_at
         expect(event.data.symbolize_keys).to include(
-          user_agent: /Mozilla\/5\.0/,
+          user_agent: %r{Mozilla/5\.0},
           remote_ip: "127.0.0.1",
           uuid: a_kind_of(String),
           client_name: "Chrome",
@@ -293,12 +294,13 @@ RSpec.describe "episodes", type: :request do
           isp: "Deutsche Telekom AG"
         )
       end
+
       it "logs valid data without a user_agent " do
         get episode.mp3_url
         perform_enqueued_jobs_now!
 
         event = Event.last
-        expect(event).to_not be_nil
+        expect(event).not_to be_nil
         expect(event.episode).to eq episode.reload
       end
 

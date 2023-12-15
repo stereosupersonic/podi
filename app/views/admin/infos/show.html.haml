@@ -2,22 +2,21 @@
 
 .bg-light
   .container
-    .row
+    .row.dev
       .card.mt-1{style: "width: 70rem;"}
         .card-body
-          %h3.card-title Data
+          %h3.card-title Development
           %p.card-text
             = "Ruby-Version: #{`ruby -v`}"
             %br
             = "Rails-Version: #{Rails.version}"
-    .row
+    .row.env
       .card.mt-2{style: "width: 70rem;"}
         .card-body
           %h3.card-title ENV
           %p.card-text= debug ENV.to_h.to_yaml
-    .row
+    .row.functions
       .card.mt-2{style: "width: 70rem;"}
-
         .card-body
           %h5.card-title Execption Testing
           = link_to "Raise rails exception", trigger_exception_admin_info_path, data: { turbo_method: "post" }, class: 'card-link btn btn-danger'

@@ -1,0 +1,58 @@
+.bg-ligh
+  #current_statistics
+    %h2 Current Statistics
+    %table.table.table-striped.table-bordered.statistics.current
+      %thead.thead-dark
+        %tr
+          %th Titel
+          %th=link_to("Published", sort_current: "published_on")
+          %th=link_to("last 24h", sort_current: "a1d")
+          %th=link_to("last 3 days", sort_current: "a3d")
+          %th=link_to("last 1 week", sort_current: "a7d")
+          %th=link_to("last 30 days", sort_current: "a30d")
+          %th=link_to("last 60 days", sort_current: "a60d")
+          %th=link_to("last 12 month", sort_current: "a12m")
+          %th=link_to("last 24 month", sort_current: "a24m")
+      %tbody
+        - @episode_current_statistics.each do |es|
+          %tr{id: "episode-#{es.episode_id}", class: "text-nowrap"}
+            %td=es.title
+            %td=time_ago_in_words(es.published_on)
+            %td=es.a1d
+            %td=es.a3d
+            %td=es.a7d
+            %td=es.a30d
+            %td=es.a60d
+            %td=es.a12m
+            %td=es.a24m
+
+  %br
+
+  #overall_statistics
+    %h2 Overall Statistics
+    %table.table.table-striped.table-bordered.statistics.overall
+      %thead.thead-dark
+        %tr
+          %th Titel
+          %th=link_to("Published", sort: "published_on")
+          %th=link_to("After 1 day", sort: "a1d")
+          %th=link_to("After 3 days", sort: "a3d")
+          %th=link_to("After 1 week", sort: "a7d")
+          %th=link_to("After 30 days", sort: "a30d")
+          %th=link_to("After 60 days", sort: "a60d")
+          %th=link_to("After 12 month", sort: "a12m")
+          %th=link_to("After 24 month", sort: "a24m")
+          %th=link_to("overall", sort: "cnt")
+      %tbody
+        - @episode_statistics.each do |es|
+          %tr{id: "episode-#{es.episode_id}", class: "text-nowrap"}
+            %td=es.title
+            %td=time_ago_in_words(es.published_on)
+            %td=es.a1d
+            %td=es.a3d
+            %td=es.a7d
+            %td=es.a30d
+            %td=es.a60d
+            %td=es.a12m
+            %td=es.a24m
+            %td=es.cnt

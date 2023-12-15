@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_13_085505) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_15_111028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -119,4 +119,169 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_085505) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "events", "episodes"
+
+  create_view "episode_statistics", sql_definition: <<-SQL
+      SELECT e.id AS episode_id,
+      e.number,
+      e.title,
+      e.published_on,
+      to_char((e.published_on)::timestamp with time zone, 'day'::text) AS day,
+      (date_part('week'::text, e.published_on))::integer AS week,
+      (date_part('year'::text, e.published_on))::integer AS year,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'PT12H'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a12h,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P1D'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a1d,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P3D'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a3d,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P7D'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a7d,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P14D'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a14d,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P30D'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a30d,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P60D'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a60d,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P3M'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a3m,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P6M'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a6m,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P1Y'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a12m,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P1Y6M'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a18m,
+      count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P2Y'::interval)) THEN 1
+              ELSE NULL::integer
+          END) AS a24m,
+      count(*) AS cnt
+     FROM (episodes e
+       LEFT JOIN events ev ON ((e.id = ev.episode_id)))
+    WHERE (e.published_on >= ( SELECT events.created_at
+             FROM events
+            ORDER BY events.created_at
+           LIMIT 1))
+    GROUP BY e.id
+    ORDER BY (count(
+          CASE
+              WHEN (ev.created_at <= (e.published_on + 'P1D'::interval)) THEN 1
+              ELSE NULL::integer
+          END)) DESC;
+  SQL
+  create_view "episode_current_statistics", sql_definition: <<-SQL
+      SELECT e.id AS episode_id,
+      e.number,
+      e.title,
+      e.published_on,
+      to_char((e.published_on)::timestamp with time zone, 'day'::text) AS day,
+      (date_part('week'::text, e.published_on))::integer AS week,
+      (date_part('year'::text, e.published_on))::integer AS year,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'PT12H'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'PT12H'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a12h,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P1D'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P1D'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a1d,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P3D'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P3D'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a3d,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P7D'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P7D'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a7d,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P14D'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P14D'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a14d,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P30D'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P30D'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a30d,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P60D'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P60D'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a60d,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P3M'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P3M'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a3m,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P6M'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P6M'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a6m,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P1Y'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P1Y'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a12m,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P1Y6M'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P1Y6M'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a18m,
+      count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P2Y'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P2Y'::interval))) THEN 1
+              ELSE NULL::integer
+          END) AS a24m,
+      count(*) AS cnt
+     FROM (episodes e
+       LEFT JOIN events ev ON ((e.id = ev.episode_id)))
+    WHERE (e.published_on >= ( SELECT events.created_at
+             FROM events
+            ORDER BY events.created_at
+           LIMIT 1))
+    GROUP BY e.id
+    ORDER BY (count(
+          CASE
+              WHEN ((e.published_on <= (CURRENT_DATE - 'P1D'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P1D'::interval))) THEN 1
+              ELSE NULL::integer
+          END)) DESC;
+  SQL
 end

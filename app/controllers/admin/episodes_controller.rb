@@ -10,7 +10,7 @@ module Admin
     def show
       episode_record = Episode.find_by!(slug: params[:id])
 
-      # hack for wrong url on facebook
+      # HACK: for wrong url on facebook
       redirect_to episode_path slug: episode_record.slug
     end
 
@@ -46,6 +46,7 @@ module Admin
 
     def build_slug(episode)
       return if episode.number.blank? || episode.title.blank?
+
       "#{episode.number.to_s.rjust(3, "0")} #{episode.title}".parameterize(locale: :de)
     end
 
