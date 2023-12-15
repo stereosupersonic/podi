@@ -1,12 +1,11 @@
 // Entry point for the build script in your package.json
-import "./src/jquery.js"
+
 import "@hotwired/turbo-rails"
 
 import * as bootstrap from "bootstrap"
 
+import "./src/jquery.js"
 
-window.addEventListener("load", function() {
-  $('[data-toggle="tooltip"]').tooltip({
-    trigger: 'hover'
-  });
+$(document).on("turbo:load", function () {
+  $("[data-toggle='tooltip']").tooltip();
 });
