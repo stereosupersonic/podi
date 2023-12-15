@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_15_111028) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_15_163302) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -273,10 +273,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_15_111028) do
       count(*) AS cnt
      FROM (episodes e
        LEFT JOIN events ev ON ((e.id = ev.episode_id)))
-    WHERE (e.published_on >= ( SELECT events.created_at
-             FROM events
-            ORDER BY events.created_at
-           LIMIT 1))
     GROUP BY e.id
     ORDER BY (count(
           CASE

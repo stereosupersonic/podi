@@ -34,7 +34,7 @@
             - [ { counter: :a1d, title: "Last 24h", class: "success"},
                 { counter: :a3d, title: "Last 3 days", class: "primary"},
                 { counter: :a7d, title: "Last 7 days", class: "info"},
-                { counter: :a30d, title: "Last 30 days", class: "light"} ].each do |counter|
+                { counter: :a30d, title: "Last 30 days", class: "warning"} ].each do |counter|
 
               - if episode.episode_current_statistic&.send(counter[:counter]).to_i > 0
                 %span

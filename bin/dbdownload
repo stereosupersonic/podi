@@ -5,4 +5,8 @@ set -Eeuo pipefail
 dump_file_name='latest.dump'
 rm -rfv $dump_file_name
 
-heroku pg:backups:download -a wartenberger
+echo "create dump file"
+heroku pg:backups:capture --app wartenberger
+
+echo "download dump file"
+heroku pg:backups:download --app wartenberger
