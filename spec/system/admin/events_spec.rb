@@ -50,9 +50,9 @@ describe "Events", type: :system do
     it "filter overview page by episode" do
       episode = create(:episode, title: "Soli Wartenberg", number: 1)
       episode2 = create(:episode, title: "Feuerwehr Wartenberg", number: 2)
-      create(:event, episode: episode, geo_data: nil, downloaded_at: Time.zone.parse("2012-07-11 21:00"))
-      create(:event, episode: episode2, created_at: 1.day.ago, downloaded_at: Time.zone.parse("2021-01-01 21:00"))
-      create(:event, episode: episode2, created_at: 1.day.ago, downloaded_at: Time.zone.parse("2021-01-02 21:00"))
+      create(:event, episode: episode,  downloaded_at: Time.zone.parse("2021-01-01 21:00"))
+      create(:event, episode: episode2, created_at: 1.day.ago)
+      create(:event, episode: episode2, created_at: 1.day.ago)
 
       visit "/admin/events?episode_id=#{episode.id}"
 

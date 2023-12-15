@@ -49,7 +49,8 @@ describe "Statistics", type: :system, js: true do
       within "#overall_statistics" do
         expect(page).to have_selector "h2", text: "Overall Statistics"
         expect(page).to have_table_with_exact_data([
-          ["Titel", "Published", "After 1 day", "After 3 days", "After 1 week", "After 30 days", "After 60 days", "After 12 month", "After 24 month", "overall"],
+          ["Titel", "Published", "After 1 day", "After 3 days", "After 1 week", "After 30 days", "After 60 days",
+            "After 12 month", "After 24 month", "overall"],
           ["Soli Wartenberg", "9 days", "-", "1", "2", "3", "3", "3", "3", "3"]
         ])
       end

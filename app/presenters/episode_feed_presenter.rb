@@ -4,11 +4,7 @@ class EpisodeFeedPresenter < EpisodePresenter
 
   delegate :author, to: :current_setting
 
-  def duration
-    # Different duration formats are accepted however
-    # it is recommended to convert the length of the episode into seconds.
-    o.duration
-  end
+  delegate :duration, to: :o
 
   def artwork_url
     super(size: 1400)
@@ -59,9 +55,7 @@ class EpisodeFeedPresenter < EpisodePresenter
       result << render_markdown_to_html(o.description)
       result << render_markdown_to_html(chapter_list_html) if chapter_marks.present?
 
-      if o.nodes.present?
-        result << render_markdown_to_html(show_notes)
-      end
+      result << render_markdown_to_html(show_notes) if o.nodes.present?
 
       result << stay_in_contact_html
     end.compact.join("<br />").html_safe
@@ -72,9 +66,7 @@ class EpisodeFeedPresenter < EpisodePresenter
       result << render_markdown_to_plain_text(o.description)
       result << render_markdown_to_plain_text(chapter_list) if chapter_marks.present?
 
-      if o.nodes.present?
-        result << render_markdown_to_plain_text(show_notes)
-      end
+      result << render_markdown_to_plain_text(show_notes) if o.nodes.present?
 
       result << render_markdown_to_plain_text(stay_in_contact_markdown)
     end.compact.join("\n")
@@ -82,6 +74,7 @@ class EpisodeFeedPresenter < EpisodePresenter
 
   def chapter_list
     return if o.chapter_marks.blank?
+
     <<~MARKDOWN.strip
       #{Array(sanitized_chapter_marks).join("\n")}
     MARKDOWN
@@ -89,6 +82,7 @@ class EpisodeFeedPresenter < EpisodePresenter
 
   def chapter_list_html
     return if o.chapter_marks.blank?
+
     Array(sanitized_chapter_marks).join("<br />")
   end
 

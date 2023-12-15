@@ -11,8 +11,8 @@ gem "jbuilder", "~> 2.7"
 gem "cssbundling-rails", "~> 0.2.6"
 gem "jsbundling-rails", "~> 0.2.1"
 
-gem "turbo-rails", "~> 1.5"
 gem "sprockets-rails"
+gem "turbo-rails", "~> 1.5"
 
 gem "simple_form"
 
@@ -27,14 +27,14 @@ gem "devise"
 gem "will_paginate"
 gem "will_paginate-bootstrap4"
 
-gem "rollbar"
 gem "newrelic_rpm"
+gem "rollbar"
 
-gem "ruby-mp3info", require: false
 gem "dalli"
+gem "ruby-mp3info", require: false
 
-gem "sitemap_generator" # https://github.com/kjvarga/sitemap_generator
 gem "aws-sdk-s3"
+gem "sitemap_generator" # https://github.com/kjvarga/sitemap_generator
 
 gem "rack-attack"
 
@@ -55,11 +55,11 @@ group :development do
   gem "rack-mini-profiler", "~> 2.0"
 
   gem "rubocop"
+  gem "rubocop-capybara", require: false
+  gem "rubocop-factory_bot", require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
-  gem "rubocop-factory_bot", require: false
-  gem "rubocop-capybara", require: false
 end
 
 group :development, :test do
@@ -70,14 +70,14 @@ group :development, :test do
   gem "rspec-rails"
 
   gem "capybara"
-  gem "launchy" # for capybara save_and_open_page
-  gem "webdrivers"
   gem "dotenv-rails"
   gem "foreman"
+  gem "launchy" # for capybara save_and_open_page
+  gem "webdrivers"
 end
 
 group :test do
-  gem "simplecov", require: false
   gem "codecov", require: false
   gem "compare-xml"
+  gem "simplecov", require: false
 end

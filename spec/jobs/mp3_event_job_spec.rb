@@ -1,18 +1,18 @@
 require "jobs_helper"
 
 RSpec.describe Mp3EventJob, type: :job do
+  subject(:job) do
+    described_class.perform_later payload
+  end
+
   let(:episode) { create(:episode) }
-  let(:payload) {
+  let(:payload) do
     {data: {
        user_agent: "my ua",
        remote_ip: "127.0.0.2"
      },
      episode_id: episode.id,
      downloaded_at: Time.current}
-  }
-
-  subject(:job) do
-    described_class.perform_later payload
   end
 
   it "queues the job" do
@@ -35,6 +35,6 @@ RSpec.describe Mp3EventJob, type: :job do
       perform_enqueued_jobs do
         job
       end
-    end.to change { Event.count }.by 1
+    end.to change(Event, :count).by 1
   end
 end
