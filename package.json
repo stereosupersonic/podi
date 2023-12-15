@@ -13,7 +13,6 @@
     "popper.js": "^1.16.1",
     "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",
-    "rollbar": "^2.26.2",
     "sass": "^1.69.5"
   },
   "version": "0.1.0",

@@ -22,6 +22,16 @@
           %h5.card-title Execption Testing
           = link_to "Raise rails exception", trigger_exception_admin_info_path, data: { turbo_method: "post" }, class: 'card-link btn btn-danger'
 
-          = link_to "Raise js exception","#", onclick: "throw new Error('My js error message')", class: 'card-link btn btn-danger raise-js-exception'
+          = link_to "Raise js exception","#", class: 'card-link btn btn-danger raise-js-exception'
 %br
 = back_button root_path
+
+:javascript
+  document.addEventListener("turbo:load", function() {
+    document.querySelector('.raise-js-exception').addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('My js error message')
+      throw new Error('My js error message');
+    });
+  });
+```
