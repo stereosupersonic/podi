@@ -1,18 +1,19 @@
 source "https://rubygems.org"
 
-ruby "3.1.4"
+# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+gem "rails", "~> 7.1.2"
 
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-
-gem "rails", "~> 7.0.4"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
-gem "turbolinks", "~> 5"
+
 gem "jbuilder", "~> 2.7"
 
 gem "cssbundling-rails", "~> 0.2.6"
 gem "jsbundling-rails", "~> 0.2.1"
+
+gem "turbo-rails", "~> 1.5"
 gem "sprockets-rails"
+
 gem "simple_form"
 
 gem "bootsnap", ">= 1.4.4", require: false
@@ -63,7 +64,7 @@ group :development, :test do
   gem "pry-nav"
   gem "pry-rails"
 
-  gem "factory_bot_rails"
+  gem "factory_bot_rails", "~> 6.4.2"
   gem "rspec-rails"
 
   gem "capybara"

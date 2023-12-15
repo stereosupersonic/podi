@@ -51,5 +51,5 @@ system(postgres_pw,
        "#{' -h ' + development_db_host if development_db_host} " \
        " -d #{development_db_name} #{dump_file_name}")
 
-safe_system "bundle exec rake db:migrate --trace"
-safe_system "bundle exec rake db:test:prepare --trace" unless ENV["RAILS_ENV"].to_s == "production"
+safe_system "bin/rails db:migrate --trace"
+safe_system "bin/rails db:test:prepare --trace" unless ENV["RAILS_ENV"].to_s == "production"
