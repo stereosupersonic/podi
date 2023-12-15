@@ -1,0 +1,53 @@
+- # https://docs.podlove.org/podlove-web-player/v5/usage.html
+
+-#%script{ :class => "podlove-web-player", :src => "https://cdn.podlove.org/web-player/5.x/embed.js"}}
+-#%script{ :class => "podlove-web-player", :src => "/node_modules/@podlove/web-player/embed.js"}
+-# https://sendegate.de/t/npm-package-verwenden-mit-webpack/13114/8
+-# https://github.com/stereosupersonic/podi/pull/20/files
+
+:javascript
+  window.addEventListener('load', function() {
+    podlovePlayer('#player',
+    {
+      link:  `http://stream.radiotux.de:8000/binaergewitter.mp3`,
+      title: 'Fuck',
+      poster: '/img/binaergewitter_logo1x1.png',
+      audio: [
+            {
+              url: 'http://stream.radiotux.de:8000/binaergewitter.mp3',
+              mimeType: 'audio/mp3',
+              size: 100000000,
+              title: 'Audio Mp3'
+            },
+      ],
+    }, {
+      version: 5,
+      base: '/podlove-web-player/',
+      theme: {
+          tokens: {
+             brand: "#7FAF1B",
+             brandDark: "#202c07",
+             brandDarkest: "#000",
+             brandLightest: "#7faf1b",
+             shadeDark: "#807E7C",
+             shadeBase: "#807E7C",
+             contrast: "#fff",
+             alt: "#fff"
+         }
+      },
+      share: {
+          channels: [
+            "twitter",
+            "mail",
+            "link"
+          ],
+          outlet: "/share.html",
+          sharePlaytime: true
+      }
+    }
+   ).then(store => {
+    store.subscribe(() => {
+      console.log(store.getState());
+    });
+  });
+  })

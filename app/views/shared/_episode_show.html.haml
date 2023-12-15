@@ -11,5 +11,7 @@
 
   .row.bg-light
     .col-md-10.mx-auto
+      #player
       .player
-        = render "shared/webplayer", webplayer_config: PodigeeWebplayerConfigBuilder.new(episode, title: true).to_json
+        - #= render "shared/webplayer", webplayer_config: PodigeeWebplayerConfigBuilder.new(episode, title: true).to_json
+        = render "shared/podlove_webplayer", podlove_config: PodloveConfigBuilder.new(episode, title: true)
