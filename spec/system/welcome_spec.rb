@@ -187,6 +187,14 @@ describe "welcome", type: :system do
       expect(page).to have_link "Account"
       expect(page).to have_link "Logout"
     end
+
+    it "should logout an user" do
+      visit "/"
+
+      click_link "Logout"
+
+      expect(page).to have_content "Signed out successfully."
+    end
   end
 
   context "when logged in as admin" do

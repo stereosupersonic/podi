@@ -55,12 +55,6 @@ module ApplicationHelper
     button_with_icon link, text, "trash", options
   end
 
-  def delete_button(link, text = "Delete", options = {})
-    options.reverse_merge! data: {confirm: "Are you sure?"},
-      method: :delete, class: "btn btn-danger"
-    button_with_icon link, text, "trash", options
-  end
-
   def back_button(link = :back, text = "Back", options = {})
     options.reverse_merge! class: "btn btn-default"
     button_with_icon link, text, "arrow-left", options
