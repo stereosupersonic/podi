@@ -1223,13 +1223,13 @@ Capybara/SpecificFinders:
 Capybara/SpecificMatcher:
   Enabled: true
 
-RSpec/FactoryBot/ConsistentParenthesesStyle:
+FactoryBot/ConsistentParenthesesStyle:
   Enabled: true
 
-RSpec/FactoryBot/FactoryNameStyle:
+FactoryBot/FactoryNameStyle:
   Enabled: true
 
-RSpec/FactoryBot/SyntaxMethods:
+FactoryBot/SyntaxMethods:
   Enabled: true
 
 RSpec/EmptyLineAfterExampleGroup:
