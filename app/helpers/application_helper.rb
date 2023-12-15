@@ -1,15 +1,15 @@
 module ApplicationHelper
   # date/time
   def format_time(time)
-    time&.strftime "%H:%M"
+    time&.strftime("%H:%M").to_s
   end
 
   def format_date(date)
-    date&.strftime "%d.%m.%Y"
+    date&.strftime("%d.%m.%Y").to_s
   end
 
-  def format_datetime(date)
-    date&.strftime "%d.%m.%Y %H:%M"
+  def format_datetime(datetime)
+    datetime&.strftime("%d.%m.%Y %H:%M").to_s
   end
 
   def format_duration(seconds:)
