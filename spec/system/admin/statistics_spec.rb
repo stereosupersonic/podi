@@ -1,6 +1,6 @@
 require "capybara_helper"
 
-describe "Statistics", type: :system, js: true do
+describe "Statistics", type: :system do
   let!(:setting) { create(:setting) }
 
   context "when logged in as admin" do
