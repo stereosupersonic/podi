@@ -18,5 +18,3 @@ scheduler call
 ```
 rake sitemap:refresh
 ```
-
-## TODO
