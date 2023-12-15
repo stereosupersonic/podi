@@ -9,9 +9,6 @@ describe "Statistics", type: :system do
     before { login_as admin }
 
     it "overview page" do
-      none_visible_episode = create(:episode, published_on: 3.weeks.ago, title: "not shown", number: 1)
-      create(:event, episode: none_visible_episode, created_at: 2.weeks.ago)
-
       published_on = 8.days.ago.to_date
       episode = create(:episode, published_on: published_on, title: "Soli Wartenberg", number: 2)
 
@@ -45,6 +42,12 @@ describe "Statistics", type: :system do
             "-",
             "-"]])
       end
+
+      none_visible_episode = create(:episode, published_on: 3.weeks.ago, title: "not shown", number: 1)
+      create(:event, episode: none_visible_episode, created_at: 2.weeks.ago)
+
+      visit "/"
+      click_on "Statistics"
 
       within "#overall_statistics" do
         expect(page).to have_selector "h2", text: "Overall Statistics"
