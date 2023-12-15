@@ -1,11 +1,13 @@
 Rollbar.configure do |config|
   # Without configuration, Rollbar is enabled in all environments.
   # To disable in specific environments, set config.enabled=false.
+  rollbar_enabled = !Rails.env.local?
+  rollbar_env = ENV["ROLLBAR_ENV"].presence || Rails.env
 
   config.access_token = ENV["ROLLBAR_ACCESS_TOKEN"]
 
   # Here we'll disable in 'test':
-  config.enabled = false if Rails.env.test?
+  config.enabled = rollbar_enabled
 
   # By default, Rollbar will try to call the `current_user` controller method
   # to fetch the logged-in user object, and then call that object's `id`
@@ -65,5 +67,18 @@ Rollbar.configure do |config|
   # environment variable like this: `ROLLBAR_ENV=staging`. This is a recommended
   # setup for Heroku. See:
   # https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment
-  config.environment = ENV["ROLLBAR_ENV"].presence || Rails.env
+
+  config.environment = rollbar_env
+
+  # JavaScript error tracking
+  config.js_enabled = rollbar_enabled
+  config.js_options = {
+    accessToken: ENV["ROLLBAR_ACCESS_TOKEN"],
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    autoInstrument: true,
+    payload: {
+      environment: rollbar_env
+    }
+  }
 end

@@ -41,7 +41,7 @@ class EpisodesController < ApplicationController
 
           end
 
-          redirect_to @episode.file_url
+          redirect_to @episode.file_url, allow_other_host: true
         end
       end
     end
