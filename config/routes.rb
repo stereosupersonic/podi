@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     resources :episodes, only: %w[index show edit update new create]
     resources :events, only: %w[index show]
     resource :setting, only: %w[edit update]
-    resource :info, only: %w[show]
+    resource :info, only: %w[show] do
+      post :trigger_exception
+    end
   end
 
   resources :episodes, only: %i[show index], param: :slug

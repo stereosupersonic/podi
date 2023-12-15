@@ -1,16 +1,27 @@
 %h1 Info
 
-.card
-  .card-body
-    %h3.card-title Data
-    %p.card-text
-      = "Ruby-Version: #{`ruby -v`}"
-      %br
-      = "Rails-Version: #{Rails.version}"
+.bg-light
+  .container
+    .row
+      .card.mt-1{style: "width: 70rem;"}
+        .card-body
+          %h3.card-title Data
+          %p.card-text
+            = "Ruby-Version: #{`ruby -v`}"
+            %br
+            = "Rails-Version: #{Rails.version}"
+    .row
+      .card.mt-2{style: "width: 70rem;"}
+        .card-body
+          %h3.card-title ENV
+          %p.card-text= debug ENV.to_h.to_yaml
+    .row
+      .card.mt-2{style: "width: 70rem;"}
 
-.card
-  .card-body
-    %h3.card-title ENV
-    %p.card-text= debug ENV.to_h.to_yaml
+        .card-body
+          %h5.card-title Execption Testing
+          = link_to "Raise rails exception", trigger_exception_admin_info_path, data: { turbo_method: "post" }, class: 'card-link btn btn-danger'
 
+          = link_to "Raise js exception","#", onclick: "throw new Error('My js error message')", class: 'card-link btn btn-danger raise-js-exception'
+%br
 = back_button root_path
