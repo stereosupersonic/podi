@@ -4,8 +4,6 @@
       = link_to image_tag(episode.artwork_url(size: 200), class: "image img-thumbnail img-fluid d-block", alt: "episode artwork"), episode.episonde_url
     .col-md
       %h3.font-weight-light
-        = link_to "Episode #{episode.number}", episode.episonde_url
-      %h4.font-weight-light
         = link_to episode.title, episode.episonde_url
       .text-white.mb-3
         %span.text-black-opacity-05
@@ -14,7 +12,7 @@
               = episode.published_on
 
       %p.mb-4
-        = render_markdown truncate(episode.description, length: 200) { link_to " mehr", episode.episonde_url, class: "font-weight-bold" }
+        = render_markdown truncate(episode.description, length: 500) { link_to " mehr", episode.episonde_url, class: "font-weight-bold" }
 
       -# .player
       -#   = render "shared/audio", episode: episode
