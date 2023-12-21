@@ -6,6 +6,7 @@
         %tr
           %th Titel
           %th=link_to("Published", sort_current: "published_on")
+          %th=link_to("last 12h", sort_current: "a12h")
           %th=link_to("last 24h", sort_current: "a1d")
           %th=link_to("last 3 days", sort_current: "a3d")
           %th=link_to("last 1 week", sort_current: "a7d")
@@ -18,6 +19,7 @@
           %tr{id: "episode-#{es.episode_id}", class: "text-nowrap"}
             %td=es.title
             %td=time_ago_in_words(es.published_on)
+            %td=es.a12h
             %td=es.a1d
             %td=es.a3d
             %td=es.a7d
@@ -35,6 +37,7 @@
         %tr
           %th Titel
           %th=link_to("Published", sort: "published_on")
+          %th=link_to("After 12h", sort: "a12h")
           %th=link_to("After 1 day", sort: "a1d")
           %th=link_to("After 3 days", sort: "a3d")
           %th=link_to("After 1 week", sort: "a7d")
@@ -48,6 +51,7 @@
           %tr{id: "episode-#{es.episode_id}", class: "text-nowrap"}
             %td=es.title
             %td=time_ago_in_words(es.published_on)
+            %td=es.a12h
             %td=es.a1d
             %td=es.a3d
             %td=es.a7d
