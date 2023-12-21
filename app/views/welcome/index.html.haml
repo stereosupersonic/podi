@@ -1,3 +1,8 @@
+.site-section.bg-light
+  .container
+    .row
+      .col-md-12.text-center
+        = render "shared/subscribe_buttons"
 -# **************************
 -# background logo
 -# **************************
@@ -13,27 +18,6 @@
 .site-section.bg-light
   .container
     .row.mb-3
-      .col-md-12.text-center
-        .subscribe-buttons.justify-content-center.text-white
-          -if current_setting.itunes_url.present?
-            = link_to(current_setting.itunes_url.strip, class: "btn btn-secondary rounded-pill") do
-              %i.fab.fa-apple
-              Apple Podcast
-          -if current_setting.spotify_url.present?
-            = link_to(current_setting.spotify_url.strip, class: " btn btn-secondary rounded-pill") do
-              %i.fab.fa-spotify
-              Spotify
-          -if current_setting.google_url.present?
-            = link_to(current_setting.google_url.strip, class: " btn btn-secondary  rounded-pill") do
-              %i.fab.fa-google
-              Google
-          -if current_setting.youtube_url.present?
-            = link_to(current_setting.youtube_url.strip, class: " btn btn-secondary rounded-pill") do
-              %i.fab.fa-youtube
-              Youtube
-          = link_to(episodes_path, class: " btn btn-secondary rounded-pill") do
-            Alle Episoden
-
     - if @episodes.present?
       #last-episodes
         .row.mb-3
@@ -47,6 +31,6 @@
 
       .container
         .row
-          .col.text-center
-            = link_to(episodes_path, class: " btn btn-secondary rounded-pill") do
+          .col.text-center.mb-2
+            = link_to(episodes_path, class: "btn btn-secondary rounded-pill") do
               Alle Episoden

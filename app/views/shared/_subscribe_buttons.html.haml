@@ -1,0 +1,19 @@
+.subscribe-buttons.justify-content-center.text-white.pt-3
+  -if current_setting.itunes_url.present?
+    = link_to(current_setting.itunes_url.strip, class: "btn btn-secondary rounded-pill") do
+      %i.fab.fa-apple
+      Apple Podcast
+  -if current_setting.spotify_url.present?
+    = link_to(current_setting.spotify_url.strip, class: " btn btn-secondary rounded-pill") do
+      %i.fab.fa-spotify
+      Spotify
+  -if current_setting.google_url.present?
+    = link_to(current_setting.google_url.strip, class: " btn btn-secondary  rounded-pill") do
+      %i.fab.fa-google
+      Google
+  -if current_setting.youtube_url.present?
+    = link_to(current_setting.youtube_url.strip, class: " btn btn-secondary rounded-pill") do
+      %i.fab.fa-youtube
+      Youtube
+  = link_to(episodes_path, class: " btn btn-secondary rounded-pill") do
+    Alle Episoden

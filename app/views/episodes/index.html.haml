@@ -2,6 +2,9 @@
 - content_for(:html_title) { title }
 .container-fluid
 
+  .row
+    .col-md-12.text-center
+      = render "shared/subscribe_buttons"
   .row.mt-3.mb-3.align-items-center.justify-content-center.text-center
     .col-md-8
       %h1.font-weight-light.mb-2.display-4
@@ -11,4 +14,6 @@
       .col-md-12
         = render "shared/episode", episode: episode
 
-  = will_paginate @episodes_records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
+  .row
+    .col-md-3.offset-md-5
+      = will_paginate @episodes_records, page_links: false, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, previous_label: '←', next_label: '→'
