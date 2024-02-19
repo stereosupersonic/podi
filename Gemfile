@@ -81,3 +81,7 @@ group :test do
   gem "compare-xml"
   gem "simplecov", require: false
 end
+
+gem "ransack", "~> 4.1"
+
+gem "pg_search", "~> 2.3"

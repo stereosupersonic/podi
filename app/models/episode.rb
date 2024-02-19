@@ -51,6 +51,38 @@ class Episode < ApplicationRecord
 
   scope :published, -> { visible.where(active: true).where("published_on <= ?", Time.zone.today).order(number: :desc) }
   scope :visible, -> { where(visible: true) }
+  def self.ransackable_attributes(auth_object = nil)
+    ["description", "nodes", "slug", "title", "chapter_marks"]
+  end
+
+  include PgSearch::Model
+  pg_search_scope :search_me,
+    against: ["description", "nodes", "slug", "title", "chapter_marks"],
+    using: {
+      # serach for postfix and prefix
+
+      #  tsearch: { prefix: true },
+      trigram: {word_similarity: true}
+    }
+
+  pg_search_scope :search_me2,
+    against: ["description", "nodes", "slug", "title", "chapter_marks"],
+    using: {
+      # serach for postfix and prefix
+
+      tsearch: {prefix: true}
+
+    }
+
+  pg_search_scope :search_me3,
+    against: ["description", "nodes", "slug", "title", "chapter_marks"],
+    using: {
+      # serach for postfix and prefix
+
+      tsearch: {prefix: true},
+      trigram: {word_similarity: true}
+    }
+  #  x = Episode.ransack(title_i_cont: query, description_i_cont: query, chapter_marks_i_cont: query, m: 'or').result
 
   validates(:number, :title, :description, :nodes, :published_on, presence: true)
 
