@@ -73,4 +73,6 @@ Rails.application.configure do
   config.cloudinary_api_secret = nil
 
   config.active_job.queue_adapter = :inline # test ?
+
+  config.active_support.deprecation = :raise
 end
