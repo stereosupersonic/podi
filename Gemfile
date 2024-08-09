@@ -57,9 +57,6 @@ group :development do
   gem "rack-mini-profiler", "~> 2.0"
 
   gem "rubocop-capybara", require: false
-  gem "rubocop-factory_bot", require: false
-  gem "rubocop-performance", require: false
-  gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
 
   gem "rubocop-rails-omakase", require: false

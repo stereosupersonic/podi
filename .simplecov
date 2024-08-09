@@ -1,6 +1,6 @@
 SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
-  SimpleCov::Formatter::HTMLFormatter
-])
+                                                                  SimpleCov::Formatter::HTMLFormatter
+                                                                ])
 SimpleCov.start "rails" do
   coverage_dir "coverage"
 

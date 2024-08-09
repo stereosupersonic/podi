@@ -1,6 +1,6 @@
 module Admin
   class EpisodesController < BaseController
-    skip_before_action :authorize_admin, only: [:show]
+    skip_before_action :authorize_admin, only: [ :show ]
 
     def index
       @episode_records = Episode.order("number desc")
@@ -47,7 +47,7 @@ module Admin
     def build_slug(episode)
       return if episode.number.blank? || episode.title.blank?
 
-      "#{episode.number.to_s.rjust(3, "0")} #{episode.title}".parameterize(locale: :de)
+      "#{episode.number.to_s.rjust(3, '0')} #{episode.title}".parameterize(locale: :de)
     end
 
     def create_params

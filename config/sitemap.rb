@@ -4,7 +4,7 @@ host = if Rails.env.test?
 elsif Rails.env.development?
   "localhost:3000"
 else
-  ENV["DEFAULT_URL_HOST"] || "#{ENV.fetch("HEROKU_APP_NAME")}.herokuapp.com"
+  ENV["DEFAULT_URL_HOST"] || "#{ENV.fetch('HEROKU_APP_NAME')}.herokuapp.com"
 end
 
 protocol = Rails.application.config.force_ssl ? "https" : "http"
@@ -40,6 +40,6 @@ if Rails.application.config.aws_bucket_name.present?
 
 else
 
-  puts "ERROR: aws s3 is not cofigured"
+  Rails.logger.debug "ERROR: aws s3 is not cofigured"
 
 end

@@ -12,11 +12,11 @@ RSpec.describe ConvertChaptersToText do
                  00:33:06.001 \tRapid Fire Questions\r\n
                  00:53:58.001 \tOutro\r\n)
     expect(described_class.call(chapters: chapters)).to eq(
-      ["(00:00:01) Intro",
+      [ "(00:00:01) Intro",
         "(00:01:00) Begrüßung",
         "(00:01:31) Wer hatte die Idee?",
         "(00:33:06) Rapid Fire Questions",
-        "(00:53:58) Outro"]
+        "(00:53:58) Outro" ]
     )
   end
 
@@ -25,9 +25,9 @@ RSpec.describe ConvertChaptersToText do
                  01:31.001 \tWer hatte die Idee? \r
                  53:58.001 \tOutro\r\n)
     expect(described_class.call(chapters: chapters)).to eq(
-      ["(00:01) Intro",
+      [ "(00:01) Intro",
         "(01:31) Wer hatte die Idee?",
-        "(53:58) Outro"]
+        "(53:58) Outro" ]
     )
   end
 end

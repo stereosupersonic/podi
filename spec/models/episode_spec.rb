@@ -41,13 +41,13 @@ RSpec.describe Episode, type: :model do
     it "find active published ones the past" do
       episode = create(:episode, published_on: 1.day.ago, active: true)
 
-      expect(described_class.published).to eq([episode])
+      expect(described_class.published).to eq([ episode ])
     end
 
     it "find active published ones from today" do
       episode = create(:episode, published_on: Time.zone.today, active: true)
 
-      expect(described_class.published).to eq([episode])
+      expect(described_class.published).to eq([ episode ])
     end
 
     it "dont find inactive" do
@@ -73,7 +73,7 @@ RSpec.describe Episode, type: :model do
       episode3 = create(:episode, number: 3)
       episode2 = create(:episode, number: 2)
 
-      expect(described_class.published).to eq([episode3, episode2, episode1])
+      expect(described_class.published).to eq([ episode3, episode2, episode1 ])
     end
   end
 end

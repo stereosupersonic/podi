@@ -7,11 +7,9 @@ class WelcomeController < ApplicationController
     fresh_when @episodes_records, public: true
   end
 
-  def imprint
-  end
+  def imprint; end
 
-  def privacy
-  end
+  def privacy; end
 
   def epsiode
     epsiode_id = params[:id].to_i.positive? ? params[:id].to_i : nil
