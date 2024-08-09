@@ -12,7 +12,7 @@ RSpec.configure do |config|
     driven_by :rack_test
   end
 
-  config.before(:each, type: :system, js: true) do
+  config.before(:each, :js, type: :system) do
     # https://api.rubyonrails.org/v6.0.1/classes/ActionDispatch/SystemTestCase.html#method-c-driven_by
     browser = ENV["SELENIUM_BROWSER"].presence&.to_sym || :headless_chrome
     driven_by :selenium, using: browser, screen_size: [ 1600, 1400 ]

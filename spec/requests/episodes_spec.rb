@@ -295,7 +295,7 @@ RSpec.describe "episodes", type: :request do
         )
       end
 
-      it "logs valid data without a user_agent " do
+      it "logs valid data without a user_agent" do
         get episode.mp3_url
         perform_enqueued_jobs_now!
 

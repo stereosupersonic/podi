@@ -74,7 +74,7 @@ describe "Events", type: :system do
     end
   end
 
-  context "when logged in  as user" do
+  context "when logged in as user" do
     let(:user) { create(:user) }
 
     before { login_as user }

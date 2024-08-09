@@ -72,7 +72,7 @@ describe "Setting", type: :system do
     end
   end
 
-  context "when logged in  as user" do
+  context "when logged in as user" do
     let(:user) { create(:user) }
 
     before { login_as user }
@@ -83,7 +83,7 @@ describe "Setting", type: :system do
       expect(page).not_to have_link "Setting"
     end
 
-    it "gets  Access Denied for admin functions" do
+    it "gets Access Denied for admin functions" do
       visit "/admin/setting/edit"
       expect(page).to have_content "Access Denied"
     end
@@ -96,7 +96,7 @@ describe "Setting", type: :system do
       expect(page).not_to have_link "setting"
     end
 
-    it "gets  Access Denied for admin functions" do
+    it "gets Access Denied for admin functions" do
       visit "/admin/setting/edit"
       expect(page).to have_content "Access Denied"
     end
