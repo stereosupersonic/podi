@@ -41,7 +41,6 @@ describe "Setting", type: :system do
       fill_in "Instagram url", with: "https://test.com/instagram"
       fill_in "Itunes url", with: "https://test.com/itunes"
       fill_in "Spotify url", with: "https://test.com/spotify"
-      fill_in "Google url", with: "https://test.com/google"
 
       click_on "Save"
 
@@ -68,7 +67,6 @@ describe "Setting", type: :system do
       expect(setting.instagram_url).to eq "https://test.com/instagram"
       expect(setting.itunes_url).to eq "https://test.com/itunes"
       expect(setting.spotify_url).to eq "https://test.com/spotify"
-      expect(setting.google_url).to eq "https://test.com/google"
     end
   end
 

@@ -35,8 +35,8 @@ RSpec.describe Setting, type: :model do
     assert setting.save!
   end
 
-  %w[logo_url default_episode_artwork_url facebook_url youtube_url twitter_url instagram_url itunes_url spotify_url
-     google_url].each do |url|
+  %w[logo_url default_episode_artwork_url facebook_url youtube_url twitter_url instagram_url itunes_url
+     spotify_url].each do |url|
     it "validates for a valid #{url}" do
       setting = build(:setting)
       setting.send("#{url}=", "invalid url")
