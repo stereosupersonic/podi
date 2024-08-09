@@ -19,7 +19,7 @@ RSpec.describe "episodes", type: :request do
         00:04:34.001  Outro
       MARKDOWN
       episode2 = create(:episode, number: 2, title: "Anton Müller",
-        nodes: nodes, chapter_marks: chapter_marks)
+                                  nodes: nodes, chapter_marks: chapter_marks)
 
       create(:episode, number: 3, title: "Future", published_on: 1.day.since)
       create(:episode, number: 4, title: "inactive", active: false)
@@ -260,7 +260,7 @@ RSpec.describe "episodes", type: :request do
 
       it "logs valid data" do
         ua = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.17 Safari/537.36"
-        headers = {"HTTP_USER_AGENT" => ua}
+        headers = { "HTTP_USER_AGENT" => ua }
         expect(FetchGeoData).to receive(:call).with(ip_address: "127.0.0.1").and_return build(:event).geo_data
         downloaded_at = Time.current
         travel_to downloaded_at do
@@ -295,7 +295,7 @@ RSpec.describe "episodes", type: :request do
         )
       end
 
-      it "logs valid data without a user_agent " do
+      it "logs valid data without a user_agent" do
         get episode.mp3_url
         perform_enqueued_jobs_now!
 
@@ -310,14 +310,14 @@ RSpec.describe "episodes", type: :request do
         episode.update downloads_count: 0
 
         expect do
-          get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
+          get episode.mp3_url, params: {}, env: { "REMOTE_ADDR": "192.168.1.2" }
           sleep 1
-          get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
-          get episode2.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
-          get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
-          get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.1"}
+          get episode.mp3_url, params: {}, env: { "REMOTE_ADDR": "192.168.1.2" }
+          get episode2.mp3_url, params: {}, env: { "REMOTE_ADDR": "192.168.1.2" }
+          get episode.mp3_url, params: {}, env: { "REMOTE_ADDR": "192.168.1.2" }
+          get episode.mp3_url, params: {}, env: { "REMOTE_ADDR": "192.168.1.1" }
           travel_to 121.seconds.from_now do
-            get episode.mp3_url, params: {}, env: {"REMOTE_ADDR": "192.168.1.2"}
+            get episode.mp3_url, params: {}, env: { "REMOTE_ADDR": "192.168.1.2" }
           end
         end.to have_enqueued_job(Mp3EventJob).exactly(4)
         perform_enqueued_jobs_now!

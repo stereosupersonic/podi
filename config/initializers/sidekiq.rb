@@ -1,1 +1,1 @@
-Sidekiq.default_job_options = {"backtrace" => true}
+Sidekiq.default_job_options = { "backtrace" => true }

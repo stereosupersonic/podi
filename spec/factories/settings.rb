@@ -9,7 +9,6 @@
 #  description                 :text             not null
 #  email                       :string           not null
 #  facebook_url                :string
-#  google_url                  :string
 #  instagram_url               :string
 #  itunes_category             :string           not null
 #  itunes_language             :string           not null
@@ -65,7 +64,5 @@ FactoryBot.define do
     itunes_url { "https://podcasts.apple.com/de/podcast/wartenberger-podcast/id1546458413" }
 
     spotify_url { "https://open.spotify.com/show/3EkNs5dt2Uix1oRWREyTOF" }
-
-    google_url { "https://www.google.com/podcasts?feed=aHR0cHM6Ly93d3cud2FydGVuYmVyZ2VyLmRlL2VwaXNvZGVzLnJzcw%3D%3D" }
   end
 end

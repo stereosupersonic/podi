@@ -21,7 +21,7 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
   let(:episode) { create(:episode, nodes: nodes, chapter_marks: chapter_marks) }
   let(:presenter) { described_class.new(episode) }
 
-  it "generate a valid markdown  chapter_list" do
+  it "generate a valid markdown chapter_list" do
     expect(presenter.chapter_list).to eq(
       <<~MARKDOWN.strip
         (00:00:00) Intro

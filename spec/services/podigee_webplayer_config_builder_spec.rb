@@ -13,7 +13,7 @@ RSpec.describe PodigeeWebplayerConfigBuilder do
           "chaptermarks" => nil,
           "coverUrl" => nil,
           "description" => nil,
-          "media" => {"mp3" => "http://wartenberger.test.com/episodes/#{episode.slug}.mp3"},
+          "media" => { "mp3" => "http://wartenberger.test.com/episodes/#{episode.slug}.mp3" },
           "subtitle" => nil,
           "title" => nil,
           "url" => "http://wartenberger.test.com/episodes/#{episode.slug}"
@@ -44,9 +44,9 @@ RSpec.describe PodigeeWebplayerConfigBuilder do
     hash_config = JSON.parse(json_config)
 
     expect(hash_config["episode"]["chaptermarks"]).to eq(
-      [{"start" => "00:00:01", "title" => "Intro"},
-        {"start" => "00:00:41", "title" => "Begrüßung der Mannschaft"},
-        {"start" => "00:01:30", "title" => "Vorstellung"}]
+      [ { "start" => "00:00:01", "title" => "Intro" },
+        { "start" => "00:00:41", "title" => "Begrüßung der Mannschaft" },
+        { "start" => "00:01:30", "title" => "Vorstellung" } ]
     )
   end
 end

@@ -5,7 +5,7 @@ module Analyzer
     end
 
     def metadata
-      {duration: extract_mp3_length}
+      { duration: extract_mp3_length }
     end
 
     private

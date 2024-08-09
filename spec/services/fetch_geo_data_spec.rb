@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe FetchGeoData do
-  before { stub_const("ENV", {"GEOIP_LICENSE_KEY" => "x", "GEOIP_ACCOUNT" => "x"}) }
+  before { stub_const("ENV", { "GEOIP_LICENSE_KEY" => "x", "GEOIP_ACCOUNT" => "x" }) }
 
   it "raises an error if config is missing" do
-    stub_const("ENV", {"GEOIP_LICENSE_KEY" => "", "GEOIP_ACCOUNT" => "x"})
+    stub_const("ENV", { "GEOIP_LICENSE_KEY" => "", "GEOIP_ACCOUNT" => "x" })
     expect do
       described_class.call(ip_address: "127.0.0.1")
     end.to raise_error("MaxMind::GeoIP2 GEOIP_ACCOUNT or GEOIP_LICENSE_KEY is not set")

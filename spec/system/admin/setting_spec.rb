@@ -41,7 +41,6 @@ describe "Setting", type: :system do
       fill_in "Instagram url", with: "https://test.com/instagram"
       fill_in "Itunes url", with: "https://test.com/itunes"
       fill_in "Spotify url", with: "https://test.com/spotify"
-      fill_in "Google url", with: "https://test.com/google"
 
       click_on "Save"
 
@@ -68,11 +67,10 @@ describe "Setting", type: :system do
       expect(setting.instagram_url).to eq "https://test.com/instagram"
       expect(setting.itunes_url).to eq "https://test.com/itunes"
       expect(setting.spotify_url).to eq "https://test.com/spotify"
-      expect(setting.google_url).to eq "https://test.com/google"
     end
   end
 
-  context "when logged in  as user" do
+  context "when logged in as user" do
     let(:user) { create(:user) }
 
     before { login_as user }
@@ -83,7 +81,7 @@ describe "Setting", type: :system do
       expect(page).not_to have_link "Setting"
     end
 
-    it "gets  Access Denied for admin functions" do
+    it "gets Access Denied for admin functions" do
       visit "/admin/setting/edit"
       expect(page).to have_content "Access Denied"
     end
@@ -96,7 +94,7 @@ describe "Setting", type: :system do
       expect(page).not_to have_link "setting"
     end
 
-    it "gets  Access Denied for admin functions" do
+    it "gets Access Denied for admin functions" do
       visit "/admin/setting/edit"
       expect(page).to have_content "Access Denied"
     end

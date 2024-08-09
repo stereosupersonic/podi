@@ -20,22 +20,22 @@ describe "Events", type: :system do
       expect(page).to have_text("2 Events")
 
       expect(page).to have_table_with_exact_data([
-        ["Date",
-          "Episode",
-          "Info",
-          "Geo Info",
-          ""],
-        ["01.01.2021 21:00",
-          "001 Soli Wartenberg",
-          "127.0.0.1 - Chrome - desktop",
-          "Germany - Bavaria - 85368 - Moosburg - Deutsche Telekom AG",
-          "Show"],
-        ["11.07.2012 21:00",
-          "001 Soli Wartenberg",
-          "127.0.0.1 - Chrome - desktop",
-          "",
-          "Show"]
-      ])
+                                                   [ "Date",
+                                                     "Episode",
+                                                     "Info",
+                                                     "Geo Info",
+                                                     "" ],
+                                                   [ "01.01.2021 21:00",
+                                                     "001 Soli Wartenberg",
+                                                     "127.0.0.1 - Chrome - desktop",
+                                                     "Germany - Bavaria - 85368 - Moosburg - Deutsche Telekom AG",
+                                                     "Show" ],
+                                                   [ "11.07.2012 21:00",
+                                                     "001 Soli Wartenberg",
+                                                     "127.0.0.1 - Chrome - desktop",
+                                                     "",
+                                                     "Show" ]
+                                                 ])
       within "#event-#{event.id}" do
         click_on "Show"
       end
@@ -60,21 +60,21 @@ describe "Events", type: :system do
       expect(page).to have_text("1 Events")
 
       expect(page).to have_table_with_exact_data([
-        ["Date",
-          "Episode",
-          "Info",
-          "Geo Info",
-          ""],
-        ["01.01.2021 21:00",
-          "001 Soli Wartenberg",
-          "127.0.0.1 - Chrome - desktop",
-          "Germany - Bavaria - 85368 - Moosburg - Deutsche Telekom AG",
-          "Show"]
-      ])
+                                                   [ "Date",
+                                                     "Episode",
+                                                     "Info",
+                                                     "Geo Info",
+                                                     "" ],
+                                                   [ "01.01.2021 21:00",
+                                                     "001 Soli Wartenberg",
+                                                     "127.0.0.1 - Chrome - desktop",
+                                                     "Germany - Bavaria - 85368 - Moosburg - Deutsche Telekom AG",
+                                                     "Show" ]
+                                                 ])
     end
   end
 
-  context "when logged in  as user" do
+  context "when logged in as user" do
     let(:user) { create(:user) }
 
     before { login_as user }

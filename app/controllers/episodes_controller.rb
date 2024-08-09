@@ -19,7 +19,8 @@ class EpisodesController < ApplicationController
     episode_record ||= Episode.visible.find_by!(number: params[:slug][(/^\d+/)].to_i)
 
     @episode = EpisodePresenter.new episode_record
-    if stale? episode_record, public: true
+    return unless stale? episode_record, public: true
+
       respond_to do |format|
         # ETag caching https://api.rubyonrails.org/classes/ActionController/ConditionalGet.html#method-i-stale-3F
         format.html
@@ -44,7 +45,6 @@ class EpisodesController < ApplicationController
           redirect_to @episode.file_url, allow_other_host: true
         end
       end
-    end
   end
 
   private

@@ -48,11 +48,11 @@ Rails.application.configure do
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new($stdout)
-    .tap { |logger| logger.formatter = ::Logger::Formatter.new }
-    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+                                       .tap { |logger| logger.formatter = ::Logger::Formatter.new }
+                                       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [:request_id]
+  config.log_tags = [ :request_id ]
 
   # Info include generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
@@ -99,13 +99,13 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.cache_store = :mem_cache_store,
-    (ENV["MEMCACHIER_SERVERS"] || "").split(","),
-    {username: ENV["MEMCACHIER_USERNAME"],
-     password: ENV["MEMCACHIER_PASSWORD"],
-     failover: true,
-     socket_timeout: 1.5,
-     socket_failure_delay: 0.2,
-     down_retry_delay: 60}
+                       (ENV["MEMCACHIER_SERVERS"] || "").split(","),
+                       { username: ENV["MEMCACHIER_USERNAME"],
+                         password: ENV["MEMCACHIER_PASSWORD"],
+                         failover: true,
+                         socket_timeout: 1.5,
+                         socket_failure_delay: 0.2,
+                         down_retry_delay: 60 }
   config.aws_access_key = ENV["S3_ACCESS_KEY"]
   config.aws_secret_key = ENV["S3_SECRET_KEY"]
   config.aws_bucket_name = ENV["S3_BUCKET_NAME"]

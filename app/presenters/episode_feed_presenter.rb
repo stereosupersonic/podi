@@ -87,7 +87,7 @@ class EpisodeFeedPresenter < EpisodePresenter
   end
 
   def show_notes
-    ["### Show Notes", o.nodes.presence].join("\n")
+    [ "### Show Notes", o.nodes.presence ].join("\n")
   end
 
   def sanitized_chapter_marks

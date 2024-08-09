@@ -7,7 +7,7 @@ FactoryBot.create :user, email: "joe@test.com", password: "test123", password_co
 FactoryBot.create :user, :admin, email: "admin@test.com", password: "test123", password_confirmation: "test123"
 
 episode1 = FactoryBot.create :episode, published_on: 1.day.ago, number: 2, title: "Anton Müller",
-  artwork_url: "https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/002/002-anton-mueller.png"
+                                       artwork_url: "https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/002/002-anton-mueller.png"
 episode2 = FactoryBot.create :episode, title: "Markus Loibl", number: 1, published_on: 1.month.ago, slug: "001-markus"
 
 FactoryBot.create :event, episode: episode1, downloaded_at: Time.current

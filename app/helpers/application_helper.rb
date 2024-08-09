@@ -38,7 +38,7 @@ module ApplicationHelper
   end
 
   def edit_button(link, text = "Edit", options = {})
-    link = link.is_a?(ActiveRecord::Base) ? [:edit, link] : link
+    link = link.is_a?(ActiveRecord::Base) ? [ :edit, link ] : link
     options.reverse_merge! class: "btn btn-primary"
     button_with_icon link, text, "pencil-alt", options
   end
@@ -46,12 +46,12 @@ module ApplicationHelper
   def submit_button(text = "Save", options = {})
     options.reverse_merge! class: "btn btn-success", type: "submit"
     button_tag options do
-      icon_tag(:check) + safe_join([text])
+      icon_tag(:check) + safe_join([ text ])
     end
   end
 
   def remove_button(link, text = "Remove", options = {})
-    options.reverse_merge! data: {confirm: "Are you sure?"}, class: "btn btn-danger"
+    options.reverse_merge! data: { confirm: "Are you sure?" }, class: "btn btn-danger"
     button_with_icon link, text, "trash", options
   end
 

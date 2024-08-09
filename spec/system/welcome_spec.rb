@@ -188,7 +188,7 @@ describe "welcome", type: :system do
       expect(page).to have_link "Logout"
     end
 
-    it "should logout an user" do
+    it "logouts an user" do
       visit "/"
 
       click_link "Logout"

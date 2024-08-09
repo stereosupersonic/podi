@@ -34,5 +34,5 @@ Rails.application.routes.draw do
 
   get "/sitemap.xml.gz", to: redirect("https://wartenberger-podcast.s3.amazonaws.com/sitemap.xml.gz")
   # episode shortcut /006 or /2
-  get ":id", to: "welcome#epsiode", constraints: {id: /\d+/}
+  get ":id", to: "welcome#epsiode", constraints: { id: /\d+/ }
 end

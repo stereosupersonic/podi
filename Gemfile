@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
@@ -53,13 +55,7 @@ group :development do
   gem "haml_lint"
   gem "listen", "~> 3.3"
   gem "rack-mini-profiler", "~> 2.0"
-
-  gem "rubocop"
-  gem "rubocop-capybara", require: false
-  gem "rubocop-factory_bot", require: false
-  gem "rubocop-performance", require: false
-  gem "rubocop-rails", require: false
-  gem "rubocop-rspec", require: false
+  gem "rubocop-rails-omakase", require: false
 end
 
 group :development, :test do
@@ -80,4 +76,5 @@ group :test do
   gem "codecov", require: false
   gem "compare-xml"
   gem "simplecov", require: false
+  gem "super_diff", "~> 0.12.1"
 end

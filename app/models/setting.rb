@@ -9,7 +9,6 @@
 #  description                 :text             not null
 #  email                       :string           not null
 #  facebook_url                :string
-#  google_url                  :string
 #  instagram_url               :string
 #  itunes_category             :string           not null
 #  itunes_language             :string           not null
@@ -44,7 +43,6 @@ class Setting < ApplicationRecord
   validates(:instagram_url, url: true)
   validates(:itunes_url, url: true)
   validates(:spotify_url, url: true)
-  validates(:google_url, url: true)
 
   def self.current
     Setting.last || raise("no setting")

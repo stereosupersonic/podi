@@ -21,15 +21,15 @@ class PodigeeWebplayerConfigBuilder
         # Transcript: {},
         SubscribeBar: {}
       },
-      episode: {media: {
-                  mp3: episode.mp3_url
-                },
-                coverUrl: nil, # episode.artwork_url,
-                title: (@options[:title] ? episode.title : nil),
-                subtitle: nil,
-                url: episode.episonde_url,
-                description: (@options[:info] ? episode.description : nil),
-                chaptermarks: chapter_marks}
+      episode: { media: {
+                   mp3: episode.mp3_url
+                 },
+                 coverUrl: nil, # episode.artwork_url,
+                 title: (@options[:title] ? episode.title : nil),
+                 subtitle: nil,
+                 url: episode.episonde_url,
+                 description: (@options[:info] ? episode.description : nil),
+                 chaptermarks: chapter_marks }
     }.to_json
   end
 
@@ -54,7 +54,7 @@ class PodigeeWebplayerConfigBuilder
         next if line.blank?
 
         start, title = *line.squish.split(/\s+/, 2)
-        result << {start: start, title: title}
+        result << { start: start, title: title }
       end
     end
   end
