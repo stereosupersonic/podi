@@ -9,7 +9,6 @@
 #  description                 :text             not null
 #  email                       :string           not null
 #  facebook_url                :string
-#  google_url                  :string
 #  instagram_url               :string
 #  itunes_category             :string           not null
 #  itunes_language             :string           not null
