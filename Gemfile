@@ -55,10 +55,6 @@ group :development do
   gem "haml_lint"
   gem "listen", "~> 3.3"
   gem "rack-mini-profiler", "~> 2.0"
-
-  gem "rubocop-capybara", require: false
-  gem "rubocop-rspec", require: false
-
   gem "rubocop-rails-omakase", require: false
 end
 
@@ -80,4 +76,5 @@ group :test do
   gem "codecov", require: false
   gem "compare-xml"
   gem "simplecov", require: false
+  gem "super_diff", "~> 0.12.1"
 end

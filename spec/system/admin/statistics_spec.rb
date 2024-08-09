@@ -34,8 +34,8 @@ describe "Statistics", type: :system do
                                                      "last 24 month"
                                                    ],
                                                      [ "Soli Wartenberg",
-                                                       "9 days",
-                                                       "1",
+                                                       "8 days",
+                                                       "-",
                                                        "1",
                                                        "2",
                                                        "3",
@@ -56,7 +56,7 @@ describe "Statistics", type: :system do
         expect(page).to have_table_with_exact_data([
                                                      [ "Titel", "Published", "After 12h", "After 1 day", "After 3 days", "After 1 week", "After 30 days",
                                                        "After 60 days", "After 12 month", "After 24 month", "overall" ],
-                                                     [ "Soli Wartenberg", "9 days", "-", "-", "1", "2", "3", "3", "3",
+                                                     [ "Soli Wartenberg", "8 days", "-", "-", "1", "2", "3", "3", "3",
                                                        "3", "3" ]
                                                    ])
       end

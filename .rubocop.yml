@@ -1,21 +1,2 @@
 inherit_gem:
   rubocop-rails-omakase: rubocop.yml
-
-
-require:
-  - rubocop-rails
-  - rubocop-performance
-  - rubocop-rspec
-  - rubocop-capybara
-
-AllCops:
-  # Prevent RuboCop from exploding when it finds an older-than-2.4 .ruby-version
-  DisabledByDefault: false
-  Exclude:
-    - '**/tmp/**/*'
-    - 'db/schema.rb'
-    - '**/vendor/**/*'
-    - '**/node_modules/**/*'
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
