@@ -7,7 +7,7 @@
       .col-md-12
         %h1 Edit Setting
 
-        = simple_form_for([:admin, @setting], method: :patch, html: { class: 'form-horizontal' })do |f|
+        = simple_form_for([ :admin, @setting ], method: :patch, html: { class: "form-horizontal" }) do |f|
           = show_button "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet", "Markdown Help"
           .form-inputs
             = f.input :title, hint: "The show title."
