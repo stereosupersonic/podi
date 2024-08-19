@@ -15,11 +15,8 @@ x-base: &base
     - DATABASE_PORT=5432
     - DATABASE_USERNAME=postgres
     - DATABASE_PASSWORD=postgres
-    - REDIS_URL=redis://redis:6379/0
   depends_on:
     postgres:
-      condition: service_healthy
-    redis:
       condition: service_healthy
 
 services:
@@ -41,19 +38,6 @@ services:
     <<: *base
     command: yarn build --watch
 
-  solid_queue:
-    <<: *base
-    command: bundle exec rake solid_queue:start
-
-  redis:
-    image: redis:latest
-    restart: always
-    volumes:
-      - "redis:/data"
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-
   postgres:
     image: postgres:14-alpine
     volumes:
@@ -67,7 +51,6 @@ services:
       interval: 5s
 volumes:
   postgres:
-  redis:
   bundle:
   rails_cache:
   node_modules:
