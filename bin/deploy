@@ -8,5 +8,5 @@ git checkout master
 # heroku git:remote -a
 git push heroku
 
-heroku run rake db:migrate --trace
-heroku run rake clear_cache --trace
+heroku run rake db:migrate
+heroku run rake clear_cache
