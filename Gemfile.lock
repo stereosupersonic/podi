@@ -370,6 +370,8 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.32.1)
       parser (>= 3.3.1.0)
+    rubocop-capybara (2.21.0)
+      rubocop (~> 1.41)
     rubocop-minitest (0.35.1)
       rubocop (>= 1.61, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
@@ -386,6 +388,8 @@ GEM
       rubocop-minitest
       rubocop-performance
       rubocop-rails
+    rubocop-rspec (3.0.4)
+      rubocop (~> 1.61)
     ruby-mp3info (0.8.10)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
@@ -499,7 +503,9 @@ DEPENDENCIES
   redcarpet
   rollbar
   rspec-rails
+  rubocop-capybara
   rubocop-rails-omakase
+  rubocop-rspec
   ruby-mp3info
   scenic (~> 1.7)
   shrine (~> 3.0)

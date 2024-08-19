@@ -227,7 +227,7 @@ describe "Administrate Episodes", type: :system do
     it "does not have Adminstration link" do
       visit "/"
 
-      expect(page).not_to have_link "Administration"
+      expect(page).to have_no_link "Administration"
     end
 
     it "gets Access Denied for admin functions" do
@@ -240,7 +240,7 @@ describe "Administrate Episodes", type: :system do
     it "does not have Adminstration link" do
       visit "/"
 
-      expect(page).not_to have_link "Administration"
+      expect(page).to have_no_link "Administration"
     end
 
     it "gets Access Denied for admin functions" do

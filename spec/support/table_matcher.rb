@@ -4,7 +4,7 @@ RSpec::Matchers.define :have_table_with_exact_data do |expected|
   end
 
   failure_message do |_actual|
-   SuperDiff.diff(expected, actual_data)
+    SuperDiff.diff(expected, actual_data)
   end
 
   def actual_header

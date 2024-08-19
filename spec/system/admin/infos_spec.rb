@@ -49,7 +49,7 @@ describe "Info", type: :system do
     it "does not have Adminstration link" do
       visit "/"
 
-      expect(page).not_to have_link "Info"
+      expect(page).to have_no_link "Info"
     end
 
     it "gets Access Denied for admin functions" do
@@ -62,7 +62,7 @@ describe "Info", type: :system do
     it "does not have setting link" do
       visit "/"
 
-      expect(page).not_to have_link "setting"
+      expect(page).to have_no_link "setting"
     end
 
     it "gets Access Denied for admin functions" do

@@ -71,7 +71,7 @@ describe "Statistics", type: :system do
     it "does not have the link" do
       visit "/"
 
-      expect(page).not_to have_link "Statistics"
+      expect(page).to have_no_link "Statistics"
     end
 
     it "gets Access Denied for admin functions" do
@@ -84,7 +84,7 @@ describe "Statistics", type: :system do
     it "does not have the link" do
       visit "/"
 
-      expect(page).not_to have_link "Statistics"
+      expect(page).to have_no_link "Statistics"
     end
 
     it "gets Access Denied for admin functions" do
