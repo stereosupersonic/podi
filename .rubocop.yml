@@ -743,10 +743,6 @@ Style/AndOr:
   Enabled: true
   EnforcedStyle: always
 
-Style/ArgumentsForwarding:
-  Enabled: true
-  AllowOnlyRestArgument: true
-
 Style/ArrayJoin:
   Enabled: true
 
