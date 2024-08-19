@@ -26,18 +26,18 @@ jobs:
       run: |
         docker compose -f docker-compose.test.yml ps
         docker compose -f docker-compose.test.yml logs
-        docker compose -f docker-compose.test.yml exec -T app bin/rails db:create --trace
-        docker compose -f docker-compose.test.yml exec -T app bin/rails db:test:prepare --trace
+        docker compose -f docker-compose.test.yml run -T app bin/rails db:create --trace
+        docker compose -f docker-compose.test.yml run -T app bin/rails db:test:prepare --trace
 
     - name: Run rubocop
-      run: docker compose -f docker-compose.test.yml exec -T app bundle exec rubocop
+      run: docker compose -f docker-compose.test.yml run -T app bundle exec rubocop
 
     - name: Scan for common Rails security vulnerabilities using static analysis
-      run: docker compose -f docker-compose.test.yml exec -T app bin/brakeman --no-pager
+      run: docker compose -f docker-compose.test.yml run -T app bin/brakeman --no-pager
 
     - name: Run tests
       run: |
-        docker compose -f docker-compose.test.yml exec -e CI=true -T app bundle exec rspec .
+        docker compose -f docker-compose.test.yml run -e CI=true -T app bundle exec rspec .
 
     - name: Stop containers
       if: always()
