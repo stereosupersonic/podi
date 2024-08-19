@@ -7,6 +7,12 @@ Rails.application.routes.draw do
     get "login", to: "devise/sessions#new"
   end
 
+  get "/404" => "errors#not_found"
+  get "/500" => "errors#internal_error"
+  get "/502" => "errors#internal_error"
+  get "/422" => "errors#unprocessable_entity"
+  get "/503" => "errors#internal_error"
+
   namespace :admin do
     resources :statistics, only: %w[index]
     resources :episodes, only: %w[index show edit update new create]
