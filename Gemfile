@@ -33,7 +33,6 @@ gem "will_paginate-bootstrap4"
 gem "newrelic_rpm"
 gem "rollbar"
 
-gem "dalli"
 gem "ruby-mp3info", require: false
 
 gem "aws-sdk-s3"
@@ -51,6 +50,8 @@ gem "maxmind-geoip2", "~> 1.1"
 
 gem "scenic", "~> 1.7" # for views in db
 
+gem "solid_cache", "~> 0.7.0"
+gem "brakeman", "~> 6.1"
 group :development do
   gem "annotate"
   gem "haml_lint"
@@ -81,5 +82,3 @@ group :test do
   gem "simplecov", require: false
   gem "super_diff", "~> 0.12.1"
 end
-
-gem "brakeman", "~> 6.1"
