@@ -15,7 +15,7 @@ describe "Statistics", type: :system do
       create(:event, episode: episode, created_at: 1.day.ago)
       create(:event, episode: episode, created_at: 3.days.ago)
       create(:event, episode: episode, created_at: 7.days.ago)
-   
+
       travel_to Time.current.beginning_of_day do
         visit "/"
         click_on "Statistics"
