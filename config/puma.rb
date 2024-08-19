@@ -32,4 +32,7 @@ plugin :tmp_restart
 # Only use a pidfile when requested
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 
-# plugin :solid_queue
+if true # ENV["RAILS_ENV"] == "production"
+  puts "Running solid_queue"
+  plugin :solid_queue
+end
