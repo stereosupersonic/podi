@@ -30,14 +30,6 @@ services:
       retries: 3
       start_period: 10s
 
-  css:
-    <<: *base
-    command: yarn build:css --watch
-
-  js:
-    <<: *base
-    command: yarn build --watch
-
   postgres:
     image: postgres:14-alpine
     volumes:
