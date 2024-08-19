@@ -75,5 +75,5 @@ Rails.application.configure do
   config.cloudinary_api_key = nil
   config.cloudinary_api_secret = nil
 
-  # config.active_job.queue_adapter = :inline # test ?
+  config.active_job.queue_adapter = :test
 end
