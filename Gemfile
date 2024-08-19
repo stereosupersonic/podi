@@ -32,7 +32,6 @@ gem "will_paginate-bootstrap4"
 gem "newrelic_rpm"
 gem "rollbar"
 
-gem "dalli"
 gem "ruby-mp3info", require: false
 
 gem "aws-sdk-s3"
