@@ -34,8 +34,8 @@ describe "Statistics", type: :system do
                                                      "last 24 month"
                                                    ],
                                                      [ "Soli Wartenberg",
-                                                       "8 days",
-                                                       "-",
+                                                       "9 days",
+                                                       "1",
                                                        "1",
                                                        "2",
                                                        "3",
