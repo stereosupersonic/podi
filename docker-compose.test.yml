@@ -1,12 +1,7 @@
-version: '2.4'
-
 x-base: &base
   build:
     context: .
     dockerfile: ./Dockerfile
-    args:
-      RUBY_VERSION: '3.1.4'
-      NODE_MAJOR: '14'
   environment:
     - DATABASE_HOST=postgres
     - DATABASE_PORT=5432
