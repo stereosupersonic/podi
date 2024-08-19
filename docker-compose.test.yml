@@ -36,9 +36,9 @@ services:
     <<: *base
     command: yarn build --watch
 
-  sidekiq:
+  solid_queue:
     <<: *base
-    command: bundle exec sidekiq -C config/sidekiq.yml
+    command: bundle exec rake solid_queue:start
 
   redis:
     image: redis:latest

@@ -7,7 +7,7 @@ ruby "3.2.5"
 gem "rails", "~> 7.2.0"
 
 gem "pg", "~> 1.1"
-gem "puma", "~> 5.0"
+gem "puma", "~> 6.4.2"
 
 gem "jbuilder", "~> 2.7"
 
@@ -44,13 +44,16 @@ gem "shrine", "~> 3.0"
 gem "shrine-cloudinary", "~> 1.1"
 
 gem "device_detector", git: "https://github.com/stereosupersonic/device_detector"
-gem "sidekiq", "~> 6.4"
 
 gem "maxmind-geoip2", "~> 1.1"
 
 gem "scenic", "~> 1.7" # for views in db
 
 gem "solid_cache", "~> 0.7.0"
+
+gem "solid_queue", "~> 0.5.0"
+gem "mission_control-jobs", "~> 0.3.1"
+
 gem "brakeman", "~> 6.1"
 group :development do
   gem "annotate"

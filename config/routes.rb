@@ -1,11 +1,5 @@
-require "sidekiq/web"
-
-Sidekiq::Web.app_url = "/" # back link from sidekiq to the application
-
 Rails.application.routes.draw do
-  authenticate :user, ->(u) { u.admin? } do
-    mount Sidekiq::Web => "/sidekiq"
-  end
+  mount MissionControl::Jobs::Engine, at: "/jobs"
 
   devise_for :users
 
