@@ -12,7 +12,6 @@ require:
 
 AllCops:
   # Prevent RuboCop from exploding when it finds an older-than-2.4 .ruby-version
-  TargetRubyVersion: 3.1
   DisabledByDefault: true
   Exclude:
     - '**/tmp/**/*'
