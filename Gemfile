@@ -50,6 +50,8 @@ gem "maxmind-geoip2", "~> 1.1"
 
 gem "scenic", "~> 1.7" # for views in db
 
+gem "solid_cache", "~> 0.7.0"
+
 group :development do
   gem "annotate"
   gem "haml_lint"
