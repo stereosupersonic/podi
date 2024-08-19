@@ -20,19 +20,22 @@ jobs:
       run: |
         docker compose -f docker-compose.test.yml up -d --build
         docker compose -f docker-compose.test.yml ps
+        echo "Waiting for the app to start..."
         docker compose -f docker-compose.test.yml logs
+        docker stats --no-stream
 
     - name: prepare
       run: |
         docker compose -f docker-compose.test.yml ps
         docker compose -f docker-compose.test.yml logs
+        docker stats --no-stream
         docker compose -f docker-compose.test.yml exec -T app bin/rails db:create --trace
         docker compose -f docker-compose.test.yml exec -T app bin/rails db:test:prepare --trace
 
     - name: Run rubocop
-      run: docker compose -f docker-compose.test.yml exec -T app bundle exec rubocop
+      run: docker compose -f docker-compose.test.yml exec -T app bundle exec rubocop -f github
 
-    - name: Scan for common Rails security vulnerabilities using static analysis
+    - name: brakeman - scan for common Rails security vulnerabilities using static analysis
       run: docker compose -f docker-compose.test.yml exec -T app bin/brakeman --no-pager
 
     - name: Run tests
