@@ -8,7 +8,7 @@ host = if Rails.env.test?
 elsif Rails.env.development?
   "localhost:3000"
 else
-  ENV["DEFAULT_URL_HOST"] || "#{ENV.fetch('HEROKU_APP_NAME')}.herokuapp.com"
+  ENV["DEFAULT_URL_HOST"] || "#{ENV.fetch('HEROKU_APP_NAME', :podi)}.herokuapp.com"
 end
 
 protocol = Rails.application.config.force_ssl ? "https" : "http"
