@@ -32,7 +32,7 @@ plugin :tmp_restart
 # Only use a pidfile when requested
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 
-if true # ENV["RAILS_ENV"] == "production"
-  puts "Running solid_queue"
+if ENV["RAILS_ENV"] == "production"
+  puts "Puma: Running solid_queue"
   plugin :solid_queue
 end
