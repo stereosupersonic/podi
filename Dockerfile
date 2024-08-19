@@ -42,9 +42,6 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
     npm install -g yarn@$YARN_VERSION && \
     rm -rf /tmp/node-build-master
 
-# install heroku cli https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
-# RUN curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-
 RUN mkdir -p /app
 WORKDIR /app
 
@@ -56,6 +53,7 @@ RUN bundle install -j $(nproc)
 RUN yarn install
 
 COPY . .
+
 # Entrypoint prepares the database.
 ENTRYPOINT ["/app/bin/docker-entrypoint"]
 
