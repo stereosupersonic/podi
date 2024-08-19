@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-ruby file: ".ruby-version"
+ruby "3.2.5"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.0"
 
@@ -81,3 +82,5 @@ group :test do
   gem "simplecov", require: false
   gem "super_diff", "~> 0.12.1"
 end
+
+gem "brakeman", "~> 6.1"

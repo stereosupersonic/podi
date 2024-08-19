@@ -1,14 +1,15 @@
-ARG RUBY_VERSION=3.1.4
+ARG RUBY_VERSION=3.2.5
 
 # https://hub.docker.com/_/ruby
-FROM ruby:${RUBY_VERSION}-slim-bullseye
+FROM ruby:${RUBY_VERSION}-slim-bookworm
 
 ENV PG_MAJOR 12
-ENV YARN_VERSION 1.13.0
-ARG NODE_MAJOR=14
-ARG BUNDLE_VERSION=2.3.6
+ARG NODE_VERSION=18.19.1
+ARG YARN_VERSION=1.22.22
+ARG BUNDLE_VERSION=2.5.17
 # Common dependencies
 ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update -qq \
   && apt-get install -yq --no-install-recommends \
     build-essential \
@@ -24,30 +25,22 @@ RUN apt-get update -qq \
     # needed for adding keys to fetch a apt repo
     gnupg2 \
     libxml2-dev \
+    # postgres lib for pg gem
+    libjemalloc2  \
+    libvips \
+    postgresql-client \
+    libpq-dev \
   && apt-get clean \
   && rm -rf /var/cache/apt/archives/* \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && truncate -s 0 /var/log/*log
 
-# Add NodeJS to sources list
-RUN curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash -
-
-# Add Yarn to the sources list
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-  && echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list
-
-# Add PostgreSQL to sources list
-RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
-  && echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' $PG_MAJOR > /etc/apt/sources.list.d/pgdg.list
-
-RUN apt-get update -qq \
-  && apt-get install -yq --no-install-recommends  \
-    # postgres client
-    postgresql-client-$PG_MAJOR \
-    # postgres lib for pg gem
-    libpq-dev \
-    nodejs \
-    yarn=$YARN_VERSION-1
+# Install JavaScript dependencies
+ENV PATH=/usr/local/node/bin:$PATH
+RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
+    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
+    npm install -g yarn@$YARN_VERSION && \
+    rm -rf /tmp/node-build-master
 
 # install heroku cli https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
 RUN curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
