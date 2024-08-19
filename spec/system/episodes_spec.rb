@@ -18,8 +18,8 @@ describe "Episodes", type: :system do
       expect(page).to have_content "second Test"
       expect(page).to have_content "last Test"
       expect(page).to have_content "first Test"
-      expect(page).not_to have_content "future Test"
-      expect(page).not_to have_content "inactive Test"
+      expect(page).to have_no_content "future Test"
+      expect(page).to have_no_content "inactive Test"
     end
   end
 

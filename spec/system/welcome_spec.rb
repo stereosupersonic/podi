@@ -18,10 +18,10 @@ describe "welcome", type: :system do
       expect(page).to have_link "Über uns"
       expect(page).to have_title "Wartenberger Podcast"
       expect(page).to have_content setting.description
-      expect(page).not_to have_link "Sidekiq"
-      expect(page).not_to have_link "Events"
-      expect(page).not_to have_link "Info"
-      expect(page).not_to have_link "Administration"
+      expect(page).to have_no_link "Sidekiq"
+      expect(page).to have_no_link "Events"
+      expect(page).to have_no_link "Info"
+      expect(page).to have_no_link "Administration"
     end
 
     it "shows the title" do
@@ -76,10 +76,10 @@ describe "welcome", type: :system do
     it "dont shows special links when you are not an admin" do
       visit "/"
 
-      expect(page).not_to have_link "Administration"
-      expect(page).not_to have_link "Account"
-      expect(page).not_to have_link "Setting"
-      expect(page).not_to have_link "Logout"
+      expect(page).to have_no_link "Administration"
+      expect(page).to have_no_link "Account"
+      expect(page).to have_no_link "Setting"
+      expect(page).to have_no_link "Logout"
     end
 
     it "visit not existing bot url" do
@@ -92,8 +92,8 @@ describe "welcome", type: :system do
       it "shows nothing without a episode" do
         visit "/"
 
-        expect(page).not_to have_css("#last-episodes")
-        expect(page).not_to have_content "Letzte Episoden "
+        expect(page).to have_no_css("#last-episodes")
+        expect(page).to have_no_content "Letzte Episoden "
       end
 
       it "shows the last two episode" do
@@ -110,9 +110,9 @@ describe "welcome", type: :system do
         expect(page).to have_content "second Test"
         expect(page).to have_content "last Test"
         expect(page).to have_content "first Test"
-        expect(page).not_to have_content "about us"
-        expect(page).not_to have_content "future Test"
-        expect(page).not_to have_content "nactive Test"
+        expect(page).to have_no_content "about us"
+        expect(page).to have_no_content "future Test"
+        expect(page).to have_no_content "nactive Test"
       end
     end
 
@@ -120,8 +120,8 @@ describe "welcome", type: :system do
       it "shows nothing without a episode" do
         visit "/"
 
-        expect(page).not_to have_css("#last-episode")
-        expect(page).not_to have_content "Letzte Episode "
+        expect(page).to have_no_css("#last-episode")
+        expect(page).to have_no_content "Letzte Episode "
       end
 
       it "shows the last episode" do
@@ -178,11 +178,11 @@ describe "welcome", type: :system do
     it "shows special links when you are an admin" do
       visit "/"
 
-      expect(page).not_to have_link "Administration"
-      expect(page).not_to have_link "Setting"
-      expect(page).not_to have_link "Sidekiq"
-      expect(page).not_to have_link "Events"
-      expect(page).not_to have_link "Info"
+      expect(page).to have_no_link "Administration"
+      expect(page).to have_no_link "Setting"
+      expect(page).to have_no_link "Sidekiq"
+      expect(page).to have_no_link "Events"
+      expect(page).to have_no_link "Info"
 
       expect(page).to have_link "Account"
       expect(page).to have_link "Logout"

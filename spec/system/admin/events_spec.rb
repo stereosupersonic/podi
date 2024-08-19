@@ -82,7 +82,7 @@ describe "Events", type: :system do
     it "does not have the link" do
       visit "/"
 
-      expect(page).not_to have_link "Events"
+      expect(page).to have_no_link "Events"
     end
 
     it "gets Access Denied for admin functions" do
@@ -95,7 +95,7 @@ describe "Events", type: :system do
     it "does not have the link" do
       visit "/"
 
-      expect(page).not_to have_link "Events"
+      expect(page).to have_no_link "Events"
     end
 
     it "gets Access Denied for admin functions" do

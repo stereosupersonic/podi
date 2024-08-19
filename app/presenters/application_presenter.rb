@@ -1,7 +1,7 @@
 require "delegate"
 
 class ApplicationPresenter < SimpleDelegator
-  alias object __getobj__
+  alias_method :object, :__getobj__
 
   delegate :current_setting, to: :helpers
 
@@ -23,6 +23,6 @@ class ApplicationPresenter < SimpleDelegator
     @current_setting ||= Setting.current
   end
 
-  alias h helpers
-  alias o object
+  alias_method :h, :helpers
+  alias_method :o, :object
 end

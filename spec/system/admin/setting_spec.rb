@@ -78,7 +78,7 @@ describe "Setting", type: :system do
     it "does not have Adminstration link" do
       visit "/"
 
-      expect(page).not_to have_link "Setting"
+      expect(page).to have_no_link "Setting"
     end
 
     it "gets Access Denied for admin functions" do
@@ -91,7 +91,7 @@ describe "Setting", type: :system do
     it "does not have setting link" do
       visit "/"
 
-      expect(page).not_to have_link "setting"
+      expect(page).to have_no_link "setting"
     end
 
     it "gets Access Denied for admin functions" do
