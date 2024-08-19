@@ -18,7 +18,7 @@ describe "welcome", type: :system do
       expect(page).to have_link "Über uns"
       expect(page).to have_title "Wartenberger Podcast"
       expect(page).to have_content setting.description
-      expect(page).to have_no_link "Sidekiq"
+      expect(page).to have_no_link "Jobs"
       expect(page).to have_no_link "Events"
       expect(page).to have_no_link "Info"
       expect(page).to have_no_link "Administration"
@@ -180,7 +180,7 @@ describe "welcome", type: :system do
 
       expect(page).to have_no_link "Administration"
       expect(page).to have_no_link "Setting"
-      expect(page).to have_no_link "Sidekiq"
+      expect(page).to have_no_link "Jobs"
       expect(page).to have_no_link "Events"
       expect(page).to have_no_link "Info"
 
@@ -207,7 +207,7 @@ describe "welcome", type: :system do
 
       expect(page).to have_link "Administration"
       expect(page).to have_link "Account"
-      expect(page).to have_link "Sidekiq"
+      expect(page).to have_link "Jobs"
       expect(page).to have_link "Events"
       expect(page).to have_link "Info"
       expect(page).to have_link "Logout"

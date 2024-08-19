@@ -18,7 +18,7 @@
         - @episode_current_statistics.each do |es|
           %tr{id: "episode-#{es.episode_id}", class: "text-nowrap"}
             %td=es.title
-            %td=time_ago_in_words(es.published_on)
+            %td=time_ago_in_words(es.published_on.beginning_of_day)
             %td=es.a12h
             %td=es.a1d
             %td=es.a3d

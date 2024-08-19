@@ -42,9 +42,6 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
     npm install -g yarn@$YARN_VERSION && \
     rm -rf /tmp/node-build-master
 
-# install heroku cli https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
-RUN curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-
 RUN mkdir -p /app
 WORKDIR /app
 
@@ -57,6 +54,10 @@ RUN yarn install
 
 COPY . .
 
+# Entrypoint prepares the database.
+ENTRYPOINT ["/app/bin/docker-entrypoint"]
+
+# Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 
-CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
