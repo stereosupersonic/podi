@@ -1,0 +1,16 @@
+- webplayer_episode_config_json = PodloveWebplayerEpisodeBuilder.new(setting: current_setting).to_json
+- webplayer_config_json = PodloveWebplayerConfigBuilder.new(episode: episode, setting: current_setting).to_json
+
+#player
+
+-# TODO: import via node_modules
+%script{src: "https://cdn.podlove.org/web-player/5.x/embed.js", type: "text/javascript"}
+
+:javascript
+
+  window.podlovePlayer("#player", #{webplayer_episode_config_json}, #{webplayer_config_json})
+    .then(store => {
+      store.subscribe(() => {
+        console.log(store.getState());
+      });
+    });
