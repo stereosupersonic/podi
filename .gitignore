@@ -54,3 +54,4 @@ response.xml
 /app/assets/builds/*
 !/app/assets/builds/.keep
 .sass-cache
+CLAUDE.md

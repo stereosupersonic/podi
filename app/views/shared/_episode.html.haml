@@ -14,8 +14,8 @@
       %p.mb-4
         = render_markdown truncate(episode.description, length: 500) { link_to " mehr", episode.episonde_url, class: "font-weight-bold" }
 
-      -# .player
-      -#   = render "shared/audio", episode: episode
+      .player
+        = render "shared/podlove_player", episode: episode
 
   - if current_user&.admin?
     .p.mt-3
