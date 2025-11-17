@@ -16,7 +16,7 @@ class EpisodesController < ApplicationController
 
   def show
     episode_record = Episode.visible.find_by(slug: params[:slug])
-    episode_record ||= Episode.visible.find_by!(number: params[:slug][(/^\d+/)].to_i)
+    episode_record ||= Episode.visible.find_by!(number: params[:slug][/^\d+/].to_i)
 
     @episode = EpisodePresenter.new episode_record
     return unless stale? episode_record, public: true

@@ -1,4 +1,4 @@
-ARG RUBY_VERSION=3.2.5
+ARG RUBY_VERSION=3.3.9
 
 # https://hub.docker.com/_/ruby
 FROM ruby:${RUBY_VERSION}-slim-bookworm
@@ -29,6 +29,8 @@ RUN apt-get update -qq \
     libjemalloc2  \
     libvips \
     postgresql-client \
+    # psych gem
+    libyaml-dev \
     libpq-dev \
   && apt-get clean \
   && rm -rf /var/cache/apt/archives/* \

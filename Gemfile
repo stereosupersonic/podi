@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-ruby "3.2.5"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.0"
+gem "rails", "~> 8.0.0"
 
 gem "pg", "~> 1.1"
 gem "puma", "~> 6.4.2"
@@ -22,6 +21,7 @@ gem "simple_form"
 gem "bootsnap", ">= 1.4.4", require: false
 gem "haml-rails", "~> 2.0"
 gem "nokogiri"
+gem "mini_portile2", "~> 2.8"
 gem "rails-i18n"
 gem "redcarpet"
 
@@ -54,7 +54,10 @@ gem "solid_cache", "~> 0.7.0"
 gem "solid_queue", "~> 0.5.0"
 gem "mission_control-jobs", "~> 0.3.1"
 
-gem "brakeman", "~> 6.1"
+gem "brakeman", "~> 7.1"
+
+gem "kamal", "~> 2.8"
+
 group :development do
   gem "annotate"
   gem "haml_lint"
