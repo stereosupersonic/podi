@@ -29,6 +29,8 @@ RUN apt-get update -qq \
     libjemalloc2  \
     libvips \
     postgresql-client \
+    # psych gem
+    libyaml-dev \
     libpq-dev \
   && apt-get clean \
   && rm -rf /var/cache/apt/archives/* \
