@@ -21,6 +21,7 @@ gem "simple_form"
 gem "bootsnap", ">= 1.4.4", require: false
 gem "haml-rails", "~> 2.0"
 gem "nokogiri"
+gem "mini_portile2", "~> 2.8"
 gem "rails-i18n"
 gem "redcarpet"
 
@@ -54,6 +55,9 @@ gem "solid_queue", "~> 0.5.0"
 gem "mission_control-jobs", "~> 0.3.1"
 
 gem "brakeman", "~> 6.1"
+
+gem "kamal", "~> 2.8"
+
 group :development do
   gem "annotate"
   gem "haml_lint"
