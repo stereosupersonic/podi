@@ -112,7 +112,7 @@ GEM
     bigdecimal (3.3.1)
     bootsnap (1.19.0)
       msgpack (~> 1.2)
-    brakeman (6.2.2)
+    brakeman (7.1.1)
       racc
     builder (3.3.0)
     capybara (3.40.0)
@@ -547,7 +547,7 @@ DEPENDENCIES
   annotate
   aws-sdk-s3
   bootsnap (>= 1.4.4)
-  brakeman (~> 6.1)
+  brakeman (~> 7.1)
   capybara
   codecov
   compare-xml

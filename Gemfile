@@ -54,7 +54,7 @@ gem "solid_cache", "~> 0.7.0"
 gem "solid_queue", "~> 0.5.0"
 gem "mission_control-jobs", "~> 0.3.1"
 
-gem "brakeman", "~> 6.1"
+gem "brakeman", "~> 7.1"
 
 gem "kamal", "~> 2.8"
 
