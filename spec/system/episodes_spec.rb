@@ -54,7 +54,7 @@ describe "Episodes", type: :system do
       visit "/episodes/001-blah-test"
 
       expect(page.status_code).to eq 404
-      expect(page).to have_content "The page you were looking for doesn't exist."
+      expect(page).to have_content "The page you were looking for doesn’t exist."
     end
 
     it "don't gets an epsiode by number" do
@@ -63,12 +63,12 @@ describe "Episodes", type: :system do
       visit "/episodes/001-old-title"
 
       expect(page.status_code).to eq 404
-      expect(page).to have_content "The page you were looking for doesn't exist."
+      expect(page).to have_content "The page you were looking for doesn’t exist."
 
       visit "/episodes/1"
 
       expect(page.status_code).to eq 404
-      expect(page).to have_content "The page you were looking for doesn't exist."
+      expect(page).to have_content "The page you were looking for doesn’t exist."
     end
 
     it "gets an epsiode by number" do
@@ -97,7 +97,7 @@ describe "Episodes", type: :system do
     it "gets an 404 by unknow slug" do
       visit "/episodes/001-blah-test"
 
-      expect(page).to have_content "The page you were looking for doesn't exist"
+      expect(page).to have_content "The page you were looking for doesn’t exist."
     end
   end
 end

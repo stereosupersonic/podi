@@ -554,9 +554,6 @@ Lint/ShadowedArgument:
 Lint/ShadowedException:
   Enabled: true
 
-Lint/Syntax:
-  Enabled: true
-
 Lint/TopLevelReturnWithArgument:
   Enabled: true
 
