@@ -4,7 +4,7 @@ inherit_gem:
 # comes from standardrb https://github.com/testdouble/standard
 #https://github.com/testdouble/standard/blob/master/config/base.yml
 
-require:
+plugins:
   - rubocop-rails
   - rubocop-performance
   - rubocop-rspec

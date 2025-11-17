@@ -12,7 +12,7 @@ describe "Statistics", type: :system do
       published_on = 8.days.ago.to_date
       episode = create(:episode, published_on: published_on, title: "Soli Wartenberg", number: 2)
 
-      create(:event, episode: episode, created_at: 1.day.ago)
+      create(:event, episode: episode, created_at: 8.hours.ago)
       create(:event, episode: episode, created_at: 3.days.ago)
       create(:event, episode: episode, created_at: 7.days.ago)
 

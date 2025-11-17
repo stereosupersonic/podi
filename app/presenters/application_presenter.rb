@@ -3,8 +3,6 @@ require "delegate"
 class ApplicationPresenter < SimpleDelegator
   alias_method :object, :__getobj__
 
-  delegate :current_setting, to: :helpers
-
   def self.wrap(collection)
     return [] unless collection
 
