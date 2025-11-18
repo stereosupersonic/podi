@@ -44,7 +44,7 @@ Rails.application.configure do
   config.silence_healthcheck_path = "/up"
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
-  config.active_job.queue_adapter = :solid_queue
+  # config.active_job.queue_adapter = :solid_queue
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
