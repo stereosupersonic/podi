@@ -56,8 +56,8 @@ RUN yarn install
 
 COPY . .
 
-HEALTHCHECK --interval=3s --timeout=3s --start-period=10s --retries=3 \
-  CMD curl -sf http://localhost:3000/up -o /dev/null || exit 1
+# HEALTHCHECK --interval=3s --timeout=3s --start-period=10s --retries=3 \
+#   CMD curl -sf http://localhost:3000/up -o /dev/null || exit 1
 # Entrypoint prepares the database.
 ENTRYPOINT ["/app/bin/docker-entrypoint"]
 
