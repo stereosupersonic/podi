@@ -24,10 +24,10 @@ servers:
 proxy:
   ssl: true
   host: www.wartenberger.de
-  healthcheck:
-    path: /up
-    timeout: 2
-    interval: 3
+  # healthcheck:
+  #   path: /up
+  #   timeout: 2
+  #   interval: 3
 
 # Credentials for your image host.
 registry:
