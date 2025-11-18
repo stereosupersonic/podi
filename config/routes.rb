@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   # episode shortcut /006 or /2
   get ":id", to: "welcome#epsiode", constraints: { id: /\d+/ }
 
+  # get "up" => "rails/health#show", as: :rails_health_check
   get "/up", to: proc {
   ActiveRecord::Base.connection.execute("SELECT 1")
   [200, {}, ["OK"]]
