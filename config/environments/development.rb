@@ -75,6 +75,7 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
   config.hosts << ENV["NGROK_HOST"] if ENV["NGROK_HOST"].present?
+
   config.cloudinary_cloud_name = ENV["CLOUDINARY_CLOUD_NAME"]
   config.cloudinary_api_key = ENV["CLOUDINARY_API_KEY"]
   config.cloudinary_api_secret = ENV["CLOUDINARY_API_SECRET"]
