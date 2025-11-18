@@ -62,4 +62,6 @@ Rails.application.configure do
   config.cloudinary_api_secret = nil
 
   config.active_job.queue_adapter = :test
+
+  config.host_url = "wartenberger.test.com"
 end
