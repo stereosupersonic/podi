@@ -20,6 +20,7 @@ ENV NODE_MAJOR="20" \
 
 # Common dependencies
 ARG DEBIAN_FRONTEND=noninteractive
+ARG RAILS_ENV="production"
 
 RUN mkdir -p /app
 WORKDIR /app
@@ -31,8 +32,7 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment variables and enable jemalloc for reduced memory usage and latency.
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
+ENV  BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
     LD_PRELOAD="/usr/local/lib/libjemalloc.so"
