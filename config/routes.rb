@@ -24,11 +24,11 @@ Rails.application.routes.draw do
   get "about", to: "welcome#about", as: :about
   get "imprint", to: "welcome#imprint", as: :imprint
   get "privacy", to: "welcome#privacy", as: :privacy
-  #get "ready", to: "welcome#ready", as: :ready
+  get "ready", to: "welcome#ready", as: :ready
 
   get "/sitemap.xml.gz", to: redirect("https://wartenberger-podcast.s3.amazonaws.com/sitemap.xml.gz")
   # episode shortcut /006 or /2
   get ":id", to: "welcome#epsiode", constraints: { id: /\d+/ }
 
-  get "/up", to: "welcome#ready", as: :ready
+  get "up", to: "welcome#ready"
 end
