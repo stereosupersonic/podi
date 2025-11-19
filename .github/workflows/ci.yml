@@ -32,7 +32,7 @@ jobs:
         docker compose -f docker-compose.test.yml exec -T app bin/rails db:create db:schema:load --trace
 
     - name: Run rubocop
-      run: docker compose -f docker-compose.test.yml exec -T app bundle exec rubocop -f github
+      run: docker compose -f docker-compose.test.yml exec -T app bundle bin/rubocop -f github
 
     - name: brakeman - scan for common Rails security vulnerabilities using static analysis
       run: docker compose -f docker-compose.test.yml exec -T app bin/brakeman --no-pager
