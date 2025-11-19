@@ -2,8 +2,8 @@
 # check=error=true
 
 # This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
-# docker build -t web82 .
-# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name web82 web82
+# docker build -t podi .
+# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name podi podi
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
@@ -64,6 +64,7 @@ RUN apt-get update -qq \
     # psych gem
     libyaml-dev \
     libpq-dev \
+    pkg-config \
   && apt-get clean \
   && rm -rf /var/cache/apt/archives/* \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
