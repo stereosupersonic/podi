@@ -1,3 +1,6 @@
+# syntax=docker/dockerfile:1
+# check=error=true
+
 ARG RUBY_VERSION=3.3.9
 
 # https://hub.docker.com/_/ruby
@@ -17,6 +20,13 @@ WORKDIR /app
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips gnupg2 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Set production environment variables and enable jemalloc for reduced memory usage and latency.
+ENV RAILS_ENV="production" \
+    BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="development" \
+    LD_PRELOAD="/usr/local/lib/libjemalloc.so"
 
 # Add Nodejs and Yarn to the sources list
 RUN mkdir -p /etc/apt/keyrings \
