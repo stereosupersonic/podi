@@ -7,16 +7,17 @@ x-base: &base
   tty: true
   volumes:
     - .:/app
-    - bundle:/usr/local/bundle
     - rails_cache:/app/tmp/cache
     - node_modules:/app/node_modules
+  env_file:
+    - .env
   environment:
     - DATABASE_HOST=postgres
     - DATABASE_PORT=5432
     - DATABASE_USERNAME=postgres
     - DATABASE_PASSWORD=postgres
     - RAILS_LOG_LEVEL=debug
-    - RAILS_ENV=development
+    - RAILS_ENV=production
     - SOLID_QUEUE_IN_PUMA=true
     - DEFAULT_URL_HOST=www.wartenberger.de
   depends_on:
@@ -28,9 +29,9 @@ services:
     <<: *base
     # command: bin/rails server -p 3000 -b 0.0.0.0
     ports:
-      - '3000:3000'
+      - '3000:80'
     healthcheck:
-      test: curl --fail http://0.0.0.0:3000/ready || exit 1
+      test: curl --fail http://0.0.0.0:80/up || exit 1
       retries: 3
       start_period: 10s
 

@@ -2,27 +2,28 @@
 #
 # Table name: episode_statistics
 #
-#  a12h         :bigint
-#  a12m         :bigint
-#  a14d         :bigint
-#  a18m         :bigint
-#  a1d          :bigint
-#  a24m         :bigint
-#  a30d         :bigint
-#  a3d          :bigint
-#  a3m          :bigint
-#  a60d         :bigint
-#  a6m          :bigint
-#  a7d          :bigint
-#  cnt          :bigint
-#  day          :text
+#  episode_id   :integer
 #  number       :integer
-#  published_on :date
 #  title        :string
+#  published_on :date
+#  day          :text
 #  week         :integer
 #  year         :integer
-#  episode_id   :bigint
+#  a12h         :integer
+#  a1d          :integer
+#  a3d          :integer
+#  a7d          :integer
+#  a14d         :integer
+#  a30d         :integer
+#  a60d         :integer
+#  a3m          :integer
+#  a6m          :integer
+#  a12m         :integer
+#  a18m         :integer
+#  a24m         :integer
+#  cnt          :integer
 #
+
 require "rails_helper"
 
 RSpec.describe EpisodeStatistic, type: :model do

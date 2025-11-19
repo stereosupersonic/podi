@@ -1,5 +1,4 @@
-
-development: &development
+default: &default
   adapter: postgresql
   encoding: unicode
   host: <%= ENV.fetch('DATABASE_HOST', '0.0.0.0') %>
@@ -10,9 +9,9 @@ development: &development
   database: <%= ENV.fetch("DATABASE_NAME", "podi_development") %>
 
 test:
-  <<: *development
+  <<: *default
   database: podi_test
 
 production:
-  <<: *development
+  <<: *default
   database: <%= ENV.fetch('DATABASE_NAME', "podi_production") %>

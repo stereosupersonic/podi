@@ -5,8 +5,8 @@ source "https://rubygems.org"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.0"
 
-gem "pg", "~> 1.1"
-gem "puma", "~> 6.4.2"
+gem "pg"
+gem "puma", "~> 7.1.0"
 
 gem "jbuilder", "~> 2.7"
 
@@ -56,7 +56,11 @@ gem "mission_control-jobs", "~> 0.3.1"
 
 gem "brakeman", "~> 7.1"
 
-gem "kamal", "~> 2.8"
+# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
+gem "kamal", require: false
+
+# Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
+gem "thruster", require: false
 
 group :development do
   gem "annotate"
