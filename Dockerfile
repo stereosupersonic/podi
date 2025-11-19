@@ -84,6 +84,8 @@ RUN bundle install && \
     bundle exec bootsnap precompile -j 1 --gemfile
 RUN yarn install
 
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
 COPY . .
 
 # HEALTHCHECK --interval=3s --timeout=3s --start-period=10s --retries=3 \
