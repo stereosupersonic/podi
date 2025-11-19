@@ -31,7 +31,7 @@ class WelcomeController < ApplicationController
   end
 
   def ready
-     ActiveRecord::Base.connection.execute("SELECT 1")
-     render inline: "OK", layout: false
+    ActiveRecord::Base.connection.execute("SELECT 1")
+    render inline: "OK", layout: false
   end
 end

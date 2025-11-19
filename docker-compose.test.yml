@@ -1,6 +1,8 @@
 x-base: &base
   build:
     context: .
+    args:
+      - BUNDLE_WITHOUT=""
     dockerfile: ./Dockerfile
   environment:
     - DATABASE_HOST=postgres
