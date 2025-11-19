@@ -89,15 +89,16 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
-  config.aws_access_key = ENV.fetch("S3_ACCESS_KEY")
-  config.aws_secret_key = ENV.fetch("S3_SECRET_KEY")
-  config.aws_bucket_name = ENV.fetch("S3_BUCKET_NAME")
-  config.aws_s3_region = ENV.fetch("S3_REGION")
-  config.aws_cloudfront_url = ENV.fetch("CLOUDFRONT_URL")
+  config.aws_access_key = ENV["S3_ACCESS_KEY"]
+  config.aws_secret_key = ENV["S3_SECRET_KEY"]
+  config.aws_secret_key = ENV["S3_SECRET_KEY"]
+  config.aws_bucket_name = ENV["S3_BUCKET_NAME"]
+  config.aws_s3_region = ENV["S3_REGION"]
+  config.aws_cloudfront_url = ENV["CLOUDFRONT_URL"]
   config.active_storage.service = :aws
-  config.cloudinary_cloud_name = ENV.fetch("CLOUDINARY_CLOUD_NAME")
-  config.cloudinary_api_key = ENV.fetch("CLOUDINARY_API_KEY")
-  config.cloudinary_api_secret = ENV.fetch("CLOUDINARY_API_SECRET")
+  config.cloudinary_cloud_name = ENV["CLOUDINARY_CLOUD_NAME"]
+  config.cloudinary_api_key = ENV["CLOUDINARY_API_KEY"]
+  config.cloudinary_api_secret = ENV["CLOUDINARY_API_SECRET"]
 
-  config.host_url = ENV.fetch("DEFAULT_URL_HOST")
+  config.host_url = ENV["DEFAULT_URL_HOST"]
 end

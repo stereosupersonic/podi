@@ -10,9 +10,9 @@ else
   require "cloudinary"
 
   Cloudinary.config(
-    cloud_name: ENV.fetch("CLOUDINARY_CLOUD_NAME"),
-    api_key: ENV.fetch("CLOUDINARY_API_KEY"),
-    api_secret: ENV.fetch("CLOUDINARY_API_SECRET")
+    cloud_name: ENV["CLOUDINARY_CLOUD_NAME"],
+    api_key: ENV["CLOUDINARY_API_KEY"],
+    api_secret: ENV["CLOUDINARY_API_SECRET"]
   )
 
   Shrine.storages = {
