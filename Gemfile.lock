@@ -115,6 +115,9 @@ GEM
     brakeman (7.1.1)
       racc
     builder (3.3.0)
+    bundler-audit (0.9.2)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 1.0)
     capybara (3.40.0)
       addressable
       matrix
@@ -327,8 +330,6 @@ GEM
     rack (3.2.4)
     rack-attack (6.8.0)
       rack (>= 1.0, < 4)
-    rack-mini-profiler (2.3.4)
-      rack (>= 1.2.0)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -548,8 +549,9 @@ PLATFORMS
 DEPENDENCIES
   annotate
   aws-sdk-s3
-  bootsnap (>= 1.4.4)
-  brakeman (~> 7.1)
+  bootsnap
+  brakeman
+  bundler-audit
   capybara
   codecov
   compare-xml
@@ -576,7 +578,6 @@ DEPENDENCIES
   pry-rails
   puma (~> 7.1.0)
   rack-attack
-  rack-mini-profiler (~> 2.0)
   rails (~> 8.0.0)
   rails-i18n
   redcarpet

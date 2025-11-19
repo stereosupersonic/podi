@@ -18,7 +18,6 @@ gem "turbo-rails", "~> 1.5"
 
 gem "simple_form"
 
-gem "bootsnap", ">= 1.4.4", require: false
 gem "haml-rails", "~> 2.0"
 gem "nokogiri"
 gem "mini_portile2", "~> 2.8"
@@ -53,8 +52,8 @@ gem "solid_cache"
 gem "solid_queue"
 
 gem "mission_control-jobs", "~> 0.3.1"
-
-gem "brakeman", "~> 7.1"
+# Reduces boot times through caching; required in config/boot.rb
+gem "bootsnap", require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", require: false
@@ -66,7 +65,10 @@ group :development do
   gem "annotate"
   gem "haml_lint"
   gem "listen", "~> 3.3"
-  gem "rack-mini-profiler", "~> 2.0"
+  # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
+  gem "bundler-audit", require: false
+  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
   gem "rubocop-rspec", require: false
   gem "rubocop-capybara", require: false
