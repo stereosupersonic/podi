@@ -49,9 +49,9 @@ gem "maxmind-geoip2", "~> 1.1"
 
 gem "scenic", "~> 1.7" # for views in db
 
-gem "solid_cache", "~> 0.7.0"
+gem "solid_cache"
+gem "solid_queue"
 
-gem "solid_queue", "~> 0.5.0"
 gem "mission_control-jobs", "~> 0.3.1"
 
 gem "brakeman", "~> 7.1"

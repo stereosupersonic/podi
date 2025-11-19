@@ -38,7 +38,6 @@ module Podi
 
     config.time_zone = "Berlin"
     config.i18n.default_locale = :en
-    #config.active_job.queue_adapter = :solid_queue
     config.generators do |g|
       g.assets = false
       g.helper = false
