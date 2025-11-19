@@ -599,7 +599,7 @@ DEPENDENCIES
   super_diff (~> 0.12.1)
   thruster
   turbo-rails (~> 1.5)
-  webdrivers
+  webdrivers (~> 5.3.0)
   will_paginate
   will_paginate-bootstrap4
 

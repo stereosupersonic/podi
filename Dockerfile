@@ -84,12 +84,11 @@ RUN bundle install && \
     bundle exec bootsnap precompile -j 1 --gemfile
 RUN yarn install
 
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
 COPY . .
 
-# HEALTHCHECK --interval=3s --timeout=3s --start-period=10s --retries=3 \
-#   CMD curl -sf http://localhost:3000/up -o /dev/null || exit 1
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
 # Entrypoint prepares the database.
 ENTRYPOINT ["/app/bin/docker-entrypoint"]
 
