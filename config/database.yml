@@ -9,13 +9,40 @@ default: &default
   database: <%= ENV.fetch("DATABASE_NAME", "podi_production") %>
 
 development:
-  <<: *default
-  database: podi_development
+  primary: &primary_development
+    <<: *default
+    database: podi_development
+  queue:
+    <<: *primary_development
+    database: <%= ENV.fetch('DATABASE_NAME_QUEUE', "podi_development_queue") %>
+    migrations_paths: db/queue_migrate
+  cache:
+    <<: *primary_development
+    database: <%= ENV.fetch('DATABASE_NAME_CACHE', "podi_development_cache") %>
+    migrations_paths: db/cache_migrate
 
 test:
-  <<: *default
-  database: podi_test
+  primary: &primary_test
+    <<: *default
+    database: podi_test
+  queue:
+    <<: *primary_test
+    database: <%= ENV.fetch('DATABASE_NAME_QUEUE', "podi_test_queue") %>
+    migrations_paths: db/queue_migrate
+  cache:
+    <<: *primary_test
+    database: <%= ENV.fetch('DATABASE_NAME_CACHE', "podi_test_cache") %>
+    migrations_paths: db/cache_migrate
 
 production:
-  <<: *default
-  database: <%= ENV.fetch('DATABASE_NAME', "podi_production") %>
+  primary: &primary_production
+    <<: *default
+    database: <%= ENV.fetch('DATABASE_NAME', "podi_production") %>
+  queue:
+    <<: *primary_production
+    database: <%= ENV.fetch('DATABASE_NAME_QUEUE', "podi_production_queue") %>
+    migrations_paths: db/queue_migrate
+  cache:
+    <<: *primary_production
+    database: <%= ENV.fetch('DATABASE_NAME_CACHE', "podi_production_cache") %>
+    migrations_paths: db/cache_migrate
