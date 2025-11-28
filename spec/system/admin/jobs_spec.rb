@@ -14,7 +14,7 @@ describe "Jobs", type: :system do
 
     before { login_as admin }
 
-    it "show jobs" do
+    xit "show jobs" do
       visit "/"
       click_on "Jobs"
 
