@@ -51,7 +51,7 @@ gem "scenic", "~> 1.7" # for views in db
 gem "solid_cache"
 gem "solid_queue"
 
-gem "mission_control-jobs", "~> 0.3.1"
+gem "mission_control-jobs"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 

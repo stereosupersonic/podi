@@ -14,8 +14,9 @@ describe "Jobs", type: :system do
 
     before { login_as admin }
 
-    xit "show jobs" do
+    it "show jobs" do
       visit "/"
+      save_and_open_page
       click_on "Jobs"
 
       expect(page).to have_content "Jobs"
@@ -33,9 +34,10 @@ describe "Jobs", type: :system do
       expect(page).to have_no_link "Jobs"
     end
 
-    xit "gets Access Denied for admin functions" do
+    it "gets Access Denied for admin functions" do
       visit "/jobs"
-      expect(page).to be_redirected
+
+      expect(page).to have_content "Access Denied"
     end
   end
 
@@ -46,9 +48,9 @@ describe "Jobs", type: :system do
       expect(page).to have_no_link "Jobs"
     end
 
-    xit "gets Access Denied for admin functions" do
+    it "gets Access Denied for admin functions" do
       visit "/jobs"
-      expect(page).to be_redirected
+      expect(page).to have_content "Access Denied"
     end
   end
 end
