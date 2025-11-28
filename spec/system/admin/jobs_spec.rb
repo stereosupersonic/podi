@@ -16,7 +16,6 @@ describe "Jobs", type: :system do
 
     it "show jobs" do
       visit "/"
-      save_and_open_page
       click_on "Jobs"
 
       expect(page).to have_content "Jobs"
