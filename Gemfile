@@ -24,7 +24,7 @@ gem "mini_portile2", "~> 2.8"
 gem "rails-i18n"
 gem "redcarpet"
 
-gem "devise"
+gem "bcrypt", "~> 3.1.7"
 
 gem "will_paginate"
 gem "will_paginate-bootstrap4"

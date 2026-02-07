@@ -1,0 +1,19 @@
+.site-section.bg-light
+  .container
+    .row.justify-content-center
+      .col-md-6.col-lg-4
+        .card
+          .card-body
+            %h2.card-title.text-center Sign In
+
+            = form_with url: login_path, method: :post, local: true do |f|
+              .form-group
+                = f.label :email, "Email"
+                = f.email_field :email, class: "form-control", required: true, autofocus: true, autocomplete: "email"
+
+              .form-group
+                = f.label :password, "Password"
+                = f.password_field :password, class: "form-control", required: true, autocomplete: "current-password"
+
+              .form-group
+                = f.submit "Sign In", class: "btn btn-primary btn-block"

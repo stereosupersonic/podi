@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
   mount MissionControl::Jobs::Engine, at: "/jobs"
 
-  devise_for :users
+  # Custom authentication routes
+  get "login", to: "users/sessions#new", as: :login
+  post "login", to: "users/sessions#create"
+  delete "logout", to: "users/sessions#destroy", as: :logout
 
-  devise_scope :user do
-    get "login", to: "devise/sessions#new"
-  end
+  # Alias for compatibility with existing views
+  get "users/sign_out", to: "users/sessions#destroy", as: :destroy_user_session
 
   namespace :admin do
     resources :statistics, only: %w[index]

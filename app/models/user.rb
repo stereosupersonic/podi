@@ -2,30 +2,24 @@
 #
 # Table name: users
 #
-#  id                     :bigint           not null, primary key
-#  admin                  :boolean
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  first_name             :string
-#  last_name              :string
-#  remember_created_at    :datetime
-#  reset_password_sent_at :datetime
-#  reset_password_token   :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
+#  id              :bigint           not null, primary key
+#  admin           :boolean
+#  email           :string           default(""), not null
+#  password_digest :string           default(""), not null
+#  first_name      :string
+#  last_name       :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 # Indexes
 #
-#  index_users_on_email                 (email) UNIQUE
-#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_email  (email) UNIQUE
 #
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  has_secure_password
 
-  # :registerable handles signing up users through a registration process, also allowing them to edit and destroy their account.
-  # :recoverable resets the user password and sends reset instructions.
-  devise :database_authenticatable,
-         :rememberable,
-         :validatable
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :password, length: { minimum: 6 }, if: -> { new_record? || !password.nil? }
+
+  normalizes :email, with: ->(email) { email.strip.downcase }
 end
