@@ -165,7 +165,7 @@ describe "welcome", type: :system do
       it "has an short cut with the nummer and redirects to 404 if number not exits" do
         visit "/001"
 
-        expect(page).to have_title "The page you were looking for doesn’t exist (404 Not found)"
+        expect(page).to have_title "The page you were looking for doesn't exist (404 Not found)"
       end
     end
   end
@@ -193,7 +193,7 @@ describe "welcome", type: :system do
 
       click_link "Logout"
 
-      expect(page).to have_content "Signed out successfully."
+      expect(page).to have_text(/Signed out successfully/i)
     end
   end
 

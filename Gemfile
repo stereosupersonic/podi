@@ -85,10 +85,10 @@ group :development, :test do
   gem "dotenv-rails"
   gem "foreman"
   gem "launchy" # for capybara save_and_open_page
-
 end
 
 group :test do
+  gem "rexml", "~> 3.4"
   gem "codecov", require: false
   gem "compare-xml"
   gem "simplecov", require: false

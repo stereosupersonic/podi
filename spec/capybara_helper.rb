@@ -3,7 +3,7 @@ require "capybara/rspec"
 
 RSpec.configure do |config|
   config.include Capybara::RSpecMatchers
-  config.include Warden::Test::Helpers
+  config.include LoginHelpers, type: :system
 
   Capybara.default_max_wait_time = 10 # The maximum number of seconds to wait for asynchronous processes to finish.
   Capybara.default_normalize_ws = true # match DOM Elements with text spanning over multiple line
@@ -13,7 +13,6 @@ RSpec.configure do |config|
   end
 
   config.before(:each, :js, type: :system) do
-    # https://api.rubyonrails.org/v6.0.1/classes/ActionDispatch/SystemTestCase.html#method-c-driven_by
     browser = ENV["SELENIUM_BROWSER"].presence&.to_sym || :headless_chrome
     driven_by :selenium, using: browser, screen_size: [ 1600, 1400 ]
   end
