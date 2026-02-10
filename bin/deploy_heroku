@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+git checkout master
+
+# if heroku remote is not setup: git config --list --local | grep heroku
+# heroku git:remote -a
+git push heroku
+
+heroku run rake db:migrate
+heroku run rake clear_cache
