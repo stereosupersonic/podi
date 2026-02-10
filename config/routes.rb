@@ -6,9 +6,6 @@ Rails.application.routes.draw do
   post "login", to: "users/sessions#create"
   delete "logout", to: "users/sessions#destroy", as: :logout
 
-  # Alias for compatibility with existing views
-  get "users/sign_out", to: "users/sessions#destroy", as: :destroy_user_session
-
   namespace :admin do
     resources :statistics, only: %w[index]
     resources :episodes, only: %w[index show edit update new create]

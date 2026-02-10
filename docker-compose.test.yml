@@ -3,7 +3,7 @@ x-base: &base
     context: .
     args:
       - BUNDLE_WITHOUT=""
-    dockerfile: ./Dockerfile
+    dockerfile: ./Dockerfile.test
   environment:
     - DATABASE_HOST=postgres
     - DATABASE_PORT=5432
