@@ -35,9 +35,10 @@ test:
     migrations_paths: db/cache_migrate
 
 production:
+
   primary: &primary_production
     <<: *default
-    database: <%= ENV.fetch('DATABASE_NAME', "podi_production") %>
+    url: <%= ENV['DATABASE_URL'] %>
   queue:
     <<: *primary_production
     database: <%= ENV.fetch('DATABASE_NAME_QUEUE', "podi_production_queue") %>
