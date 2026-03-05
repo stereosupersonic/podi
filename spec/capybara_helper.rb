@@ -3,7 +3,7 @@ require "capybara/rspec"
 
 RSpec.configure do |config|
   config.include Capybara::RSpecMatchers
-  config.include Warden::Test::Helpers
+  config.include LoginHelpers, type: :system
 
   Capybara.default_max_wait_time = 10 # The maximum number of seconds to wait for asynchronous processes to finish.
   Capybara.default_normalize_ws = true # match DOM Elements with text spanning over multiple line

@@ -193,7 +193,7 @@ describe "welcome", type: :system do
 
       click_link "Logout"
 
-      expect(page).to have_content "Signed out successfully."
+      expect(page).to have_text(/Signed out successfully/i)
     end
   end
 
