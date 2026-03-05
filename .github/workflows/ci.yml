@@ -1,20 +1,73 @@
 name: CI
+
 on:
-  push:
-    branches:
-      - master
   pull_request:
-    branches:
-      - master
+  push:
+    branches: [ master ]
 
 jobs:
+  scan_ruby:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Scan for common Rails security vulnerabilities using static analysis
+        run: bin/brakeman --no-pager
+
+  scan_gems:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Scan for known security vulnerabilities in gems
+        run: bin/bundler-audit
+
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      RUBOCOP_CACHE_ROOT: tmp/rubocop
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Prepare RuboCop cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.RUBOCOP_CACHE_ROOT }}
+          key: rubocop-${{ runner.os }}-${{ hashFiles('.ruby-version', 'Gemfile.lock') }}
+
+      - name: Lint code for consistent style
+        run: bin/rubocop -f github
+
   docker:
     timeout-minutes: 10
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v6
 
     - name: Start containers
       run: |
@@ -30,15 +83,6 @@ jobs:
         docker compose -f docker-compose.test.yml logs
         docker stats --no-stream
         docker compose -f docker-compose.test.yml exec -T app bin/rails db:create db:schema:load --trace
-
-    - name: Run rubocop
-      run: docker compose -f docker-compose.test.yml exec -T app bundle exec rubocop -f github
-
-    - name: brakeman - scan for common Rails security vulnerabilities using static analysis
-      run: docker compose -f docker-compose.test.yml exec -T app bin/brakeman --no-pager
-
-    - name: Scan for known security vulnerabilities in gems used
-      run: docker compose -f docker-compose.test.yml exec -T app bin/bundler-audit
 
     - name: Run tests
       run: |
