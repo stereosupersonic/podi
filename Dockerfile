@@ -16,7 +16,7 @@ FROM ruby:${RUBY_VERSION}-slim-bookworm
 ENV NODE_MAJOR="20" \
     YARN_VERSION="1.22.22" \
     CONFIGURE_OPTS="--disable-install-rdoc" \
-    BUNDLE_VERSION="2.7.2"
+    BUNDLE_VERSION="4.0.7"
 
 # Common dependencies
 ARG DEBIAN_FRONTEND=noninteractive
