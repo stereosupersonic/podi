@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.0"
+gem "rails", "~> 8.1.0"
 
 gem "pg"
 gem "puma", "~> 7.1.0"
@@ -85,10 +85,10 @@ group :development, :test do
   gem "dotenv-rails"
   gem "foreman"
   gem "launchy" # for capybara save_and_open_page
-  gem "webdrivers", "~> 5.3.0"
 end
 
 group :test do
+  gem "rexml", "~> 3.4"
   gem "codecov", require: false
   gem "compare-xml"
   gem "simplecov", require: false

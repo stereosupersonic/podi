@@ -46,7 +46,7 @@ class Setting < ApplicationRecord
   validates(:spotify_url, url: true)
 
   def self.current
-    Setting.last || raise("no setting")
+    Setting.order(:id).last || raise("no setting")
   end
 
   def rss_url
