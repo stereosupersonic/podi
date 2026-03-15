@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :episodes, only: %i[show index], param: :slug
 
   root to: "welcome#index"
-
+  get "up" => "rails/health#show", as: :rails_health_check
   get "about", to: "welcome#about", as: :about
   get "imprint", to: "welcome#imprint", as: :imprint
   get "privacy", to: "welcome#privacy", as: :privacy
