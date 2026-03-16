@@ -1,41 +1,56 @@
-x-base: &base
-  build:
-    context: .
-    args:
-      - BUNDLE_WITHOUT=""
-    dockerfile: ./Dockerfile
-  environment:
-    - DATABASE_HOST=postgres
-    - DATABASE_PORT=5432
-    - DATABASE_USERNAME=postgres
-    - DATABASE_PASSWORD=postgres
-    - RAILS_ENV=test
-    - RAILS_LOG_TO_STDOUT=true
-  depends_on:
-    postgres:
-      condition: service_healthy
-
 services:
   app:
-    <<: *base
+    build:
+      context: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+      chrome:
+        condition: service_healthy
     ports:
-      - '3000:3000'
-    healthcheck:
-      test: curl --fail http://0.0.0.0:3000/ready || exit 1
-      retries: 3
-      start_period: 10s
+      - "3001:3000"
+    environment:
+      CAPYBARA_SERVER_PORT: 3001
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      RAILS_ENV: test
+      CI: true
+      RAILS_LOG_TO_STDOUT: true
+      CHROME_URL: http://chrome:4444/wd/hub
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:-}
 
   postgres:
-    image: postgres:17
+    image: postgres:17-alpine
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: podi_test
     healthcheck:
-      test: pg_isready -U postgres -h 127.0.0.1
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
+      timeout: 5s
+      retries: 5
+
+  chrome:
+    image: selenium/standalone-chrome-debug:3.141.59
+    ports:
+      - 4444:4444
+      - 7900:7900
+    shm_size: 2gb
+    volumes:
+      - .:/rails:cached
+    environment:
+      SE_NODE_MAX_SESSIONS: 4
+      SE_NODE_OVERRIDE_MAX_SESSIONS: true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
   postgres:

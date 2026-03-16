@@ -1,55 +1,51 @@
-.git
-.gitignore
+# See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more about ignoring files.
 
-#
-# OS X
-#
-.DS_Store
-.AppleDouble
-.LSOverride
-# Icon must end with two \r
-Icon
-# Thumbnails
-._*
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+# Ignore git directory.
+/.git/
+/.gitignore
 
-#
-# Rails
-#
-*.rbc
-capybara-*.html
-log
-db/*.sqlite3
-db/*.sqlite3-journal
-public/system
-yarn-error.log
-yarn-debug.log*
-.yarn-integrity
-external_dns.log
+# Ignore bundler config.
+/.bundle
 
-coverage/
-spec/tmp
-**.orig
+# Ignore all environment files.
+/.env*
 
-.bundle
+# Ignore all default key files.
+/config/master.key
+/config/credentials/*.key
 
-.ruby-gemset
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
 
-.rvmrc
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/.keep
 
-# if using bower-rails ignore default bower_components path bower.json files
-vendor/assets/bower_components
-*.bowerrc
-bower.json
+# Ignore storage (uploaded files in development and any SQLite databases).
+/storage/*
+!/storage/.keep
+/tmp/storage/*
+!/tmp/storage/.keep
+
+# Ignore assets.
+/node_modules/
+/app/assets/builds/*
+!/app/assets/builds/.keep
+/public/assets
+
+# Ignore CI service files.
+/.github
 
 # Ignore Kamal files.
 /config/deploy*.yml
 /.kamal
+
+# Ignore development files
+/.devcontainer
+
+# Ignore Docker-related files
+/.dockerignore
+/Dockerfile*
