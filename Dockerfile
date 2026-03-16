@@ -6,7 +6,7 @@
 # docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name podi podi
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.3.9
+ARG RUBY_VERSION=3.4.8
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
 # Rails app lives here
