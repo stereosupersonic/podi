@@ -45,7 +45,7 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
 # Install application gems
 COPY vendor/* ./vendor/
 COPY Gemfile Gemfile.lock ./
-ARG BUNDLER_VERSION=4.0.6
+ARG BUNDLER_VERSION=4.0.8
 RUN gem install bundler -v $BUNDLER_VERSION && \
     bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
