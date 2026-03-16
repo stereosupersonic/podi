@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
 set -Eeuo pipefail
-
-dump_file_name='latest.dump'
-rm -rfv $dump_file_name
+# filename=YYYY-MM-DD_HH-MM-SS.dump
+dump_file_name="$(date +'%Y-%m-%d_%H-%M-%S').dump"
 
 echo "create dump file"
 heroku pg:backups:capture --app wartenberger
 
 echo "download dump file"
-heroku pg:backups:download --app wartenberger
+heroku pg:backups:download --app wartenberger --output "$dump_file_name"

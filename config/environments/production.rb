@@ -31,7 +31,7 @@ Rails.application.configure do
   config.force_ssl = true
 
   # Skip http-to-https redirect for the default health check endpoint.
-  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
@@ -87,8 +87,9 @@ Rails.application.configure do
   # ]
   #
   # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-
+  config.host_authorization = {
+    exclude: ->(request) { request.path == "/up" }
+  }
   config.aws_access_key = ENV["S3_ACCESS_KEY"]
   config.aws_secret_key = ENV["S3_SECRET_KEY"]
   config.aws_secret_key = ENV["S3_SECRET_KEY"]
@@ -101,4 +102,6 @@ Rails.application.configure do
   config.cloudinary_api_secret = ENV["CLOUDINARY_API_SECRET"]
 
   config.host_url = ENV["DEFAULT_URL_HOST"]
+
+  config.hosts.clear
 end

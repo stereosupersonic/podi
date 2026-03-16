@@ -7,18 +7,33 @@
         .card-body
           %h3.card-title Development
           %p.card-text
+            = "Server-IP: #{Socket.ip_address_list.detect(&:ipv4_private?)&.ip_address || Socket.gethostname}"
+            %br
             = "Ruby-Version: #{`ruby -v`}"
             %br
             = "Rails-Version: #{Rails.version}"
     .row.env
       .card.mt-2{style: "width: 70rem;"}
         .card-body
-          %h3.card-title ENV
-          %p.card-text= debug ENV.to_h.to_yaml
+          %h3.card-title Debug
+          %dl
+            %dt Deploy SHA
+            %dd= ENV["DEPLOY_SHA"].presence || "n/a"
+            %dt Deploy Timestamp
+            %dd= ENV["DEPLOY_TIMESTAMP"].present? ? Time.zone.parse(ENV["DEPLOY_TIMESTAMP"]).strftime("%d.%m.%Y %H:%M:%S UTC") : "n/a"
+            %dt Rails Environment
+            %dd= ENV["RAILS_ENV"].presence || "n/a"
+            %dt Rails Max Threads
+            %dd= ENV["RAILS_MAX_THREADS"].presence || "n/a"
+            %dt Web Concurrency
+            %dd= ENV["WEB_CONCURRENCY"].presence || "n/a"
+            %dt Rails Log Level
+            %dd= ENV["RAILS_LOG_LEVEL"].presence || Rails.logger.level
+
     .row.functions
       .card.mt-2{style: "width: 70rem;"}
         .card-body
-          %h5.card-title Execption Testing
+          %h5.card-title Exception Testing
           = link_to "Raise rails exception", trigger_exception_admin_info_path, data: { turbo_method: "post" }, class: "card-link btn btn-danger"
 
           = link_to "Raise js exception", "#", class: "card-link btn btn-danger raise-js-exception"
@@ -33,4 +48,3 @@
       throw new Error('My js error message');
     });
   });
-```

@@ -1,0 +1,103 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+    branches:
+      - master
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    env:
+      DOCKER_BUILDKIT: 1
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          cat >> ~/.ssh/known_hosts <<'EOF'
+          37.120.190.122 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMdS11oiEQCNql/8qW14C4Of1i1nG/p2ixNi0A3yT9pM
+          37.120.190.122 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQD8OM4fDvSIhJk5EMbaW4C85VnFDfFYzTgCWd1o3xD2UgOzjSlefJHGtOhJCL+zBYxiDC0l1pi+42gFwUzxXQQD4PxG5mGSftrtS8CP7hx8pBlkORkbq6vBdV9/5IWtuXFvbtDvioh1UMgWubUNXaB6Jfxjf7rpxnrMBvPgG0fFrYUk7Rt3fUCS8tvHPu/nPmbwkwjbnhg7d9ifn1rR37CSUh1mQ7kj61FnoGHJ7x8SeGzxL5m7qf0VrL7/+yRsqePUsNaOuKE3fQCRZZ5YYUtyBADccRCJAROFOkVDHL9XSqv9XCiP8Wb44ij13tjLLYjFwzY7bEhuZH8RC/AEYSuy05/qNXXCzjutLFOC5oTGXKmeQpLDeJp8M5sz2eLsmCZNz8p1FBRg/UCCzAnSVDdEMeBmfuOImlyUGvESWGQgWn+JGnP/zjaOKE65OXZ0iHBqw/lhW46WM1D0J9yefXLDF4eC6zv/iPKAXJXuIR+sVZBEcYBzU0FjPGcnCrQwkS0=
+          37.120.190.122 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFtHnLYRpDYy+JwH4RfuyItBfUP14DGzqu3ust6AxsEETUa4nFH0MD5aMTPw546cEQMXzhIqbX7aIctRj4z6Ah0=
+          EOF
+
+      - name: Create Kamal secrets file
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+          ROLLBAR_ENABLED: ${{ secrets.ROLLBAR_ENABLED }}
+          NEWRELIC_LICENSE_KEY: ${{ secrets.NEWRELIC_LICENSE_KEY }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET: ${{ secrets.AWS_SECRET }}
+          CLOUDFRONT_URL: ${{ secrets.CLOUDFRONT_URL }}
+          S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+          S3_REGION: ${{ secrets.S3_REGION }}
+          S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          GEOIP_ACCOUNT: ${{ secrets.GEOIP_ACCOUNT }}
+          GEOIP_LICENSE_KEY: ${{ secrets.GEOIP_LICENSE_KEY }}
+          UMAMI_WEBSITE_ID: ${{ secrets.UMAMI_WEBSITE_ID }}
+        run: |
+          mkdir -p .kamal
+          cat > .kamal/secrets <<EOF
+          RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+          POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+          POSTGRES_PASS=${POSTGRES_PASSWORD}
+          ROLLBAR_ACCESS_TOKEN=${ROLLBAR_ACCESS_TOKEN}
+          ROLLBAR_ENABLED=${ROLLBAR_ENABLED}
+          NEWRELIC_LICENSE_KEY=${NEWRELIC_LICENSE_KEY}
+          AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
+          AWS_SECRET=${AWS_SECRET}
+          CLOUDFRONT_URL=${CLOUDFRONT_URL}
+          S3_ACCESS_KEY=${S3_ACCESS_KEY}
+          S3_BUCKET_NAME=${S3_BUCKET_NAME}
+          S3_REGION=${S3_REGION}
+          S3_SECRET_KEY=${S3_SECRET_KEY}
+          CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+          CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+          CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+          GEOIP_ACCOUNT=${GEOIP_ACCOUNT}
+          GEOIP_LICENSE_KEY=${GEOIP_LICENSE_KEY}
+          UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID}
+          EOF
+
+      - name: Deploy with Kamal
+        run: bin/kamal deploy
+
+      - name: Notify Rollbar of deploy
+        if: success()
+        run: |
+          curl -s -X POST https://api.rollbar.com/api/1/deploy \
+            -F access_token=${{ secrets.ROLLBAR_ACCESS_TOKEN }} \
+            -F environment=production \
+            -F revision=${{ github.sha }} \
+            -F local_username=${{ github.actor }}

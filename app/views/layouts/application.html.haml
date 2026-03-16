@@ -38,6 +38,9 @@
     = stylesheet_link_tag "application", media: "all"
     = javascript_include_tag "application", defer: true
 
+    - if ENV["UMAMI_WEBSITE_ID"].present?
+      %script{defer: true, src: "https://cloud.umami.is/script.js", "data-website-id": ENV["UMAMI_WEBSITE_ID"]}{}
+
   %body{id: "main", class: "#{controller_name} #{action_name}"}
     %header
       - if flash.present?

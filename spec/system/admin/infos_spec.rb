@@ -19,8 +19,8 @@ describe "Info", type: :system do
       end
 
       within ".env" do
-        expect(page).to have_selector "h3", text: "ENV"
-        expect(page).to have_content("HOME:")
+        expect(page).to have_selector "h3", text: "Debug"
+        expect(page).to have_content("Deploy SHA")
       end
 
       within ".functions" do
