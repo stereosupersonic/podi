@@ -470,10 +470,6 @@ GEM
     simplecov_json_formatter (0.1.4)
     sitemap_generator (6.3.0)
       builder (~> 3.0)
-    solid_cache (1.0.10)
-      activejob (>= 7.2)
-      activerecord (>= 7.2)
-      railties (>= 7.2)
     sshkit (1.25.0)
       base64
       logger
@@ -567,7 +563,6 @@ DEPENDENCIES
   simple_form
   simplecov
   sitemap_generator
-  solid_cache
   super_diff (~> 0.12.1)
   thruster
   turbo-rails (~> 1.5)
