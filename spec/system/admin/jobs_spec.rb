@@ -8,11 +8,10 @@ describe "Jobs", type: :system do
 
     before { login_as admin }
 
-    xit "show jobs" do
+    it "has a Jobs link pointing to Sidekiq" do
       visit "/"
-      click_on "Jobs"
 
-      expect(page).to have_content "Sidekiq"
+      expect(page).to have_link "Jobs", href: "/sidekiq"
     end
   end
 

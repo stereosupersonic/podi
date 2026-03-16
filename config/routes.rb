@@ -1,9 +1,11 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
-  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-    ActiveSupport::SecurityUtils.secure_compare(username, ENV.fetch("SIDEKIQ_WEB_USER", "admin")) &
-      ActiveSupport::SecurityUtils.secure_compare(password, ENV.fetch("SIDEKIQ_WEB_PASSWORD", "password"))
+  unless Rails.env.development? || Rails.env.test?
+    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+      ActiveSupport::SecurityUtils.secure_compare(username, ENV.fetch("SIDEKIQ_WEB_USER")) &
+        ActiveSupport::SecurityUtils.secure_compare(password, ENV.fetch("SIDEKIQ_WEB_PASSWORD"))
+    end
   end
   mount Sidekiq::Web => "/sidekiq"
 

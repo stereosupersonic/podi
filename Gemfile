@@ -10,10 +10,12 @@ gem "puma", "~> 7.1.0"
 
 gem "jbuilder", "~> 2.7"
 
-gem "cssbundling-rails", "~> 0.2.6"
+gem "dartsass-rails"
 gem "importmap-rails"
 
 gem "propshaft"
+gem "bootstrap", "~> 5.3"
+gem "font-awesome-sass", "~> 6.7"
 gem "turbo-rails", "~> 1.5"
 
 gem "simple_form"
@@ -27,7 +29,7 @@ gem "redcarpet"
 gem "bcrypt", "~> 3.1.7"
 
 gem "will_paginate"
-gem "will_paginate-bootstrap4"
+gem "will_paginate-bootstrap5", require: "will_paginate-bootstrap4"
 
 gem "newrelic_rpm"
 gem "rollbar"
@@ -57,7 +59,7 @@ gem "kamal", require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
-
+gem "connection_pool", "~> 2.5.0" # there is an issue with MemCacheStore and connection_pool >= 3.0.0
 group :development do
   gem "annotate"
   gem "haml_lint"
@@ -91,3 +93,4 @@ group :test do
   gem "simplecov", require: false
   gem "super_diff", "~> 0.12.1"
 end
+
