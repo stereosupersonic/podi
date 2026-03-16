@@ -7,5 +7,7 @@ import * as bootstrap from "bootstrap"
 import "./src/jquery.js"
 
 $(document).on("turbo:load", function () {
-  $("[data-toggle='tooltip']").tooltip();
+  $("[data-bs-toggle='tooltip']").each(function () {
+    new bootstrap.Tooltip(this);
+  });
 });
