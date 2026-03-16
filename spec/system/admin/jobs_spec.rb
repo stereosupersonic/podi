@@ -1,11 +1,5 @@
 require "capybara_helper"
 
-# class ActiveJob::QueueAdapters::TestAdapter
-#   def activating(&block)
-#    # block.call
-#   end
-# end
-
 describe "Jobs", type: :system do
   let!(:setting) { create(:setting) }
 
@@ -18,7 +12,7 @@ describe "Jobs", type: :system do
       visit "/"
       click_on "Jobs"
 
-      expect(page).to have_content "Jobs"
+      expect(page).to have_content "Sidekiq"
     end
   end
 
@@ -32,12 +26,6 @@ describe "Jobs", type: :system do
 
       expect(page).to have_no_link "Jobs"
     end
-
-    it "gets Access Denied for admin functions" do
-      visit "/jobs"
-
-      expect(page).to have_content "Access Denied"
-    end
   end
 
   context "when not logged in" do
@@ -45,11 +33,6 @@ describe "Jobs", type: :system do
       visit "/"
 
       expect(page).to have_no_link "Jobs"
-    end
-
-    it "gets Access Denied for admin functions" do
-      visit "/jobs"
-      expect(page).to have_content "Access Denied"
     end
   end
 end

@@ -15,9 +15,7 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
-  config.active_job.queue_adapter = :solid_queue
-  # config.solid_queue.connects_to = { database: { writing: :queue } }
-  # config.solid_cache.connects_to = { database: { writing: :primary } }
+  config.active_job.queue_adapter = ENV.fetch("SIDEKIQ_ENABLED", false) ? :sidekiq : :async
 
   # Enable/disable Action Controller caching. By default Action Controller caching is disabled.
   # Run rails dev:cache to toggle Action Controller caching.

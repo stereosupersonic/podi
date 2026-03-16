@@ -43,11 +43,8 @@ Rails.application.configure do
   # Prevent health checks from clogging up the logs.
   config.silence_healthcheck_path = "/up"
 
-  # Use a real queuing backend for Active Job (and separate queues per environment).
-  config.active_job.queue_adapter = :solid_queue
-  # config.solid_queue.connects_to = { database: { writing: :queue } }
-  # config.solid_queue.connects_to = { database: { writing: :queue } }
-  # config.solid_cache.connects_to = { database: { writing: :primary } }
+  config.active_job.queue_adapter = :sidekiq
+
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 

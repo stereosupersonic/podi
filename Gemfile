@@ -49,9 +49,7 @@ gem "maxmind-geoip2", "~> 1.1"
 gem "scenic", "~> 1.7" # for views in db
 
 gem "solid_cache"
-gem "solid_queue"
-
-gem "mission_control-jobs"
+gem "sidekiq", "~> 7.3"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 

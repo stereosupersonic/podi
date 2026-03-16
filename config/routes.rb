@@ -1,5 +1,11 @@
+require "sidekiq/web"
+
 Rails.application.routes.draw do
-  mount MissionControl::Jobs::Engine, at: "/jobs"
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+    ActiveSupport::SecurityUtils.secure_compare(username, ENV.fetch("SIDEKIQ_WEB_USER", "admin")) &
+      ActiveSupport::SecurityUtils.secure_compare(password, ENV.fetch("SIDEKIQ_WEB_PASSWORD", "password"))
+  end
+  mount Sidekiq::Web => "/sidekiq"
 
   # Custom authentication routes
   get "login", to: "users/sessions#new", as: :login

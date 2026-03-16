@@ -17,7 +17,7 @@ x-base: &base
     - DATABASE_PASSWORD=postgres
     - RAILS_LOG_LEVEL=debug
     - RAILS_ENV=production
-    - SOLID_QUEUE_IN_PUMA=true
+    - REDIS_URL=redis://redis:6379/0
     - DEFAULT_URL_HOST=www.wartenberger.de
   depends_on:
     postgres:
