@@ -1,0 +1,9 @@
+* dockerfile like exhiby with dockerfile.test
+* migrate to sidekiq => adjust kamal
+* use redis for caching
+* redirect ready endpoint to up
+* upgarde latest ruby
+* importmap
+* propshaft
+
+* DNS settings
