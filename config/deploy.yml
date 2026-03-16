@@ -24,11 +24,10 @@ servers:
 proxy:
   ssl: true
   host: wartenberger.de
-  # healthcheck:
-  #   path: /up
-  #   timeout: 2
-  #   interval: 3
-
+  healthcheck:
+    path: /up
+    interval: 3
+    timeout: 2
 # Use local registry on the server (no external registry needed).
 registry:
   server: localhost:5555

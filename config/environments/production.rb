@@ -87,8 +87,9 @@ Rails.application.configure do
   # ]
   #
   # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-
+  config.host_authorization = {
+    exclude: ->(request) { request.path == "/up" }
+  }
   config.aws_access_key = ENV["S3_ACCESS_KEY"]
   config.aws_secret_key = ENV["S3_SECRET_KEY"]
   config.aws_secret_key = ENV["S3_SECRET_KEY"]
