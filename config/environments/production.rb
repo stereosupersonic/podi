@@ -101,4 +101,6 @@ Rails.application.configure do
   config.cloudinary_api_secret = ENV["CLOUDINARY_API_SECRET"]
 
   config.host_url = ENV["DEFAULT_URL_HOST"]
+
+  config.hosts << /[a-z0-9]+/
 end
