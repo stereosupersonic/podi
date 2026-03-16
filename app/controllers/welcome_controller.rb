@@ -29,9 +29,4 @@ class WelcomeController < ApplicationController
     episode = Episode.find_by(number: episode_number)
     @about_episode = episode ? EpisodePresenter.new(episode) : nil
   end
-
-  def ready
-    ActiveRecord::Base.connection.execute("SELECT 1")
-    render inline: "OK", layout: false
-  end
 end

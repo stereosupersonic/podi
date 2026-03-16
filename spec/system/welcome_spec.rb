@@ -3,10 +3,10 @@ require "capybara_helper"
 describe "welcome", type: :system do
   let!(:setting) { create(:setting) }
 
-  it "has an ready endpoint" do
+  it "redirects ready endpoint to health check" do
     visit "/ready"
 
-    expect(page).to have_content "OK"
+    expect(page).to have_current_path("/up")
   end
 
   context "when not logged in" do
