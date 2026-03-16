@@ -22,15 +22,6 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: yarn
-
-      - name: Install JS dependencies
-        run: yarn install --frozen-lockfile
-
       - name: Unfreeze bundle for updates
         run: bundle config set frozen false
 
@@ -66,24 +57,6 @@ jobs:
       - name: Update all gems to latest patch versions
         run: bundle update --patch
 
-      - name: Check for JS vulnerabilities
-        id: js_audit
-        run: |
-          set +e
-          yarn audit --level moderate 2>&1
-          js_exit=$?
-          set -e
-
-          if [ $js_exit -ne 0 ]; then
-            echo "has_js_vulnerabilities=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_js_vulnerabilities=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Update JS dependencies if vulnerable
-        if: steps.js_audit.outputs.has_js_vulnerabilities == 'true'
-        run: yarn upgrade
-
       - name: Run RuboCop auto-fix
         run: bundle exec rubocop -a --fail-level fatal || true
 
@@ -103,7 +76,6 @@ jobs:
 
             ### Changes
             - Updated gems flagged by `bundler-audit`
-            - Updated JS dependencies if vulnerabilities were found
             - Applied RuboCop auto-fixes
 
             ### Vulnerable gems updated

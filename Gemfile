@@ -93,4 +93,3 @@ group :test do
   gem "simplecov", require: false
   gem "super_diff", "~> 0.12.1"
 end
-
