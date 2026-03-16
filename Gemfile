@@ -13,7 +13,7 @@ gem "jbuilder", "~> 2.7"
 gem "cssbundling-rails", "~> 0.2.6"
 gem "jsbundling-rails", "~> 0.2.1"
 
-gem "sprockets-rails"
+gem "propshaft"
 gem "turbo-rails", "~> 1.5"
 
 gem "simple_form"
