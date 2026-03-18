@@ -1,9 +1,16 @@
-* dockerfile like exhiby with dockerfile.test
-* migrate to sidekiq => adjust kamal
-* use redis for caching
-* redirect ready endpoint to up
-* upgarde latest ruby
-* importmap
-* propshaft
+* dockerfile like exhiby with dockerfile.test ✅
+* propshaft ✅
+* migrate to Bootstrap 5 ✅
+* remove jquery
+* importmap ✅
+
+* migrate to sidekiq and remove solid queue  ✅
++ inclusive tables and add redis to accessories and  adjust kamal to start jobs  ✅
+
+* use redis for caching   ✅
+* redirect ready endpoint to up  ✅
+* upgarde latest ruby 3.4
+
+
 
 * DNS settings
