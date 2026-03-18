@@ -17,7 +17,8 @@ RSpec.describe PodloveWebplayerConfigBuilder do
               mimeType: "audio/mpeg"
             }
           ],
-          chapters: []
+          chapters: [],
+          files: []
         }
       )
     end
@@ -29,9 +30,9 @@ RSpec.describe PodloveWebplayerConfigBuilder do
     end
 
     it "sets duration to nil when episode has no audio" do
-      allow(episode).to receive(:duration).and_return(nil)
+      episode_without_audio = EpisodePresenter.new(build(:episode, audio: nil))
 
-      config = described_class.new(episode).episode_config
+      config = described_class.new(episode_without_audio).episode_config
 
       expect(config[:duration]).to be_nil
     end

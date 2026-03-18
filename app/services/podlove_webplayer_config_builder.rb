@@ -31,7 +31,8 @@ class PodloveWebplayerConfigBuilder
           mimeType: "audio/mpeg"
         }
       ],
-      chapters: chapters
+      chapters: chapters,
+      files: []
     }
   end
 

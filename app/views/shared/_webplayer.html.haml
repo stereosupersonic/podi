@@ -3,10 +3,12 @@
 %div{ id: webplayer_id }
 :javascript
   (function() {
+    var attempts = 0;
     function initPlayer() {
       if (typeof podlovePlayer === "function") {
         podlovePlayer("##{webplayer_id}", #{episode_config}, #{player_config});
-      } else {
+      } else if (attempts < 50) {
+        attempts++;
         setTimeout(initPlayer, 100);
       }
     }
