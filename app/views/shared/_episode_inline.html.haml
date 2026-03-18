@@ -1,18 +1,1 @@
-- if episode
-  #last-episode
-    .inline-podcast.align-middle.border.border-dark.rounded
-
-      %h2.text-white.fw-light.mb-2.display-4
-        = link_to "Letzte Episode", episode.episonde_url, class: "text-white"
-
-      %h4.text-white.fw-light.mb-2
-        = link_to "#{episode.title}", episode.episonde_url, class: "text-white"
-
-      .text-white.mb-3
-        %span.text-white-opacity-05
-          %small
-            %span.sep.text-white
-            = episode.published_on
-      %p.mb-4
-        .player
-          = render "shared/audio", episode: episode
+-# Inline player removed — episode detail page has the full player

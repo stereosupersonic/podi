@@ -84,6 +84,16 @@ audio {
   height: 50px;
 }
 
+.player iframe {
+  width: 100%;
+  border: none;
+}
+
+.player *:focus-visible {
+  outline: 2px solid #5c626e;
+  outline-offset: 2px;
+}
+
 .episode-header {
   padding-top: 15px;
   padding-bottom: 15px;
