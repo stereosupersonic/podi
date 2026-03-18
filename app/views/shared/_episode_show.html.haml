@@ -7,4 +7,4 @@
 
   .col-md-8.mx-auto.py-4
     - builder = PodloveWebplayerConfigBuilder.new(episode)
-    = render "shared/webplayer", webplayer_id: "webplayer-#{episode.to_param}", episode_config: ERB::Util.json_escape(builder.episode_config.to_json), player_config: ERB::Util.json_escape(builder.player_config.to_json)
+    = render "shared/webplayer", webplayer_id: "webplayer-#{episode.to_param}", audio_url: episode.mp3_url, episode_config: ERB::Util.json_escape(builder.episode_config.to_json), player_config: ERB::Util.json_escape(builder.player_config.to_json)
