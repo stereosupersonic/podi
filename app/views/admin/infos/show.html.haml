@@ -7,7 +7,7 @@
         .card-body
           %h3.card-title Development
           %p.card-text
-            = "Server-IP: #{Socket.ip_address_list.detect(&:ipv4_private?)&.ip_address || Socket.gethostname}"
+            = "Server-IP: #{ENV["SERVER_IP"].presence || Socket.gethostname}"
             %br
             = "Ruby-Version: #{`ruby -v`}"
             %br
@@ -25,8 +25,6 @@
             %dd= ENV["RAILS_ENV"].presence || "n/a"
             %dt Rails Max Threads
             %dd= ENV["RAILS_MAX_THREADS"].presence || "n/a"
-            %dt Web Concurrency
-            %dd= ENV["WEB_CONCURRENCY"].presence || "n/a"
             %dt Rails Log Level
             %dd= ENV["RAILS_LOG_LEVEL"].presence || Rails.logger.level
 

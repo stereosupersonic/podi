@@ -1,3 +1,5 @@
+<% server_ip = "37.120.190.122" %>
+
 # Name of your application. Used to uniquely configure containers.
 # setup server via ansible https://github.com/stereosupersonic/ansible-pi
 service: podi
@@ -11,11 +13,11 @@ image: podi
 
 servers:
   web:
-    - 37.120.190.122
+    - <%= server_ip %>
   job:
     hosts:
-      - 37.120.190.122
-    cmd: bundle exec sidekiq -C config/sidekiq.yml
+      - <%= server_ip %>
+    cmd: bin/jobs
     options:
       memory: 512m
 
@@ -60,6 +62,8 @@ env:
     DEFAULT_URL_HOST: www.wartenberger.de
     REDIS_URL: redis://podi-redis:6379/0
     RAILS_LOG_LEVEL: info
+    RAILS_MAX_THREADS: 3
+    SERVER_IP: <%= server_ip %>
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal logs -r job" will tail logs from the first server in the job section.
@@ -108,7 +112,7 @@ ssh:
 accessories:
   redis:
     image: redis:7-alpine
-    host: 37.120.190.122
+    host: <%= server_ip %>
     port: 127.0.0.1:6379:6379
     cmd: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
     directories:
@@ -117,7 +121,7 @@ accessories:
   postgres:
     image: postgres:17
     port: 127.0.0.1:5432:5432
-    host: 37.120.190.122
+    host: <%= server_ip %>
     env:
       clear:
         POSTGRES_USER: postgres
@@ -129,7 +133,7 @@ accessories:
 
   postgres_backup:
     image: kartoza/pg-backup:17-3.5
-    host:  37.120.190.122
+    host: <%= server_ip %>
     env:
       clear:
         POSTGRES_USER: postgres

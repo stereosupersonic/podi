@@ -1,13 +1,9 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
-  unless Rails.env.development? || Rails.env.test?
-    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-      ActiveSupport::SecurityUtils.secure_compare(username, ENV.fetch("SIDEKIQ_WEB_USER")) &
-        ActiveSupport::SecurityUtils.secure_compare(password, ENV.fetch("SIDEKIQ_WEB_PASSWORD"))
-    end
+  constraints ->(request) { User.find_by(id: request.session[:user_id])&.admin? } do
+    mount Sidekiq::Web => "/sidekiq"
   end
-  mount Sidekiq::Web => "/sidekiq"
 
   # Custom authentication routes
   get "login", to: "users/sessions#new", as: :login
