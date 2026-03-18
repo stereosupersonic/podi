@@ -93,6 +93,21 @@ jobs:
       - name: Deploy with Kamal
         run: bin/kamal deploy
 
+      - name: Fetch container logs on failure
+        if: failure()
+        run: |
+          echo "=== Docker container status ==="
+          ssh -o StrictHostKeyChecking=no stereosonic@37.120.190.122 "docker ps -a --filter name=podi- --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
+          echo ""
+          echo "=== Job container logs ==="
+          ssh -o StrictHostKeyChecking=no stereosonic@37.120.190.122 "docker ps -a --filter name=podi-job --quiet | head -1 | xargs -r docker logs --tail 100 2>&1" || true
+          echo ""
+          echo "=== Web container logs ==="
+          ssh -o StrictHostKeyChecking=no stereosonic@37.120.190.122 "docker ps -a --filter name=podi-web --quiet | head -1 | xargs -r docker logs --tail 100 2>&1" || true
+          echo ""
+          echo "=== Docker inspect (health) ==="
+          ssh -o StrictHostKeyChecking=no stereosonic@37.120.190.122 "docker ps -a --filter name=podi-job --quiet | head -1 | xargs -r docker inspect --format '{{json .State}}' 2>&1" || true
+
       - name: Notify Rollbar of deploy
         if: success()
         run: |
