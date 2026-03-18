@@ -117,41 +117,11 @@ describe "welcome", type: :system do
     end
 
     context "with last episode" do
-      it "shows nothing without a episode" do
+      it "does not show an inline player on the homepage" do
+        create(:episode, title: "last Test", number: 2, published_on: Time.zone.today)
         visit "/"
 
         expect(page).to have_no_css("#last-episode")
-        expect(page).to have_no_content "Letzte Episode "
-      end
-
-      it "shows the last episode" do
-        create(:episode, title: "last Test", number: 2, published_on: Time.zone.today)
-        create(:episode, title: "first Test", number: 1, published_on: 2.weeks.ago)
-        visit "/"
-
-        expect(page).to have_css("#last-episode")
-        expect(page).to have_content "Letzte Episode"
-        expect(page).to have_content "last Test"
-      end
-
-      it "shows the last episode not inactive" do
-        create(:episode, title: "last Test", number: 2, published_on: Time.zone.today, active: false)
-        create(:episode, title: "first Test", number: 1, published_on: 2.weeks.ago)
-        visit "/"
-
-        expect(page).to have_css("#last-episode")
-        expect(page).to have_content "Letzte Episode"
-        expect(page).to have_content "first Test"
-      end
-
-      it "shows the last episode not published" do
-        create(:episode, title: "last Test", number: 2, published_on: 1.day.since)
-        create(:episode, title: "first Test", number: 1, published_on: 2.weeks.ago)
-        visit "/"
-
-        expect(page).to have_css("#last-episode")
-        expect(page).to have_content "Letzte Episode"
-        expect(page).to have_content "first Test"
       end
 
       it "has an short cut with the nummer" do

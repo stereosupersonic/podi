@@ -17,7 +17,7 @@ else
 
   Shrine.storages = {
     cache: Shrine::Storage::Cloudinary.new(prefix: "cache"),
-    store: Shrine::Storage::Cloudinary.new(prefix: Rails.env)
+    store: Shrine::Storage::Cloudinary.new(prefix: ENV.fetch("CLOUDINARY_PREFIX", Rails.env))
   }
 
 end

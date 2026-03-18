@@ -1,5 +1,14 @@
--# https://github.com/podigee/podigee-podcast-player/blob/master/docs/configuration.md
+-# https://docs.podlove.org/podlove-web-player/v5/installation
 
-
-%script.podigee-podcast-player{"data-configuration" => webplayer_config,
-                               :src => "https://cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js"}
+%div{ id: webplayer_id }
+:javascript
+  (function() {
+    function initPlayer() {
+      if (typeof podlovePlayer === "function") {
+        podlovePlayer("##{webplayer_id}", #{episode_config}, #{player_config});
+      } else {
+        setTimeout(initPlayer, 100);
+      }
+    }
+    initPlayer();
+  })();
