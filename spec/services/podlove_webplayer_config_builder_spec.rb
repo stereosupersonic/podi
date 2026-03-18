@@ -37,6 +37,44 @@ RSpec.describe PodloveWebplayerConfigBuilder do
       expect(config[:duration]).to be_nil
     end
 
+    it "includes parsed transcripts when present" do
+      vtt = <<~VTT
+        WEBVTT
+
+        00:00:00.017 --> 00:00:07.597
+        Servus und herzlich willkommen.
+
+        00:00:08.277 --> 00:00:15.617
+        Heute reden wir mit dem Ortsverband.
+      VTT
+      episode.update!(transcript: vtt)
+
+      config = described_class.new(episode).episode_config
+
+      expect(config[:transcripts]).to eq([
+        {
+          start: "00:00:00.017",
+          start_ms: 17,
+          end: "00:00:07.597",
+          end_ms: 7597,
+          text: "Servus und herzlich willkommen."
+        },
+        {
+          start: "00:00:08.277",
+          start_ms: 8277,
+          end: "00:00:15.617",
+          end_ms: 15617,
+          text: "Heute reden wir mit dem Ortsverband."
+        }
+      ])
+    end
+
+    it "omits transcripts key when transcript is blank" do
+      config = described_class.new(episode).episode_config
+
+      expect(config).not_to have_key(:transcripts)
+    end
+
     it "includes parsed chapter marks" do
       episode.chapter_marks = %(
        00:00:01 Intro
@@ -58,6 +96,20 @@ RSpec.describe PodloveWebplayerConfigBuilder do
   end
 
   describe "#player_config" do
+    it "sets activeTab to transcripts when transcript is present" do
+      episode.update!(transcript: "WEBVTT\n\n00:00:01.000 --> 00:00:02.000\nHello")
+
+      config = described_class.new(episode).player_config
+
+      expect(config[:activeTab]).to eq("transcripts")
+    end
+
+    it "sets activeTab to chapters when no transcript" do
+      config = described_class.new(episode).player_config
+
+      expect(config[:activeTab]).to eq("chapters")
+    end
+
     it "builds the player configuration with theme" do
       config = described_class.new(episode).player_config
 

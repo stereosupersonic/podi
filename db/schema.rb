@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_16_163539) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_18_172732) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -57,6 +57,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_16_163539) do
     t.boolean "rss_feed", default: true
     t.string "slug", null: false
     t.string "title", null: false
+    t.text "transcript"
     t.datetime "updated_at", null: false
     t.boolean "visible", default: true
     t.index ["number"], name: "index_episodes_on_number", unique: true
