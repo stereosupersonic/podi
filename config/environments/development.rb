@@ -15,9 +15,7 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
-  config.active_job.queue_adapter = :solid_queue
-  # config.solid_queue.connects_to = { database: { writing: :queue } }
-  # config.solid_cache.connects_to = { database: { writing: :primary } }
+  config.active_job.queue_adapter = ENV["SIDEKIQ_ENABLED"] == "true" ? :sidekiq : :async
 
   # Enable/disable Action Controller caching. By default Action Controller caching is disabled.
   # Run rails dev:cache to toggle Action Controller caching.
@@ -25,7 +23,7 @@ Rails.application.configure do
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
-    config.cache_store = :solid_cache_store
+    config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }
     config.public_file_server.headers = { "cache-control" => "public, max-age=#{2.days.to_i}" }
   else
     config.action_controller.perform_caching = false

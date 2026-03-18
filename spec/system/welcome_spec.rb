@@ -3,10 +3,10 @@ require "capybara_helper"
 describe "welcome", type: :system do
   let!(:setting) { create(:setting) }
 
-  it "has an ready endpoint" do
+  it "redirects ready endpoint to health check" do
     visit "/ready"
 
-    expect(page).to have_content "OK"
+    expect(page).to have_current_path("/up")
   end
 
   context "when not logged in" do
@@ -165,7 +165,7 @@ describe "welcome", type: :system do
       it "has an short cut with the nummer and redirects to 404 if number not exits" do
         visit "/001"
 
-        expect(page).to have_title "The page you were looking for doesn’t exist (404 Not found)"
+        expect(page).to have_title "The page you were looking for doesn't exist (404 Not found)"
       end
     end
   end

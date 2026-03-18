@@ -2,7 +2,7 @@
 
   %h1 Episodes
   %table.table.table-striped.table-bordered
-    %thead.thead-dark
+    %thead.table-dark
       %tr
         %th Published
         %th Visible
@@ -37,7 +37,7 @@
                 { counter: :a30d, title: "Last 30 days", class: "warning" } ].each do |counter|
               - if episode.episode_current_statistic&.send(counter[:counter]).to_i > 0
                 %span
-                  .badge.badge-pill{class: "badge-#{counter[:class]}", "data-toggle" => "tooltip", "data-placement"=>"top", "title"=>counter[:title]}
+                  .badge.rounded-pill{class: "text-bg-#{counter[:class]}", "data-bs-toggle" => "tooltip", "data-bs-placement" => "top", "title" => counter[:title]}
                     = link_to episode.episode_current_statistic&.send(counter[:counter]).to_i, admin_events_path(episode_id: episode.id, counter: counter[:counter])
 
           %td= episode.published_on

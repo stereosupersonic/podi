@@ -36,7 +36,7 @@
     = csp_meta_tag
 
     = stylesheet_link_tag "application", media: "all"
-    = javascript_include_tag "application", defer: true
+    = javascript_importmap_tags
 
     - if ENV["UMAMI_WEBSITE_ID"].present?
       %script{defer: true, src: "https://cloud.umami.is/script.js", "data-website-id": ENV["UMAMI_WEBSITE_ID"]}{}
@@ -47,18 +47,18 @@
         - flash.each do |name, msg|
           - if msg.is_a?(String)
             %div{id: "top-alert", class: "alert alert-dismissible fade show alert-#{name == :notice ? "success" : "warning"}", role: "alert"}
-              %a.close{"data-dismiss" => "alert"} ×
+              %button.btn-close{"data-bs-dismiss" => "alert", type: "button", "aria-label" => "Close"}
               = content_tag :div, msg, id: "flash_#{name}"
 
       %nav.navbar.navbar-dark.bg-dark.navbar-expand-lg
         %h1
           %a.text-white{href: root_path}
             = current_setting.title
-        %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarNav", "data-toggle" => "collapse", :type => "button"}
+        %button.navbar-toggler{"aria-controls" => "navbarNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-bs-target" => "#navbarNav", "data-bs-toggle" => "collapse", :type => "button"}
           %span.navbar-toggler-icon
 
         #navbarNav.collapse.text-white.navbar-collapse
-          %ul.navbar-nav.ml-auto
+          %ul.navbar-nav.ms-auto
             %li.nav-item
               %a.text-white.nav-link{href: episodes_path} Episoden
             %li.nav-item
@@ -71,7 +71,7 @@
                 = link_to "Settings", edit_admin_setting_path, class: "nav-link text-white"
                 = link_to "Info", admin_info_path, class: "nav-link text-white"
                 %div{"data-turbo" => "false"}
-                  = link_to "Jobs", "/jobs", class: "nav-link text-white"
+                  = link_to "Jobs", "/sidekiq", class: "nav-link text-white"
 
               = link_to "Account", "/", data: { confirm: "NOT IMPLEMENTED YET!" }, class: "nav-link text-white"
               = link_to "Logout", logout_path, data: { turbo_method: :delete }, class: "nav-link text-white"
@@ -116,37 +116,37 @@
               %h3.footer-heading.mb-4 Folge uns
               %div
                 - if current_setting.facebook_url.present?
-                  %a.pl-0.pr-3{href: current_setting.facebook_url.strip}
+                  %a.ps-0.pe-3{href: current_setting.facebook_url.strip}
                     %span
                       %i.fab.fa-facebook
 
 
                 - if current_setting.twitter_url.present?
-                  %a.pl-0.pr-3{href: current_setting.twitter_url.strip }
+                  %a.ps-0.pe-3{href: current_setting.twitter_url.strip }
                     %span
                       %i.fab.fa-twitter
 
                 - if current_setting.instagram_url.present?
-                  %a.pl-0.pr-3{href: current_setting.instagram_url.strip }
+                  %a.ps-0.pe-3{href: current_setting.instagram_url.strip }
                     %span
                       %i.fab.fa-instagram
 
                 - if current_setting.itunes_url.present?
-                  %a.pl-0.pr-3{href: current_setting.itunes_url.strip }
+                  %a.ps-0.pe-3{href: current_setting.itunes_url.strip }
                     %span
                       %i.fab.fa-apple
 
                 - if current_setting.spotify_url.present?
-                  %a.pl-0.pr-3{href: current_setting.spotify_url.strip}
+                  %a.ps-0.pe-3{href: current_setting.spotify_url.strip}
                     %span
                       %i.fab.fa-spotify
 
                 - if current_setting.youtube_url.present?
-                  %a.pl-0.pr-3{href: current_setting.youtube_url.strip}
+                  %a.ps-0.pe-3{href: current_setting.youtube_url.strip}
                     %span
                       %i.fab.fa-youtube
                 - if current_setting.rss_url.present?
-                  %a.pl-0.pr-3{href: current_setting.rss_url.strip}
+                  %a.ps-0.pe-3{href: current_setting.rss_url.strip}
                     %span
                       %i.fas.fa-rss
 

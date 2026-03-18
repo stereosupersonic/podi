@@ -9,40 +9,13 @@ default: &default
   database: <%= ENV.fetch("DATABASE_NAME", "podi_production") %>
 
 development:
-  primary: &primary_development
-    <<: *default
-    database: podi_development
-  queue:
-    <<: *primary_development
-    database: <%= ENV.fetch('DATABASE_NAME_QUEUE', "podi_development_queue") %>
-    migrations_paths: db/queue_migrate
-  cache:
-    <<: *primary_development
-    database: <%= ENV.fetch('DATABASE_NAME_CACHE', "podi_development_cache") %>
-    migrations_paths: db/cache_migrate
+  <<: *default
+  database: podi_development
 
 test:
-  primary: &primary_test
-    <<: *default
-    database: podi_test
-  queue:
-    <<: *primary_test
-    database: <%= ENV.fetch('DATABASE_NAME_QUEUE', "podi_test_queue") %>
-    migrations_paths: db/queue_migrate
-  cache:
-    <<: *primary_test
-    database: <%= ENV.fetch('DATABASE_NAME_CACHE', "podi_test_cache") %>
-    migrations_paths: db/cache_migrate
+  <<: *default
+  database: podi_test
 
 production:
-  primary: &primary_production
-    adapter: postgresql
-    encoding: unicode
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    url: <%= ENV['DATABASE_URL'] %>
-  queue:
-    <<: *primary_production
-    migrations_paths: db/queue_migrate
-  cache:
-    <<: *primary_production
-    migrations_paths: db/cache_migrate
+  <<: *default
+  database: podi_production

@@ -43,16 +43,12 @@ Rails.application.configure do
   # Prevent health checks from clogging up the logs.
   config.silence_healthcheck_path = "/up"
 
-  # Use a real queuing backend for Active Job (and separate queues per environment).
-  config.active_job.queue_adapter = :solid_queue
-  # config.solid_queue.connects_to = { database: { writing: :queue } }
-  # config.solid_queue.connects_to = { database: { writing: :queue } }
-  # config.solid_cache.connects_to = { database: { writing: :primary } }
+  config.active_job.queue_adapter = :sidekiq
+
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
-  # Replace the default in-process memory cache store with a durable alternative.
-  config.cache_store = :solid_cache_store
+  config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0") }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -87,10 +83,10 @@ Rails.application.configure do
   # ]
   #
   # Skip DNS rebinding protection for the default health check endpoint.
-  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-
+  # config.host_authorization = {
+  #   exclude: ->(request) { request.path == "/up" }
+  # }
   config.aws_access_key = ENV["S3_ACCESS_KEY"]
-  config.aws_secret_key = ENV["S3_SECRET_KEY"]
   config.aws_secret_key = ENV["S3_SECRET_KEY"]
   config.aws_bucket_name = ENV["S3_BUCKET_NAME"]
   config.aws_s3_region = ENV["S3_REGION"]

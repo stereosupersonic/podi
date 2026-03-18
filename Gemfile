@@ -3,17 +3,19 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.0"
+gem "rails", "~> 8.1.0"
 
 gem "pg"
 gem "puma", "~> 7.1.0"
 
 gem "jbuilder", "~> 2.7"
 
-gem "cssbundling-rails", "~> 0.2.6"
-gem "jsbundling-rails", "~> 0.2.1"
+gem "dartsass-rails"
+gem "importmap-rails"
 
-gem "sprockets-rails"
+gem "propshaft"
+gem "bootstrap", "~> 5.3"
+gem "font-awesome-sass", "~> 6.7"
 gem "turbo-rails", "~> 1.5"
 
 gem "simple_form"
@@ -27,7 +29,7 @@ gem "redcarpet"
 gem "bcrypt", "~> 3.1.7"
 
 gem "will_paginate"
-gem "will_paginate-bootstrap4"
+gem "will_paginate-bootstrap5", require: "will_paginate-bootstrap4"
 
 gem "newrelic_rpm"
 gem "rollbar"
@@ -48,10 +50,8 @@ gem "maxmind-geoip2", "~> 1.1"
 
 gem "scenic", "~> 1.7" # for views in db
 
-gem "solid_cache"
-gem "solid_queue"
-
-gem "mission_control-jobs"
+gem "redis", ">= 4.0.1"
+gem "sidekiq", "~> 7.3"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
@@ -60,7 +60,7 @@ gem "kamal", require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
-
+gem "connection_pool", "~> 2.5.0" # there is an issue with MemCacheStore and connection_pool >= 3.0.0
 group :development do
   gem "annotate"
   gem "haml_lint"
@@ -85,10 +85,10 @@ group :development, :test do
   gem "dotenv-rails"
   gem "foreman"
   gem "launchy" # for capybara save_and_open_page
-  gem "webdrivers", "~> 5.3.0"
 end
 
 group :test do
+  gem "rexml", "~> 3.4"
   gem "codecov", require: false
   gem "compare-xml"
   gem "simplecov", require: false
