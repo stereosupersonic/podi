@@ -94,7 +94,6 @@ jobs:
         run: bin/kamal deploy
 
       - name: Fetch container logs on failure
-        if: failure()
         run: |
           echo "=== Docker container status ==="
           ssh -o StrictHostKeyChecking=no stereosonic@37.120.190.122 "docker ps -a --filter name=podi- --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
