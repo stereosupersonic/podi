@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "episodes/search", to: "episodes#search", as: :search_episodes
   resources :episodes, only: %i[show index], param: :slug
 
   root to: "welcome#index"

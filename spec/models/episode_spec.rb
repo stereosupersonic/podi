@@ -77,6 +77,42 @@ RSpec.describe Episode, type: :model do
     end
   end
 
+  describe ".search" do
+    it "finds episodes by title" do
+      episode = create(:episode, title: "Fahrrad Geschichte", number: 1)
+      create(:episode, title: "Soli Wartenberg", number: 2)
+
+      expect(described_class.search("Fahrrad")).to eq([episode])
+    end
+
+    it "finds episodes by description" do
+      episode = create(:episode, title: "Episode One", number: 1, description: "About cycling")
+      create(:episode, title: "Episode Two", number: 2, description: "About cooking")
+
+      expect(described_class.search("cycling")).to eq([episode])
+    end
+
+    it "finds episodes by tag" do
+      episode = create(:episode, title: "Episode One", number: 1, tags: ["Interview", "Technik"])
+      create(:episode, title: "Episode Two", number: 2, tags: ["Geschichte"])
+
+      expect(described_class.search("Interview")).to eq([episode])
+    end
+
+    it "is case-insensitive" do
+      episode = create(:episode, title: "Fahrrad Geschichte", number: 1)
+
+      expect(described_class.search("fahrrad")).to eq([episode])
+    end
+
+    it "returns none for blank query" do
+      create(:episode, number: 1)
+
+      expect(described_class.search("")).to be_empty
+      expect(described_class.search(nil)).to be_empty
+    end
+  end
+
   describe "#tag_list" do
     it "returns tags as comma-separated string" do
       episode = build(:episode, tags: ["Interview", "Geschichte"])

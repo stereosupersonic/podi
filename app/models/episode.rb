@@ -61,6 +61,15 @@ class Episode < ApplicationRecord
 
   scope :published, -> { visible.where(active: true).where("published_on <= ?", Time.zone.today).order(number: :desc) }
   scope :visible, -> { where(visible: true) }
+  scope :search, ->(query) {
+    return none if query.blank?
+
+    sanitized = "%#{sanitize_sql_like(query)}%"
+    where(
+      "title ILIKE :q OR description ILIKE :q OR array_to_string(tags, ',') ILIKE :q",
+      q: sanitized
+    )
+  }
 
   validates(:number, :title, :description, :nodes, :published_on, presence: true)
 

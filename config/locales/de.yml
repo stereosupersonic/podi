@@ -31,3 +31,11 @@
 
 de:
   title: "Titel"
+  episodes:
+    search:
+      placeholder: "Episoden durchsuchen..."
+      results_count:
+        one: "1 Ergebnis für \"%{query}\""
+        other: "%{count} Ergebnisse für \"%{query}\""
+      no_results: "Keine Ergebnisse für \"%{query}\""
+      episode: "Episode"

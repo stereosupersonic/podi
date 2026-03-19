@@ -1,0 +1,13 @@
+= turbo_frame_tag "search_results" do
+  - if @query.present?
+    .container-fluid
+      .row.mt-3.mb-3.justify-content-center
+        .col-md-8
+          - if @episodes.any?
+            %p.text-muted
+              = t("episodes.search.results_count", count: @episodes.size, query: @query)
+            - @episodes.each do |episode|
+              = render "shared/search_result", episode: episode
+          - else
+            %p.text-muted
+              = t("episodes.search.no_results", query: @query)
