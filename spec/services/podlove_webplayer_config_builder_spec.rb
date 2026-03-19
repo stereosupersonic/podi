@@ -96,15 +96,7 @@ RSpec.describe PodloveWebplayerConfigBuilder do
   end
 
   describe "#player_config" do
-    it "sets activeTab to transcripts when transcript is present" do
-      episode.update!(transcript: "WEBVTT\n\n00:00:01.000 --> 00:00:02.000\nHello")
-
-      config = described_class.new(episode).player_config
-
-      expect(config[:activeTab]).to eq("transcripts")
-    end
-
-    it "sets activeTab to chapters when no transcript" do
+    it "always sets activeTab to chapters" do
       config = described_class.new(episode).player_config
 
       expect(config[:activeTab]).to eq("chapters")

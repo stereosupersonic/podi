@@ -43,7 +43,7 @@ class PodloveWebplayerConfigBuilder
   def player_config
     {
       version: 5,
-      activeTab: episode.transcript? ? "transcripts" : "chapters",
+      activeTab: "chapters",
       theme: {
         tokens: THEME_TOKENS,
         fonts: {
