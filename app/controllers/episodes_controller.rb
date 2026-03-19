@@ -16,7 +16,7 @@ class EpisodesController < ApplicationController
 
   def search
     @query = params[:q].to_s.strip
-    episodes = Episode.published.search(@query)
+    episodes = Episode.published.search(@query).limit(20)
     @episodes = EpisodePresenter.wrap(episodes)
   end
 

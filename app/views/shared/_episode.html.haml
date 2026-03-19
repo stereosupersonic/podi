@@ -1,10 +1,10 @@
 .podcast-entry.bg-white.mb-5.p-2
   .row
     .col-md-3
-      = link_to image_tag(episode.artwork_url(size: 200), class: "image img-thumbnail img-fluid d-block", alt: "episode artwork"), episode.episonde_url
+      = link_to image_tag(episode.artwork_url(size: 200), class: "image img-thumbnail img-fluid d-block", alt: "episode artwork"), episode.episode_url
     .col-md
       %h3.fw-light
-        = link_to episode.title, episode.episonde_url
+        = link_to episode.title, episode.episode_url
       .text-white.mb-3
         %span.text-black-opacity-05
           %small
@@ -12,7 +12,7 @@
               = episode.published_on
 
       %p.mb-4
-        = render_markdown truncate(episode.description, length: 500) { link_to " mehr", episode.episonde_url, class: "fw-bold" }
+        = render_markdown truncate(episode.description, length: 500) { link_to " mehr", episode.episode_url, class: "fw-bold" }
 
       -# .player
       -#   = render "shared/audio", episode: episode

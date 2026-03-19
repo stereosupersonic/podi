@@ -15,6 +15,8 @@
 #  rss_feed        :boolean          default(TRUE)
 #  slug            :string           not null
 #  title           :string           not null
+#  transcript      :text
+#  tags            :text             default([]), not null, is an Array
 #  visible         :boolean          default(TRUE)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -25,6 +27,7 @@
 #  index_episodes_on_published_on  (published_on)
 #  index_episodes_on_rss_feed      (rss_feed)
 #  index_episodes_on_slug          (slug) UNIQUE
+#  index_episodes_on_tags          (tags) USING gin
 #  index_episodes_on_title         (title) UNIQUE
 #
 class Episode < ApplicationRecord
