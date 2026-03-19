@@ -9,5 +9,5 @@
         = "#{t("episodes.search.episode")} #{episode.number}"
         &#183;
         = episode.published_on
-      %p.mb-0.mt-1.text-truncate
-        = truncate(strip_tags(episode.description), length: 200)
+      %p.mb-0.mt-1.description-clamp
+        = truncate(strip_tags(episode.description), length: 500)
