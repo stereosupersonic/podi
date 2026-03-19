@@ -3,6 +3,7 @@ class FetchGeoData < BaseService
 
   def call
     return {} if ip_address.blank?
+    return {} unless config_available?
 
     record = client.city(ip_address)
     return {} unless record
@@ -18,6 +19,9 @@ class FetchGeoData < BaseService
       result[:accuracy_radius] = record.location&.accuracy_radius
       result[:isp] = record&.traits&.isp
     end
+  rescue MaxMind::GeoIP2::AuthenticationError => e
+    Rails.logger.error("MaxMind GeoIP2 authentication failed: #{e.message}")
+    {}
   end
 
   private
