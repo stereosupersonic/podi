@@ -84,7 +84,7 @@
               = button_to "Logout", logout_path, method: :delete, class: "nav-link text-white btn btn-link", data: { turbo: false }
     %main
       .container-fluid
-        = turbo_frame_tag "search_results" do
+        = turbo_frame_tag "search_results", target: "_top" do
           .content
             = yield
 
