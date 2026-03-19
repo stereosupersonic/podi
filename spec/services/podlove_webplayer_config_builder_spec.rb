@@ -115,7 +115,7 @@ RSpec.describe PodloveWebplayerConfigBuilder do
               brandDark: "#45494f",
               brandDarkest: "#25262a",
               brandLightest: "#edf0f5",
-              shadeDark: "#25262a",
+              shadeDark: "#f5c518",
               shadeBase: "#5c626e",
               contrast: "#25262a",
               alt: "#f8f9fa"
