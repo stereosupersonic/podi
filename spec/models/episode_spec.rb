@@ -76,4 +76,48 @@ RSpec.describe Episode, type: :model do
       expect(described_class.published).to eq([ episode3, episode2, episode1 ])
     end
   end
+
+  describe "#tag_list" do
+    it "returns tags as comma-separated string" do
+      episode = build(:episode, tags: ["Interview", "Geschichte"])
+
+      expect(episode.tag_list).to eq("Interview, Geschichte")
+    end
+
+    it "returns empty string when no tags" do
+      episode = build(:episode, tags: [])
+
+      expect(episode.tag_list).to eq("")
+    end
+  end
+
+  describe "#tag_list=" do
+    it "splits comma-separated string into tags array" do
+      episode = build(:episode)
+      episode.tag_list = "Interview, Geschichte, Technik"
+
+      expect(episode.tags).to eq(["Interview", "Geschichte", "Technik"])
+    end
+
+    it "strips whitespace from tags" do
+      episode = build(:episode)
+      episode.tag_list = "  Interview ,  Geschichte  "
+
+      expect(episode.tags).to eq(["Interview", "Geschichte"])
+    end
+
+    it "rejects blank tags" do
+      episode = build(:episode)
+      episode.tag_list = "Interview,,, Geschichte,"
+
+      expect(episode.tags).to eq(["Interview", "Geschichte"])
+    end
+
+    it "handles nil" do
+      episode = build(:episode)
+      episode.tag_list = nil
+
+      expect(episode.tags).to eq([])
+    end
+  end
 end

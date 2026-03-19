@@ -44,7 +44,16 @@ class Episode < ApplicationRecord
     audio
     visible
     rss_feed
+    tag_list
   ].freeze
+
+  def tag_list
+    tags.join(", ")
+  end
+
+  def tag_list=(value)
+    self.tags = value.to_s.split(",").map(&:strip).reject(&:blank?)
+  end
 
   def to_param
     slug
