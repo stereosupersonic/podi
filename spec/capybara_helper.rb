@@ -16,13 +16,15 @@ RSpec.configure do |config|
   end
 
   if ENV["CHROME_URL"].present?
+    Capybara.server_host = "0.0.0.0"
+    Capybara.app_host = "http://app:#{Capybara.server_port}"
+
     Capybara.register_driver(:cuprite) do |app|
       Capybara::Cuprite::Driver.new(
         app,
         window_size: [ 1400, 1400 ],
-        browser_options: { 'no-sandbox': nil },
-        inspector: true,
-        url: ENV['CHROME_URL']
+        browser_options: { "no-sandbox": nil },
+        url: ENV["CHROME_URL"]
       )
     end
     Capybara.javascript_driver = :cuprite

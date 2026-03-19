@@ -22,9 +22,8 @@ services:
       - "3001:3000"
     environment:
       <<: *base-env
-      CAPYBARA_SERVER_PORT: 3001
       CI: true
-      CHROME_URL: http://chrome:4444/wd/hub
+      CHROME_URL: http://chrome:9222
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:-}
 
   postgres:
@@ -42,18 +41,14 @@ services:
       retries: 5
 
   chrome:
-    image: selenium/standalone-chrome-debug:3.141.59
+    image: browserless/chrome:latest
     ports:
-      - 4444:4444
-      - 7900:7900
+      - 9222:9222
     shm_size: 2gb
-    volumes:
-      - .:/rails:cached
     environment:
-      SE_NODE_MAX_SESSIONS: 4
-      SE_NODE_OVERRIDE_MAX_SESSIONS: true
+      CONNECTION_TIMEOUT: 600000
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
+      test: ["CMD", "curl", "-f", "http://localhost:9222/json/version"]
       interval: 5s
       timeout: 5s
       retries: 10
