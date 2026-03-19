@@ -60,6 +60,12 @@
 
         #navbarNav.collapse.text-white.navbar-collapse
           %ul.navbar-nav.ms-auto
+            %li.nav-item.d-flex.align-items-center{"data-controller" => "search", "data-action" => "click@window->search#close"}
+              %button.btn.nav-link.text-white{"data-action" => "search#toggle", "aria-label" => "Search"}
+                %i.fas.fa-search
+              .d-none{"data-search-target" => "input"}
+                = form_with url: search_episodes_path, method: :get, class: "d-flex", data: { search_target: "form", turbo_frame: "search_results" } do |f|
+                  = f.search_field :q, class: "form-control form-control-sm", placeholder: t("episodes.search.placeholder"), data: { action: "input->search#search" }, autocomplete: "off"
             %li.nav-item
               %a.text-white.nav-link{href: episodes_path} Episoden
             %li.nav-item
@@ -78,9 +84,9 @@
               = button_to "Logout", logout_path, method: :delete, class: "nav-link text-white btn btn-link", data: { turbo: false }
     %main
       .container-fluid
-
-        .content
-          = yield
+        = turbo_frame_tag "search_results", target: "_top" do
+          .content
+            = yield
 
     %footer.site-footer
       .container

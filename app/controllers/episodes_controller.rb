@@ -14,6 +14,12 @@ class EpisodesController < ApplicationController
     end
   end
 
+  def search
+    @query = params[:q].to_s.strip
+    episodes = Episode.published.search(@query).limit(20)
+    @episodes = EpisodePresenter.wrap(episodes)
+  end
+
   def show
     episode_record = Episode.visible.find_by(slug: params[:slug])
     episode_record ||= Episode.visible.find_by!(number: params[:slug][/^\d+/].to_i)

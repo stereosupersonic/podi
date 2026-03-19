@@ -60,7 +60,7 @@ class EpisodePresenter < ApplicationPresenter
     Rails.application.routes.url_helpers.episode_url(o, params)
   end
 
-  def episonde_url
+  def episode_url
     # This is used when an episode has a corresponding webpage. For example:
     Rails.application.routes.url_helpers.episode_url(o)
   end

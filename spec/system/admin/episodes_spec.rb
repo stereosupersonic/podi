@@ -217,6 +217,24 @@ describe "Administrate Episodes", type: :system do
         00:00:41 Begrüßung der Leute
         00:01:30 Bereitstellung).squish
     end
+
+    it "edits tags on an episode" do
+      episode = create(:episode, title: "Tag Test", number: 1, tags: [ "Interview" ])
+
+      visit "/admin/episodes"
+
+      within "#episode-#{episode.id}" do
+        click_on "Edit"
+      end
+
+      expect(page).to have_field("Tag list", with: "Interview")
+
+      fill_in "Tag list", with: "Geschichte, Technik, Interview"
+      click_on "Save"
+
+      expect(page).to have_content "Episode was successfully updated."
+      expect(episode.reload.tags).to eq([ "Geschichte", "Technik", "Interview" ])
+    end
   end
 
   context "when logged in as user" do

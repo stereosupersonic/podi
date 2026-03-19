@@ -28,7 +28,7 @@ xml.item do
     end
   end
   # An episode link URL.
-  xml.link episode.episonde_url
+  xml.link episode.episode_url
 
   # The episode artwork.
   # TODO

@@ -31,3 +31,11 @@
 
 en:
   hello: "Hello world"
+  episodes:
+    search:
+      placeholder: "Search episodes..."
+      results_count:
+        one: "1 result for \"%{query}\""
+        other: "%{count} results for \"%{query}\""
+      no_results: "No results for \"%{query}\""
+      episode: "Episode"

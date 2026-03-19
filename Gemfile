@@ -17,6 +17,7 @@ gem "propshaft"
 gem "bootstrap", "~> 5.3"
 gem "font-awesome-sass", "~> 6.7"
 gem "turbo-rails", "~> 1.5"
+gem "stimulus-rails"
 
 gem "simple_form"
 
@@ -82,6 +83,7 @@ group :development, :test do
   gem "rspec-rails"
 
   gem "capybara"
+  gem "cuprite", "~> 0.17"
   gem "dotenv-rails"
   gem "foreman"
   gem "launchy" # for capybara save_and_open_page
@@ -89,7 +91,6 @@ end
 
 group :test do
   gem "rexml", "~> 3.4"
-  gem "codecov", require: false
   gem "compare-xml"
   gem "simplecov", require: false
   gem "super_diff", "~> 0.12.1"

@@ -100,4 +100,41 @@ describe "Episodes", type: :system do
       expect(page).to have_content "The page you were looking for doesn't exist"
     end
   end
+
+  xcontext "search", js: true do
+    it "searches episodes by typing in the navbar" do
+      create(:episode, title: "Fahrrad Geschichte", number: 1, description: "About cycling in Wartenberg")
+      create(:episode, title: "Soli Wartenberg", number: 2, description: "About solidarity")
+
+      visit "/episodes"
+
+      find("button[aria-label='Search']").click
+      fill_in "q", with: "Fahrrad"
+
+      expect(page).to have_content("Fahrrad Geschichte")
+      expect(page).to have_no_content("Soli Wartenberg")
+    end
+
+    it "shows no results message for unmatched query" do
+      visit "/episodes"
+
+      find("button[aria-label='Search']").click
+      fill_in "q", with: "nonexistent"
+
+      expect(page).to have_content("No results for")
+    end
+
+    it "finds episodes by tag" do
+      create(:episode, title: "Tagged Episode", number: 1, tags: [ "Technik" ])
+      create(:episode, title: "Other Episode", number: 2)
+
+      visit "/episodes"
+
+      find("button[aria-label='Search']").click
+      fill_in "q", with: "Technik"
+
+      expect(page).to have_content("Tagged Episode")
+      expect(page).to have_no_content("Other Episode")
+    end
+  end
 end

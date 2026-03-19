@@ -15,6 +15,8 @@
 #  rss_feed        :boolean          default(TRUE)
 #  slug            :string           not null
 #  title           :string           not null
+#  transcript      :text
+#  tags            :text             default([]), not null, is an Array
 #  visible         :boolean          default(TRUE)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -25,6 +27,7 @@
 #  index_episodes_on_published_on  (published_on)
 #  index_episodes_on_rss_feed      (rss_feed)
 #  index_episodes_on_slug          (slug) UNIQUE
+#  index_episodes_on_tags          (tags) USING gin
 #  index_episodes_on_title         (title) UNIQUE
 #
 class Episode < ApplicationRecord
@@ -44,7 +47,16 @@ class Episode < ApplicationRecord
     audio
     visible
     rss_feed
+    tag_list
   ].freeze
+
+  def tag_list
+    tags.join(", ")
+  end
+
+  def tag_list=(value)
+    self.tags = value.to_s.split(",").map(&:strip).reject(&:blank?)
+  end
 
   def to_param
     slug
@@ -52,6 +64,15 @@ class Episode < ApplicationRecord
 
   scope :published, -> { visible.where(active: true).where("published_on <= ?", Time.zone.today).order(number: :desc) }
   scope :visible, -> { where(visible: true) }
+  scope :search, ->(query) {
+    return none if query.blank?
+
+    sanitized = "%#{sanitize_sql_like(query)}%"
+    where(
+      "title ILIKE :q OR description ILIKE :q OR array_to_string(tags, ',') ILIKE :q",
+      q: sanitized
+    )
+  }
 
   validates(:number, :title, :description, :nodes, :published_on, presence: true)
 

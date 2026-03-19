@@ -19,18 +19,20 @@ services:
       chrome:
         condition: service_healthy
     ports:
-      - "3001:3000"
+      - "3000:3000"
+    volumes:
+      - ./tmp/capybara:/app/tmp/capybara
     environment:
       <<: *base-env
-      CAPYBARA_SERVER_PORT: 3001
       CI: true
-      CHROME_URL: http://chrome:4444/wd/hub
+      CHROME_URL: http://chrome:3333
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:-}
-
+    healthcheck:
+      test: curl --fail http://0.0.0.0:3000/ready || exit 1
+      retries: 3
+      start_period: 10s
   postgres:
     image: postgres:17-alpine
-    volumes:
-      - postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -42,21 +44,23 @@ services:
       retries: 5
 
   chrome:
-    image: selenium/standalone-chrome-debug:3.141.59
+    image: browserless/chrome:1.31-chrome-stable
     ports:
-      - 4444:4444
-      - 7900:7900
-    shm_size: 2gb
+      - 3333:3333
+    # Mount application source code to support file uploading
+    # (otherwise Chrome won't be able to find files).
+    # NOTE: Make sure you use absolute paths in `#attach_file`.
     volumes:
-      - .:/rails:cached
+      - .:/app:cached # change it for your rails' container directory
     environment:
-      SE_NODE_MAX_SESSIONS: 4
-      SE_NODE_OVERRIDE_MAX_SESSIONS: true
+      # By default, it uses 3000, which is typically used by Rails.
+      PORT: 3333
+      # Set connection timeout to avoid timeout exception during debugging
+      # https://docs.browserless.io/docs/docker.html#connection-timeout
+      CONNECTION_TIMEOUT: 600000
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
+      test: ["CMD-SHELL", "curl --fail http://localhost:3333/json/version || exit 1"]
       interval: 5s
       timeout: 5s
-      retries: 10
-
-volumes:
-  postgres:
+      retries: 5
+      start_period: 10s

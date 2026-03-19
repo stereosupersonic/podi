@@ -76,4 +76,84 @@ RSpec.describe Episode, type: :model do
       expect(described_class.published).to eq([ episode3, episode2, episode1 ])
     end
   end
+
+  describe ".search" do
+    it "finds episodes by title" do
+      episode = create(:episode, title: "Fahrrad Geschichte", number: 1)
+      create(:episode, title: "Soli Wartenberg", number: 2)
+
+      expect(described_class.search("Fahrrad")).to eq([ episode ])
+    end
+
+    it "finds episodes by description" do
+      episode = create(:episode, title: "Episode One", number: 1, description: "About cycling")
+      create(:episode, title: "Episode Two", number: 2, description: "About cooking")
+
+      expect(described_class.search("cycling")).to eq([ episode ])
+    end
+
+    it "finds episodes by tag" do
+      episode = create(:episode, title: "Episode One", number: 1, tags: [ "Interview", "Technik" ])
+      create(:episode, title: "Episode Two", number: 2, tags: [ "Geschichte" ])
+
+      expect(described_class.search("Interview")).to eq([ episode ])
+    end
+
+    it "is case-insensitive" do
+      episode = create(:episode, title: "Fahrrad Geschichte", number: 1)
+
+      expect(described_class.search("fahrrad")).to eq([ episode ])
+    end
+
+    it "returns none for blank query" do
+      create(:episode, number: 1)
+
+      expect(described_class.search("")).to be_empty
+      expect(described_class.search(nil)).to be_empty
+    end
+  end
+
+  describe "#tag_list" do
+    it "returns tags as comma-separated string" do
+      episode = build(:episode, tags: [ "Interview", "Geschichte" ])
+
+      expect(episode.tag_list).to eq("Interview, Geschichte")
+    end
+
+    it "returns empty string when no tags" do
+      episode = build(:episode, tags: [])
+
+      expect(episode.tag_list).to eq("")
+    end
+  end
+
+  describe "#tag_list=" do
+    it "splits comma-separated string into tags array" do
+      episode = build(:episode)
+      episode.tag_list = "Interview, Geschichte, Technik"
+
+      expect(episode.tags).to eq([ "Interview", "Geschichte", "Technik" ])
+    end
+
+    it "strips whitespace from tags" do
+      episode = build(:episode)
+      episode.tag_list = "  Interview ,  Geschichte  "
+
+      expect(episode.tags).to eq([ "Interview", "Geschichte" ])
+    end
+
+    it "rejects blank tags" do
+      episode = build(:episode)
+      episode.tag_list = "Interview,,, Geschichte,"
+
+      expect(episode.tags).to eq([ "Interview", "Geschichte" ])
+    end
+
+    it "handles nil" do
+      episode = build(:episode)
+      episode.tag_list = nil
+
+      expect(episode.tags).to eq([])
+    end
+  end
 end
