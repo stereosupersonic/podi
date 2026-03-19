@@ -101,7 +101,7 @@ describe "Episodes", type: :system do
     end
   end
 
-  xcontext "search", js: true do
+  context "search", js: true do
     it "searches episodes by typing in the navbar" do
       create(:episode, title: "Fahrrad Geschichte", number: 1, description: "About cycling in Wartenberg")
       create(:episode, title: "Soli Wartenberg", number: 2, description: "About solidarity")
