@@ -219,7 +219,7 @@ describe "Administrate Episodes", type: :system do
     end
 
     it "edits tags on an episode" do
-      episode = create(:episode, title: "Tag Test", number: 1, tags: ["Interview"])
+      episode = create(:episode, title: "Tag Test", number: 1, tags: [ "Interview" ])
 
       visit "/admin/episodes"
 
@@ -233,7 +233,7 @@ describe "Administrate Episodes", type: :system do
       click_on "Save"
 
       expect(page).to have_content "Episode was successfully updated."
-      expect(episode.reload.tags).to eq(["Geschichte", "Technik", "Interview"])
+      expect(episode.reload.tags).to eq([ "Geschichte", "Technik", "Interview" ])
     end
   end
 

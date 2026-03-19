@@ -27,8 +27,8 @@ RSpec.describe "Episode Search", type: :request do
     end
 
     it "returns episodes matching tags" do
-      create(:episode, title: "Episode One", number: 1, tags: ["Technik", "Interview"])
-      create(:episode, title: "Episode Two", number: 2, tags: ["Geschichte"])
+      create(:episode, title: "Episode One", number: 1, tags: [ "Technik", "Interview" ])
+      create(:episode, title: "Episode Two", number: 2, tags: [ "Geschichte" ])
 
       get "/episodes/search", params: { q: "Interview" }
 

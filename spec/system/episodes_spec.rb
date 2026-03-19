@@ -125,7 +125,7 @@ describe "Episodes", type: :system do
     end
 
     it "finds episodes by tag" do
-      create(:episode, title: "Tagged Episode", number: 1, tags: ["Technik"])
+      create(:episode, title: "Tagged Episode", number: 1, tags: [ "Technik" ])
       create(:episode, title: "Other Episode", number: 2)
 
       visit "/episodes"
