@@ -39,6 +39,7 @@ class Episode < ApplicationRecord
     active
     image
     chapter_marks
+    transcript
     artwork_url
     audio
     visible

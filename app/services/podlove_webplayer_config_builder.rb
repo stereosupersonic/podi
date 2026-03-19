@@ -4,7 +4,7 @@ class PodloveWebplayerConfigBuilder
     brandDark: "#45494f",
     brandDarkest: "#25262a",
     brandLightest: "#edf0f5",
-    shadeDark: "#25262a",
+    shadeDark: "#f5c518",
     shadeBase: "#5c626e",
     contrast: "#25262a",
     alt: "#f8f9fa"
@@ -22,7 +22,7 @@ class PodloveWebplayerConfigBuilder
   end
 
   def episode_config
-    {
+    config = {
       poster: episode.artwork_url,
       duration: formatted_duration,
       audio: [
@@ -34,6 +34,10 @@ class PodloveWebplayerConfigBuilder
       chapters: chapters,
       files: []
     }
+
+    config[:transcripts] = transcripts if episode.transcript?
+
+    config
   end
 
   def player_config
@@ -57,6 +61,10 @@ class PodloveWebplayerConfigBuilder
     return unless episode.duration.present?
 
     Time.at(episode.duration).utc.strftime("%H:%M:%S.000")
+  end
+
+  def transcripts
+    ParseVtt.call(episode.transcript)
   end
 
   def chapters
