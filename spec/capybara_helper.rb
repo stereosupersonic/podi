@@ -10,6 +10,7 @@ RSpec.configure do |config|
 
   Capybara.default_max_wait_time = 10 # The maximum number of seconds to wait for asynchronous processes to finish.
   Capybara.default_normalize_ws = true # match DOM Elements with text spanning over multiple line
+  # Capybara.save_path = Rails.root.join("tmp/capybara")
 
   config.before(:each, type: :system) do
     driven_by :rack_test

@@ -20,6 +20,8 @@ services:
         condition: service_healthy
     ports:
       - "3000:3000"
+    volumes:
+      - ./tmp/capybara:/app/tmp/capybara
     environment:
       <<: *base-env
       CI: true
@@ -62,4 +64,3 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-
