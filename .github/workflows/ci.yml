@@ -69,13 +69,24 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v6
 
-    - name: Start containers
+    - name: Start chrome container
+      run: |
+        docker compose -f docker-compose.test.yml up -d chrome
+        echo "--- Waiting 10s for chrome to start ---"
+        sleep 10
+        echo "--- Chrome container status ---"
+        docker compose -f docker-compose.test.yml ps chrome
+        echo "--- Chrome container logs ---"
+        docker compose -f docker-compose.test.yml logs chrome
+        echo "--- Healthcheck test manually ---"
+        docker compose -f docker-compose.test.yml exec -T chrome wget --spider -q http://localhost:9222/json/version || echo "Healthcheck failed"
+        docker compose -f docker-compose.test.yml exec -T chrome wget -O- http://localhost:9222/json/version 2>&1 || echo "Could not reach CDP endpoint"
+
+    - name: Start remaining containers
       run: |
         docker compose -f docker-compose.test.yml up -d --build
         docker compose -f docker-compose.test.yml ps
-        echo "Waiting for the app to start..."
         docker compose -f docker-compose.test.yml logs
-        docker stats --no-stream
 
     - name: prepare
       run: |
