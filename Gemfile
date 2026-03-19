@@ -83,7 +83,7 @@ group :development, :test do
   gem "rspec-rails"
 
   gem "capybara"
-  gem "selenium-webdriver"
+  gem "cuprite", "~> 0.17"
   gem "dotenv-rails"
   gem "foreman"
   gem "launchy" # for capybara save_and_open_page
