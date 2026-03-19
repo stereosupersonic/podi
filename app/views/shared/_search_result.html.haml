@@ -2,8 +2,8 @@
   .d-flex
     .me-3.flex-shrink-0
       = link_to image_tag(episode.artwork_url(size: 80), class: "img-thumbnail", alt: "episode artwork", width: 80, height: 80), episode.episonde_url
-    .flex-grow-1
-      %h5.mb-1
+    .flex-grow-1.min-w-0
+      %h5.mb-1.text-truncate
         = link_to episode.title, episode.episonde_url
       %small.text-muted
         = "#{t("episodes.search.episode")} #{episode.number}"
