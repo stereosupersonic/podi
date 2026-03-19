@@ -1,9 +1,13 @@
 .search-result.mb-3.p-3.bg-white.border.rounded
-  %h5.mb-1
-    = link_to episode.title, episode.episonde_url
-  %small.text-muted
-    = "#{t("episodes.search.episode")} #{episode.number}"
-    &#183;
-    = episode.published_on
-  %p.mb-0.mt-1.text-truncate
-    = truncate(strip_tags(episode.description), length: 200)
+  .d-flex
+    .me-3.flex-shrink-0
+      = link_to image_tag(episode.artwork_url(size: 80), class: "img-thumbnail", alt: "episode artwork", width: 80, height: 80), episode.episonde_url
+    .flex-grow-1
+      %h5.mb-1
+        = link_to episode.title, episode.episonde_url
+      %small.text-muted
+        = "#{t("episodes.search.episode")} #{episode.number}"
+        &#183;
+        = episode.published_on
+      %p.mb-0.mt-1.text-truncate
+        = truncate(strip_tags(episode.description), length: 200)
