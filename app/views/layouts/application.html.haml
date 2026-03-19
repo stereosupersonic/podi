@@ -75,7 +75,7 @@
                   = link_to "Jobs", "/sidekiq", class: "nav-link text-white"
 
               = link_to "Account", "/", data: { confirm: "NOT IMPLEMENTED YET!" }, class: "nav-link text-white"
-              = link_to "Logout", logout_path, data: { turbo_method: :delete }, class: "nav-link text-white"
+              = button_to "Logout", logout_path, method: :delete, class: "nav-link text-white btn btn-link", data: { turbo: false }
     %main
       .container-fluid
 

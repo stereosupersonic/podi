@@ -155,13 +155,13 @@ describe "welcome", type: :system do
       expect(page).to have_no_link "Info"
 
       expect(page).to have_link "Account"
-      expect(page).to have_link "Logout"
+      expect(page).to have_button "Logout"
     end
 
     it "logouts an user" do
       visit "/"
 
-      click_link "Logout"
+      click_button "Logout"
 
       expect(page).to have_text(/Signed out successfully/i)
     end
@@ -180,7 +180,7 @@ describe "welcome", type: :system do
       expect(page).to have_link "Jobs"
       expect(page).to have_link "Events"
       expect(page).to have_link "Info"
-      expect(page).to have_link "Logout"
+      expect(page).to have_button "Logout"
     end
   end
 end
