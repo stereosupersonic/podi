@@ -36,7 +36,7 @@ module Podi
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.time_zone = "Berlin"
-    config.i18n.default_locale = :de
+    config.i18n.default_locale = :en
     config.generators do |g|
       g.assets = false
       g.helper = false
