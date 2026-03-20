@@ -9,11 +9,10 @@
     .col-md-8
       %h1.fw-light.mb-2.display-4
         = title
-  - @episodes.each do |episode|
-    .row
-      .col-md-12
-        = render "shared/episode", episode: episode
 
-  .row
-    .col-md-3.offset-md-5
-      = will_paginate @episodes_records, page_links: false, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, previous_label: "←", next_label: "→"
+  = render "episodes/page", episodes: @episodes, current_page: @episodes_records.current_page, next_page: @episodes_records.next_page
+
+  %noscript
+    .row
+      .col-md-3.offset-md-5
+        = will_paginate @episodes_records, page_links: false, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, previous_label: "←", next_label: "→"

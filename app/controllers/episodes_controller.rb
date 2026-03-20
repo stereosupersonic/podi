@@ -1,7 +1,9 @@
 class EpisodesController < ApplicationController
+  PER_PAGE = 5
+
   def index
     published = Episode.published
-    @episodes_records = published.paginate(page: params[:page], per_page: params[:per_page])
+    @episodes_records = published.paginate(page: params[:page], per_page: PER_PAGE)
     @episodes = EpisodePresenter.wrap @episodes_records
 
     respond_to do |format|
