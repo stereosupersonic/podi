@@ -1,0 +1,12 @@
+= turbo_frame_tag "episodes_page_#{current_page}" do
+  - episodes.each do |episode|
+    .row
+      .col-md-12
+        = render "shared/episode", episode: episode
+
+  - if next_page
+    = turbo_frame_tag "episodes_page_#{next_page}", src: episodes_path(page: next_page), loading: :lazy do
+      .row.justify-content-center
+        .col-md-3.text-center.p-4
+          .spinner-border.text-secondary{ role: "status" }
+            %span.visually-hidden Loading...
