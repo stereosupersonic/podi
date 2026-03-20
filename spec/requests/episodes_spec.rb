@@ -3,6 +3,46 @@ require "rails_helper"
 RSpec.describe "episodes", type: :request do
   before { allow(FetchGeoData).to receive(:call).and_return({}) }
 
+  describe "GET /episodes (endless scrolling)" do
+    before do
+      create(:setting)
+      create_list(:episode, 7)
+    end
+
+    it "returns the first 5 episodes on page 1" do
+      get "/episodes"
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body.scan("podcast-entry").size).to eq(5)
+    end
+
+    it "includes a lazy-loading turbo frame for the next page" do
+      get "/episodes"
+
+      expect(response.body).to include('id="episodes_page_2"')
+      expect(response.body).to include('loading="lazy"')
+      expect(response.body).to include('src="/episodes?page=2"')
+    end
+
+    it "returns the next episodes on page 2" do
+      get "/episodes", params: { page: 2 }
+
+      expect(response.body.scan("podcast-entry").size).to eq(2)
+    end
+
+    it "does not include a turbo frame on the last page" do
+      get "/episodes", params: { page: 2 }
+
+      expect(response.body).not_to include("episodes_page_3")
+    end
+
+    it "includes noscript pagination fallback" do
+      get "/episodes"
+
+      expect(response.body).to include("<noscript>")
+    end
+  end
+
   describe "GET /episodes.rss" do
     let!(:setting) { create(:setting) }
 
