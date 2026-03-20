@@ -32,7 +32,7 @@ services:
       # The test server WILL NOT BE AVAILABLE from outside the container if it binds
       # to 127.0.0.1. It must bind to 0.0.0.0 to be exposed to the outside world.
       CAPYBARA_SERVER_HOST: "0.0.0.0"
-      CAPYBARA_APP_HOST: "http://podi:30000"
+      CAPYBARA_APP_HOST: "http://app:30000"
     healthcheck:
       test: curl --fail http://0.0.0.0:3000/ready || exit 1
       retries: 3
