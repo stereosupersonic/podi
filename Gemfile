@@ -77,19 +77,18 @@ end
 
 group :development, :test do
   gem "pry-nav"
-  gem "pry-rails"
-
   gem "factory_bot_rails", "~> 6.4.2"
-  gem "rspec-rails"
-
-  gem "capybara"
-  gem "cuprite", "~> 0.17"
   gem "dotenv-rails"
   gem "foreman"
-  gem "launchy" # for capybara save_and_open_page
 end
 
 group :test do
+  gem "rspec-rails"
+  gem "capybara"
+  gem "launchy" # for capybara save_and_open_page
+  gem "webdrivers", "~> 5.3.0", require: false
+  gem "selenium-webdriver", require: false
+
   gem "rexml", "~> 3.4"
   gem "compare-xml"
   gem "simplecov", require: false
