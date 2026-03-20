@@ -10,7 +10,7 @@ RSpec.configure do |config|
   Capybara.default_normalize_ws = true # match DOM Elements with text spanning over multiple line
   Capybara.server_host = ENV.fetch("CAPYBARA_SERVER_HOST", "127.0.0.1")
   Capybara.server_port = ENV.fetch("CAPYBARA_SERVER_PORT", "3000")
-  Capybara.save_path   = Rails.root.join("tmp/screenshots")
+  Capybara.save_path = Rails.root.join("tmp/screenshots")
 
   if ENV["SELENIUM_URL"]
     require "selenium/webdriver"
@@ -29,7 +29,7 @@ RSpec.configure do |config|
 
       Capybara::Selenium::Driver.new(app,
                                      browser: :remote,
-                                     url:     ENV["SELENIUM_URL"],
+                                     url: ENV["SELENIUM_URL"],
                                      options: options)
     end
 
@@ -40,7 +40,7 @@ RSpec.configure do |config|
     config.before(:each, type: :system, js: true) do
       Capybara.server_host = ENV.fetch("CAPYBARA_SERVER_HOST")
       Capybara.server_port = ENV.fetch("CAPYBARA_SERVER_PORT")
-      Capybara.app_host    = ENV.fetch("CAPYBARA_APP_HOST", nil)
+      Capybara.app_host = ENV.fetch("CAPYBARA_APP_HOST", nil)
       driven_by :selenium_remote
     end
 
@@ -54,7 +54,7 @@ RSpec.configure do |config|
     config.before(:each, type: :system, js: true) do
       # https://api.rubyonrails.org/v6.0.1/classes/ActionDispatch/SystemTestCase.html#method-c-driven_by
       browser = ENV["SELENIUM_BROWSER"].presence&.to_sym || :headless_chrome
-      driven_by :selenium, using: browser, screen_size: [1600, 1400]
+      driven_by :selenium, using: browser, screen_size: [ 1600, 1400 ]
     end
   end
 end
