@@ -36,6 +36,15 @@ RSpec.describe "episodes", type: :request do
       expect(response.body).not_to include("episodes_page_3")
     end
 
+    it "returns only the page partial for turbo frame requests" do
+      get "/episodes", params: { page: 2 }, headers: { "Turbo-Frame" => "episodes_page_2" }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('id="episodes_page_2"')
+      expect(response.body).not_to include("<noscript>")
+      expect(response.body).not_to include("<h1")
+    end
+
     it "includes noscript pagination fallback" do
       get "/episodes"
 

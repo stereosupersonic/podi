@@ -7,7 +7,14 @@ class EpisodesController < ApplicationController
     @episodes = EpisodePresenter.wrap @episodes_records
 
     respond_to do |format|
-      format.html
+      format.html do
+        if turbo_frame_request?
+          render partial: "episodes/page",
+                 locals: { episodes: @episodes,
+                           current_page: @episodes_records.current_page,
+                           next_page: @episodes_records.next_page }
+        end
+      end
       format.rss do
         @episodes_records = published.where(rss_feed: true)
         @feed = PodcastFeedPresenter.new(@episodes_records)
