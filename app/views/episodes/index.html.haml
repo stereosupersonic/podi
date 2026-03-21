@@ -10,7 +10,8 @@
       %h1.fw-light.mb-2.display-4
         = title
 
-  = render "episodes/page", episodes: @episodes, current_page: @episodes_records.current_page, next_page: @episodes_records.next_page
+  #episodes-list{ data: { controller: "infinite-scroll" } }
+    = render "episodes/page", episodes: @episodes, next_page: @episodes_records.next_page
 
   %noscript
     .row
