@@ -1,4 +1,4 @@
-= turbo_frame_tag "episodes_page_#{current_page}" do
+= turbo_frame_tag "episodes_page_#{current_page}", target: "_top" do
   - episodes.each do |episode|
     .row
       .col-md-12

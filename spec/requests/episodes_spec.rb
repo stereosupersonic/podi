@@ -36,6 +36,12 @@ RSpec.describe "episodes", type: :request do
       expect(response.body).not_to include("episodes_page_3")
     end
 
+    it "sets target _top on the page turbo frame so episode links trigger full page visits" do
+      get "/episodes"
+
+      expect(response.body).to include('target="_top"')
+    end
+
     it "returns only the page partial for turbo frame requests" do
       get "/episodes", params: { page: 2 }, headers: { "Turbo-Frame" => "episodes_page_2" }
 
