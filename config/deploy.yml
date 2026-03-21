@@ -55,7 +55,8 @@ env:
     - CLOUDINARY_CLOUD_NAME
     - GEOIP_ACCOUNT
     - GEOIP_LICENSE_KEY
-
+    - ROLLBAR_CLIENT_ACCESS_TOKEN
+    - UMAMI_WEBSITE_ID
 
   clear:
     DATABASE_HOST: podi-postgres
