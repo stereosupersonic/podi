@@ -1,23 +1,29 @@
 -# https://docs.podlove.org/podlove-web-player/v5/installation
 
 %div{ id: webplayer_id, style: "opacity:0; transition:opacity 0.3s" }
+  .webplayer-skeleton{ id: "#{webplayer_id}-skeleton" }
+    .webplayer-skeleton__play
+    .webplayer-skeleton__progress
 %audio{ id: "#{webplayer_id}-fallback", controls: true, preload: "none", style: "display:none" }
   %source{ src: audio_url, type: "audio/mpeg" }
 :javascript
   (function() {
     var attempts = 0;
     var container = document.getElementById("#{webplayer_id}");
+    var skeleton = document.getElementById("#{webplayer_id}-skeleton");
     var fallback = document.getElementById("#{webplayer_id}-fallback");
     function initPlayer() {
       if (typeof podlovePlayer === "function") {
         fallback.remove();
         podlovePlayer("##{webplayer_id}", #{episode_config}, #{player_config}).then(function() {
+          if (skeleton) { skeleton.remove(); }
           container.style.opacity = "1";
         });
       } else if (attempts < 50) {
         attempts++;
         setTimeout(initPlayer, 100);
       } else {
+        if (skeleton) { skeleton.remove(); }
         fallback.style.display = "";
       }
     }

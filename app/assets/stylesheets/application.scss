@@ -94,6 +94,46 @@ audio {
   outline-offset: 2px;
 }
 
+.webplayer-skeleton {
+  height: 200px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  overflow: hidden;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+    animation: webplayer-shimmer 1.5s infinite;
+  }
+}
+
+.webplayer-skeleton__play {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ced4da;
+}
+
+.webplayer-skeleton__progress {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #ced4da;
+}
+
+@keyframes webplayer-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
 .episode-header {
   padding-top: 15px;
   padding-bottom: 15px;
