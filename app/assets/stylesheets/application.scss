@@ -94,6 +94,17 @@ audio {
   outline-offset: 2px;
 }
 
+@keyframes webplayer-pulse {
+  0%, 100% { background-color: #f0f0f0; }
+  50%       { background-color: #e0e0e0; }
+}
+
+.webplayer-pulse {
+  height: 200px;
+  border-radius: 8px;
+  animation: webplayer-pulse 1.5s ease-in-out infinite;
+}
+
 .episode-header {
   padding-top: 15px;
   padding-bottom: 15px;
