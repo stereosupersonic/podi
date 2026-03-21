@@ -8,10 +8,9 @@ class EpisodesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        if turbo_frame_request?
+        if request.xhr?
           render partial: "episodes/page",
                  locals: { episodes: @episodes,
-                           current_page: @episodes_records.current_page,
                            next_page: @episodes_records.next_page }
         end
       end

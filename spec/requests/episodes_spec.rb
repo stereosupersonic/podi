@@ -16,33 +16,32 @@ RSpec.describe "episodes", type: :request do
       expect(response.body.scan("podcast-entry").size).to eq(5)
     end
 
-    it "includes a lazy-loading turbo frame for the next page" do
+    it "includes a sentinel element for infinite scroll" do
       get "/episodes"
 
-      expect(response.body).to include('id="episodes_page_2"')
-      expect(response.body).to include('loading="lazy"')
-      expect(response.body).to include('src="/episodes?page=2"')
+      expect(response.body).to include('data-infinite-scroll-target="sentinel"')
+      expect(response.body).to include("/episodes?page=2")
     end
 
-    it "returns the next episodes on page 2" do
-      get "/episodes", params: { page: 2 }
+    it "does not include a sentinel on the last page" do
+      get "/episodes", params: { page: 2 }, xhr: true
 
-      expect(response.body.scan("podcast-entry").size).to eq(2)
+      expect(response.body).not_to include("sentinel")
     end
 
-    it "does not include a turbo frame on the last page" do
-      get "/episodes", params: { page: 2 }
-
-      expect(response.body).not_to include("episodes_page_3")
-    end
-
-    it "returns only the page partial for turbo frame requests" do
-      get "/episodes", params: { page: 2 }, headers: { "Turbo-Frame" => "episodes_page_2" }
+    it "returns only the page partial for XHR requests" do
+      get "/episodes", params: { page: 2 }, xhr: true
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include('id="episodes_page_2"')
+      expect(response.body.scan("podcast-entry").size).to eq(2)
       expect(response.body).not_to include("<noscript>")
       expect(response.body).not_to include("<h1")
+    end
+
+    it "does not use turbo frames for pagination" do
+      get "/episodes"
+
+      expect(response.body).not_to include("episodes_page")
     end
 
     it "includes noscript pagination fallback" do
