@@ -73,7 +73,7 @@ Rollbar.configure do |config|
   # JavaScript error tracking
   config.js_enabled = rollbar_enabled
   config.js_options = {
-    accessToken: ENV["ROLLBAR_ACCESS_TOKEN"],
+    accessToken: ENV["ROLLBAR_CLIENT_ACCESS_TOKEN"],
     captureUncaught: true,
     captureUnhandledRejections: true,
     autoInstrument: true,
