@@ -6,9 +6,12 @@
 -# **************************
 -# background logo
 -# **************************
-.site-blocks-cover.overlay-welcome{style: "background-image: url(#{image_path('hp-bg-logo-neu.jpg')});"}
-  .container-fluid
-    .row.align-items-center.justify-content-center.text-center
+.welcome-hero
+  .container
+    .row.justify-content-center
+      .col-md-8.text-center
+        = image_tag("hp-bg-logo-neu.jpg", class: "welcome-hero__logo img-fluid", alt: "Podi Logo")
+    .row.justify-content-center
       .col-md-8
         = render "shared/episode_inline", episode: @last_episode
 -# **************************
