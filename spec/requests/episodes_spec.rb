@@ -187,12 +187,9 @@ RSpec.describe "episodes", type: :request do
           </channel>
         </rss>)
 
-      # Debugging
-      File.write("response.xml", response.body.squish)
-      File.write("expected_xml.xml", expected_xml.squish)
       expect(response.body).to match_xml(expected_xml)
 
-      # remove epsiode from rss feed
+      # remove episode from rss feed
       episode2.update! rss_feed: false
       get "/episodes.rss"
 
@@ -248,8 +245,6 @@ RSpec.describe "episodes", type: :request do
           </channel>
         </rss>)
 
-      File.write("response.xml", response.body.squish)
-      File.write("expected_xml.xml", expected_xml.squish)
       expect(response.body).to match_xml(expected_xml)
     end
 
@@ -359,7 +354,6 @@ RSpec.describe "episodes", type: :request do
 
         expect do
           get episode.mp3_url, params: {}, env: { "REMOTE_ADDR": "192.168.1.2" }
-          sleep 1
           get episode.mp3_url, params: {}, env: { "REMOTE_ADDR": "192.168.1.2" }
           get episode2.mp3_url, params: {}, env: { "REMOTE_ADDR": "192.168.1.2" }
           get episode.mp3_url, params: {}, env: { "REMOTE_ADDR": "192.168.1.2" }
