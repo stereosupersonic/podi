@@ -5,8 +5,8 @@ class PodcastFeedPresenter
 
   delegate_missing_to :current_setting
 
-  def initialize(episondes)
-    @episodes = EpisodeFeedPresenter.wrap episondes
+  def initialize(episodes)
+    @episodes = EpisodeFeedPresenter.wrap episodes
   end
 
   def copyright
