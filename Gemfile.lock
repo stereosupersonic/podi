@@ -484,8 +484,6 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
-    sitemap_generator (6.3.0)
-      builder (~> 3.0)
     sshkit (1.25.0)
       base64
       logger
@@ -587,7 +585,6 @@ DEPENDENCIES
   sidekiq (~> 7.3)
   simple_form
   simplecov
-  sitemap_generator
   stimulus-rails
   super_diff (~> 0.12.1)
   thruster
