@@ -29,7 +29,7 @@
     - # all favicon
     = render "shared/favicon"
 
-    %link{href: current_setting.canonical_url, rel: "canonical"}
+    %link{href: request.base_url + request.path, rel: "canonical"}
 
     = auto_discovery_link_tag :rss, current_setting.rss_url
     = csrf_meta_tags
