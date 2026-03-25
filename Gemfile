@@ -38,7 +38,6 @@ gem "rollbar"
 gem "ruby-mp3info", require: false
 
 gem "aws-sdk-s3"
-gem "sitemap_generator" # https://github.com/kjvarga/sitemap_generator
 
 gem "rack-attack"
 

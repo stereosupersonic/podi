@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   get "privacy", to: "welcome#privacy", as: :privacy
   get "ready", to: redirect("/up")
 
-  get "/sitemap.xml.gz", to: redirect("https://wartenberger-podcast.s3.amazonaws.com/sitemap.xml.gz")
+  get "sitemap.xml" => "sitemaps#show", :as => :sitemap, :defaults => { format: :xml }
   # episode shortcut /006 or /2
   get ":id", to: "welcome#epsiode", constraints: { id: /\d+/ }
 end
