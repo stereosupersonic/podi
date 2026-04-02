@@ -1,6 +1,6 @@
 ENV["RAILS_ENV"] ||= "test"
 
-unless ENV.fetch("CI", "").length > 0
+if !ENV.fetch("CI", "").length.positive? || ENV["COVERAGE"] == "true"
   require "simplecov"
   SimpleCov.start "rails"
 end

@@ -206,6 +206,8 @@ GEM
       ffi-compiler (>= 1.0, < 2.0)
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
+    imagen (0.2.0)
+      parser (>= 2.5, != 2.5.1.1)
     importmap-rails (2.2.3)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -448,6 +450,7 @@ GEM
     ruby-mp3info (0.8.10)
     ruby-progressbar (1.13.0)
     rubyzip (2.4.1)
+    rugged (1.9.0)
     sass-embedded (1.98.0)
       google-protobuf (~> 4.31)
       rake (>= 13)
@@ -510,6 +513,14 @@ GEM
       railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    undercover (0.8.4)
+      base64
+      bigdecimal
+      imagen (>= 0.2.0)
+      rainbow (>= 2.1, < 4.0)
+      rugged (>= 0.27, < 1.10)
+      simplecov
+      simplecov_json_formatter
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
@@ -589,6 +600,7 @@ DEPENDENCIES
   super_diff (~> 0.12.1)
   thruster
   turbo-rails (~> 2.0)
+  undercover
   webdrivers (~> 5.3.0)
   will_paginate
   will_paginate-bootstrap5

@@ -91,5 +91,6 @@ group :test do
   gem "rexml", "~> 3.4"
   gem "compare-xml"
   gem "simplecov", require: false
+  gem "undercover", require: false
   gem "super_diff", "~> 0.12.1"
 end
