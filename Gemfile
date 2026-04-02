@@ -61,6 +61,7 @@ gem "kamal", require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 gem "connection_pool", "~> 2.5.0" # there is an issue with MemCacheStore and connection_pool >= 3.0.0
+
 group :development do
   gem "annotate"
   gem "haml_lint"
@@ -91,6 +92,7 @@ group :test do
   gem "rexml", "~> 3.4"
   gem "compare-xml"
   gem "simplecov", require: false
+  gem "rugged", "~> 1.7.2"
   gem "undercover", require: false
   gem "super_diff", "~> 0.12.1"
 end

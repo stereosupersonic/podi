@@ -450,7 +450,7 @@ GEM
     ruby-mp3info (0.8.10)
     ruby-progressbar (1.13.0)
     rubyzip (2.4.1)
-    rugged (1.9.0)
+    rugged (1.7.2)
     sass-embedded (1.98.0)
       google-protobuf (~> 4.31)
       rake (>= 13)
@@ -589,6 +589,7 @@ DEPENDENCIES
   rubocop-rails-omakase
   rubocop-rspec
   ruby-mp3info
+  rugged (~> 1.7.2)
   scenic (~> 1.7)
   selenium-webdriver
   shrine (~> 3.0)
