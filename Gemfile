@@ -43,6 +43,7 @@ gem "rack-attack"
 
 gem "shrine", "~> 3.0"
 gem "shrine-cloudinary", "~> 1.1"
+gem "mime-types", "~> 3.7"
 
 gem "device_detector", git: "https://github.com/stereosupersonic/device_detector"
 
