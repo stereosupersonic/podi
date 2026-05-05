@@ -13,9 +13,9 @@ class WelcomeController < ApplicationController
   def privacy
   end
 
-  def epsiode
-    epsiode_id = params[:id].to_i.positive? ? params[:id].to_i : nil
-    episode_record = Episode.find_by(number: epsiode_id) if epsiode_id
+  def episode
+    episode_id = params[:id].to_i.positive? ? params[:id].to_i : nil
+    episode_record = Episode.find_by(number: episode_id) if episode_id
 
     if episode_record
       redirect_to episode_path slug: episode_record.slug

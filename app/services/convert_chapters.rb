@@ -1,4 +1,6 @@
 class ConvertChapters < BaseService
+  Chapter = Struct.new(:start, :title)
+
   attr_accessor :chapters
 
   def call
@@ -7,10 +9,10 @@ class ConvertChapters < BaseService
     chapters.split("\n").map do |chapter_mark|
       next if chapter_mark.blank?
 
-      result = chapter_mark.squish.match(/(?<timestamp>\d{2}(?<sperator>:\d{2})+)\.\d{3}\s+(?<text>.*)/)
+      result = chapter_mark.squish.match(/(?<timestamp>\d{2}(?<separator>:\d{2})+)\.\d{3}\s+(?<text>.*)/)
       next if result.blank?
 
-      OpenStruct.new(start: result[:timestamp].strip, title: result[:text].strip)
+      Chapter.new(result[:timestamp].strip, result[:text].strip)
     end.compact
   end
 end

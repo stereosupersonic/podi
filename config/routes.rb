@@ -33,5 +33,5 @@ Rails.application.routes.draw do
   get "sitemap.xml" => "sitemaps#show", :as => :sitemap, :defaults => { format: :xml }
   get "robots.txt" => "robots#show", :defaults => { format: :text }
   # episode shortcut /006 or /2
-  get ":id", to: "welcome#epsiode", constraints: { id: /\d+/ }
+  get ":id", to: "welcome#episode", constraints: { id: /\d+/ }
 end
