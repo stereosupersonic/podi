@@ -21,4 +21,8 @@
 #
 class Event < ApplicationRecord
   belongs_to :episode
+
+  def secret_name
+    "some secret name #{id}"
+  end
 end

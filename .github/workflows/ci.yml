@@ -97,8 +97,41 @@ jobs:
 
     - name: Run tests
       run: |
-        docker compose -f docker-compose.test.yml exec -e CI=true -T app bundle exec rspec .
+        docker compose -f docker-compose.test.yml exec -e CI=true -e COVERAGE=true -T app bundle exec rspec .
+
+    - name: Upload coverage
+      if: github.event_name == 'pull_request'
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage
+        path: coverage/coverage.json
 
     - name: Stop containers
       if: always()
       run: docker compose -f docker-compose.test.yml down
+
+  undercover:
+    runs-on: ubuntu-latest
+    needs: docker
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Download coverage
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage
+          path: coverage
+
+      - name: Check coverage on changed lines
+        run: bundle exec undercover --compare ${{ github.event.pull_request.base.sha }}
