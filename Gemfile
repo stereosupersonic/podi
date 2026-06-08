@@ -6,7 +6,7 @@ source "https://rubygems.org"
 gem "rails", "~> 8.1.0"
 
 gem "pg"
-gem "puma", "~> 7.1.0"
+gem "puma", "~> 7.2.0"
 
 gem "jbuilder", "~> 2.7"
 
