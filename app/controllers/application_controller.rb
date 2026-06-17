@@ -35,7 +35,6 @@ class ApplicationController < ActionController::Base
     redirect_to "/", alert: "Access Denied" unless current_user&.admin?
   end
 
-
   def markdown_processor
     @markdown_processor ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
   end
