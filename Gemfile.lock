@@ -86,9 +86,6 @@ GEM
     annotate (2.6.5)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
-    appsignal (4.8.5)
-      logger
-      rack (>= 2.0.0)
     ast (2.4.3)
     attr_extras (7.1.0)
     aws-eventstream (1.4.0)
@@ -539,7 +536,6 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
-  appsignal (~> 4.8)
   aws-sdk-s3
   bcrypt (~> 3.1.7)
   bootsnap
