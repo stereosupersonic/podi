@@ -457,6 +457,8 @@ GEM
     scenic (1.9.0)
       activerecord (>= 4.0.0)
       railties (>= 4.0.0)
+    scout_apm (6.2.0)
+      parser
     securerandom (0.4.1)
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -581,6 +583,7 @@ DEPENDENCIES
   rubocop-rspec
   ruby-mp3info
   scenic (~> 1.7)
+  scout_apm (~> 6.2)
   selenium-webdriver
   shrine (~> 3.0)
   shrine-cloudinary (~> 1.1)
