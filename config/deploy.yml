@@ -42,7 +42,7 @@ env:
     - RAILS_MASTER_KEY
     - ROLLBAR_ENABLED
     - ROLLBAR_ACCESS_TOKEN
-    - NEWRELIC_LICENSE_KEY
+    - APPSIGNAL_PUSH_API_KEY
     - AWS_SECRET
     - AWS_ACCESS_KEY
     - CLOUDFRONT_URL
@@ -66,6 +66,7 @@ env:
     RAILS_LOG_LEVEL: info
     RAILS_MAX_THREADS: 3
     SERVER_IP: <%= server_ip %>
+    APP_REVISION: <%= ENV["GITHUB_SHA"] || `git rev-parse HEAD`.strip %>
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal logs -r job" will tail logs from the first server in the job section.
