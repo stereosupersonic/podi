@@ -32,7 +32,6 @@ gem "bcrypt", "~> 3.1.7"
 gem "will_paginate"
 gem "will_paginate-bootstrap5", require: "will_paginate-bootstrap4"
 
-# gem "appsignal", "~> 4.8"
 gem "rollbar"
 
 gem "ruby-mp3info", require: false

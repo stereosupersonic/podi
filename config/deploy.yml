@@ -40,9 +40,9 @@ registry:
 env:
   secret:
     - RAILS_MASTER_KEY
+    - SCOUT_KEY
     - ROLLBAR_ENABLED
     - ROLLBAR_ACCESS_TOKEN
-    - APPSIGNAL_PUSH_API_KEY
     - AWS_SECRET
     - AWS_ACCESS_KEY
     - CLOUDFRONT_URL
