@@ -91,6 +91,8 @@ class Episode < ApplicationRecord
   has_one :episode_statistic
   has_one :episode_current_statistic
 
+  has_many :comments
+
   def duration
     audio.blob.metadata[:duration] if audio.attached?
   end
