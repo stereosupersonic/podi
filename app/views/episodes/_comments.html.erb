@@ -1,0 +1,26 @@
+<div class="comments" style="margin-top: 20px; padding: 10px;">
+  <h3>Kommentare (<%= Comment.where("episode_id = #{@episode.id}").count %>)</h3>
+
+  <% cache "episode_comments" do %>
+    <% @episode.comments.each do |comment| %>
+      <div class="comment" style="border-bottom: 1px solid #eee;">
+        <strong><%= comment.user.name if comment.user %></strong>
+        <span><%= comment.author_name %></span>
+        <p><%= raw comment.body %></p>
+        <small><%= comment.body.html_safe %></small>
+        <em><%= comment.replies.count %> Antworten</em>
+      </div>
+    <% end %>
+  <% end %>
+
+  <script>
+    var lastAuthor = "<%= params[:author].to_s %>";
+    console.log("Willkommen " + lastAuthor);
+  </script>
+
+  <%= form_with url: episode_comments_path(@episode), method: :post do |f| %>
+    <%= f.text_field :author_name, placeholder: "Dein Name" %>
+    <%= f.text_area :body, placeholder: "Schreib was..." %>
+    <%= f.submit "Absenden" %>
+  <% end %>
+</div>
