@@ -503,7 +503,7 @@ GEM
       diff-lcs
       patience_diff
     sysexits (1.2.0)
-    temple (0.10.6)
+    temple (0.10.7)
     thor (1.5.0)
     thruster (0.1.25)
     tilt (2.7.0)
