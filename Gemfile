@@ -85,8 +85,8 @@ group :test do
   gem "rspec-rails"
   gem "capybara"
   gem "launchy" # for capybara save_and_open_page
-  gem "webdrivers", "~> 5.3.0", require: false
-  gem "selenium-webdriver", require: false
+  gem "webdrivers", require: false
+  gem "selenium-webdriver", "~> 4.14.0", require: false
 
   gem "rexml", "~> 3.4"
   gem "compare-xml"
