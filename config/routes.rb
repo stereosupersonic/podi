@@ -23,6 +23,13 @@ Rails.application.routes.draw do
   get "episodes/search", to: "episodes#search", as: :search_episodes
   resources :episodes, only: %i[show index], param: :slug
 
+  resources :episodes, only: [] do
+    resources :comments do
+      resources :replies
+      get "approve", on: :member
+    end
+  end
+
   root to: "welcome#index"
   get "up" => "rails/health#show", :as => :rails_health_check
   get "about", to: "welcome#about", as: :about

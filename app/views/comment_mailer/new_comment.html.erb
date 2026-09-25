@@ -1,0 +1,7 @@
+<h1>New comment</h1>
+<p><%= raw @comment.body %></p>
+<p>Author: <%= @comment.author_name %> (<%= @comment.author_email %>)</p>
+<p>
+  <a href="<%= episode_comment_approve_path(@comment.episode_id, @comment) %>">Approve this comment</a>
+</p>
+<p>Token: <%= @token %></p>

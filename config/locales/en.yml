@@ -39,3 +39,6 @@ en:
         other: "%{count} results for \"%{query}\""
       no_results: "No results for \"%{query}\""
       episode: "Episode"
+  comments:
+    title: "Comments"
+    submit: "Send commment"

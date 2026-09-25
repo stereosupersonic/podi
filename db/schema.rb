@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_19_132809) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_01_101500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -43,12 +43,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_19_132809) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.integer "episode_id"
+    t.integer "user_id"
+    t.string "body"
+    t.string "author_name"
+    t.string "author_email"
+    t.string "status", default: "pending"
+    t.integer "parent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "episodes", force: :cascade do |t|
     t.boolean "active", default: true
     t.string "artwork_url"
     t.text "chapter_marks"
     t.datetime "created_at", null: false
     t.text "description", null: false
+    t.integer "comments_count", default: 0
     t.integer "downloads_count", default: 0
     t.text "image_data"
     t.text "nodes"
