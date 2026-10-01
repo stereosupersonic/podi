@@ -20,6 +20,12 @@ services:
         condition: service_healthy
     ports:
       - "3000:3000"
+    # Chrome must not reach the app as "app": .app is an HSTS-preloaded TLD,
+    # so Chrome forces https://app and the plain-HTTP test server fails
+    networks:
+      default:
+        aliases:
+          - podi-test
     volumes:
       - ./tmp/capybara:/app/tmp/capybara
     environment:
@@ -32,7 +38,7 @@ services:
       # The test server WILL NOT BE AVAILABLE from outside the container if it binds
       # to 127.0.0.1. It must bind to 0.0.0.0 to be exposed to the outside world.
       CAPYBARA_SERVER_HOST: "0.0.0.0"
-      CAPYBARA_APP_HOST: "http://app:30000"
+      CAPYBARA_APP_HOST: "http://podi-test:30000"
     healthcheck:
       test: curl --fail http://0.0.0.0:3000/ready || exit 1
       retries: 3
@@ -50,10 +56,10 @@ services:
       retries: 5
 
   chrome:
-    image: selenium/standalone-chrome:4.27.0
+    image: selenium/standalone-chrome:4
     ports:
       - 4444:4444
-      # for debugging open with vnc://localhost:5900
+      # for debugging open with vnc://localhost:5900 password=secret
       # but don't run chrome in headless mode
       - 5900:5900
     healthcheck:
