@@ -50,10 +50,10 @@ services:
       retries: 5
 
   chrome:
-    image: selenium/standalone-chrome:4.27.0
+    image: selenium/standalone-chrome:4
     ports:
       - 4444:4444
-      # for debugging open with vnc://localhost:5900
+      # for debugging open with vnc://localhost:5900 password=secret
       # but don't run chrome in headless mode
       - 5900:5900
     healthcheck:
