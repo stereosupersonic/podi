@@ -19,8 +19,10 @@
                 %td= user.admin
                 %td= user.created_at
                 %td
-                  = edit_button edit_admin_user_path(user)
-                  - unless user.object == current_user
+                  - if user.object == current_user
+                    = edit_button edit_account_path
+                  - else
+                    = edit_button edit_admin_user_path(user)
                     = button_to "Delete", admin_user_path(user),
                                 method: :delete, class: "btn btn-danger",
                                 form: { class: "d-inline", data: { turbo_confirm: "Delete #{user.email}?" } }

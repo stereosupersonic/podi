@@ -7,6 +7,6 @@
     = f.input :password, required: user.new_record?, input_html: { autocomplete: "new-password" },
                          hint: ("Leave blank to keep the password" if user.persisted?)
     = f.input :password_confirmation, required: user.new_record?, input_html: { autocomplete: "new-password" }
-    = f.input :admin unless user == current_user
+    = f.input :admin
   .form-actions
     = submit_button
