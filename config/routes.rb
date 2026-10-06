@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "login", to: "users/sessions#new", as: :login
   post "login", to: "users/sessions#create"
   delete "logout", to: "users/sessions#destroy", as: :logout
+  resource :account, only: %w[edit update]
 
   namespace :admin do
     resources :statistics, only: %w[index]

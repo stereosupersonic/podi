@@ -1,0 +1,21 @@
+.site-section.bg-light
+  .container
+    .row
+      .col-md-12
+        %h1 Account
+
+        = simple_form_for(@user, url: account_path, method: :patch, html: { class: "form-horizontal" }) do |f|
+          = f.error_notification
+          .form-inputs
+            = f.input :first_name
+            = f.input :last_name
+            = f.input :email, required: true
+            = f.input :password, required: false, hint: "Leave blank to keep your password",
+                                 input_html: { autocomplete: "new-password" }
+            = f.input :password_confirmation, required: false, input_html: { autocomplete: "new-password" }
+            = f.input :current_password, required: false, hint: "Required to change email or password",
+                                         input_html: { autocomplete: "current-password" }
+          .form-actions
+            = submit_button
+
+        = back_button root_path
