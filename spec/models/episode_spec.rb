@@ -84,8 +84,8 @@ RSpec.describe Episode, type: :model do
       end
     end
 
-    context "with a file that is not an mp3" do
-      it "is invalid even when declared as audio/mpeg", :aggregate_failures do
+    context "with a non-mp3 file declared as audio/mpeg" do
+      it "is invalid", :aggregate_failures do
         image = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/001-vorstellung.jpg"), "audio/mpeg")
         episode = build(:episode, audio: image)
 
