@@ -71,8 +71,9 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
   end
 
   it "strips scripts, event handlers and javascript links from the html description", :aggregate_failures do
-    episode.update!(description: "<script>alert(1)</script><img src=x onerror=alert(2)>[link](javascript:alert(3))",
-                    nodes: "<script>alert(4)</script>")
+    # Saved without validation: rendering must stay safe for texts the link validation never saw.
+    episode.update_columns(description: "<script>alert(1)</script><img src=x onerror=alert(2)>[link](javascript:alert(3))",
+                           nodes: "<script>alert(4)</script>")
 
     html = presenter.description_with_show_notes_html
 

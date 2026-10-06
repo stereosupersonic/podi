@@ -70,6 +70,7 @@ class Episode < ApplicationRecord
   validates(:number, uniqueness: true)
   validates(:slug, uniqueness: true)
   validates(:title, uniqueness: true)
+  validates(:description, :nodes, absolute_links: true)
 
   validates(:audio, presence: true)
   validate(:audio_must_be_mp3)

@@ -93,6 +93,44 @@ RSpec.describe Episode, type: :model do
     end
   end
 
+  describe "link validation" do
+    context "with full and mail links" do
+      it "is valid" do
+        episode = build(:episode, description: "[Museum](https://www.dhm.de/lemo/) and https://test.com",
+                                  nodes: "* [Mail](mailto:info@wartenberger.de)")
+
+        expect(episode).to be_valid
+      end
+    end
+
+    context "with a link to another episode without the domain" do
+      it "is invalid", :aggregate_failures do
+        episode = build(:episode, description: "[Episode 25](025-maria-und-mathias-obermeier-zeitzeugen)")
+
+        expect(episode).not_to be_valid
+        expect(episode.errors[:description])
+          .to eq([ "contains links without https://: 025-maria-und-mathias-obermeier-zeitzeugen" ])
+      end
+    end
+
+    context "with a domain without https:// in the show notes" do
+      it "is invalid", :aggregate_failures do
+        episode = build(:episode, nodes: "* [Lebendiges Museum Online](dhm.de/lemo/)")
+
+        expect(episode).not_to be_valid
+        expect(episode.errors[:nodes]).to eq([ "contains links without https://: dhm.de/lemo/" ])
+      end
+    end
+
+    context "with a relative link in raw HTML" do
+      it "is invalid" do
+        episode = build(:episode, description: %(<a href="/episodes/001">Episode 1</a>))
+
+        expect(episode).not_to be_valid
+      end
+    end
+  end
+
   describe ".next_number" do
     it "is 1 when there are no episodes" do
       expect(described_class.next_number).to eq(1)
