@@ -21,6 +21,13 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      get "ping", to: "ping#show"
+      resources :episodes, only: %w[create]
+    end
+  end
+
   get "episodes/search", to: "episodes#search", as: :search_episodes
   resources :episodes, only: %i[show index], param: :slug
 
