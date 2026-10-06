@@ -177,7 +177,8 @@ default artwork). It raises if no record exists.
   `fix: …`, `refactor: …`, `test: …`, `docs: …`. Keep the summary under 50 characters.
 - **Pull requests** target `master` on GitHub (`stereosupersonic/podi`). CI (`.github/workflows/ci.yml`)
   runs Brakeman, bundler-audit, RuboCop and the full RSpec suite in Docker.
-- **Implementation plans** live in `docs/plans/`.
+- **Implementation plans** live in `docs/plans/` while they are being implemented. Remove a plan once
+  its PR is merged: the code, the PR description and git history are the record from then on.
 
 ## Deployment
 
