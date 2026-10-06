@@ -91,11 +91,21 @@ class Episode < ApplicationRecord
   has_one :episode_statistic
   has_one :episode_current_statistic
 
+  def self.next_number
+    maximum(:number).to_i.next
+  end
+
   def duration
     audio.blob.metadata[:duration] if audio.attached?
   end
 
   def audio_size
     audio.blob.byte_size if audio.attached?
+  end
+
+  def build_slug
+    return if number.blank? || title.blank?
+
+    "#{number.to_s.rjust(3, '0')} #{title}".parameterize(locale: :de)
   end
 end

@@ -15,13 +15,12 @@ module Admin
     end
 
     def new
-      @episode = Episode.new number: Episode.maximum(:number).to_i.next
+      @episode = Episode.new number: Episode.next_number
     end
 
     def create
-      @episode = Episode.new create_params
-      @episode.slug = build_slug(@episode)
-      if @episode.save
+      @episode = EpisodeCreator.call(episode_attributes: create_params)
+      if @episode.persisted?
         redirect_to admin_episodes_path, notice: "Episode was successfully created."
       else
         render :new
@@ -35,7 +34,7 @@ module Admin
     def update
       @episode = Episode.find_by!(slug: params[:id])
 
-      if @episode.update(update_params) && @episode.update(slug: build_slug(@episode))
+      if @episode.update(update_params) && @episode.update(slug: @episode.build_slug)
         redirect_to admin_episodes_path, notice: "Episode was successfully updated."
       else
         render :edit
@@ -43,12 +42,6 @@ module Admin
     end
 
     protected
-
-    def build_slug(episode)
-      return if episode.number.blank? || episode.title.blank?
-
-      "#{episode.number.to_s.rjust(3, '0')} #{episode.title}".parameterize(locale: :de)
-    end
 
     def create_params
       params.require(:episode).permit(*Episode::ATTRIBUTES)

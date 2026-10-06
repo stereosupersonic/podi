@@ -77,6 +77,31 @@ RSpec.describe Episode, type: :model do
     end
   end
 
+  describe ".next_number" do
+    it "is 1 when there are no episodes" do
+      expect(described_class.next_number).to eq(1)
+    end
+
+    it "is one more than the highest number" do
+      create(:episode, number: 7)
+      create(:episode, number: 3)
+
+      expect(described_class.next_number).to eq(8)
+    end
+  end
+
+  describe "#build_slug" do
+    it "combines the zero-padded number and the title" do
+      episode = described_class.new(number: 42, title: "Über den Markt")
+
+      expect(episode.build_slug).to eq("042-ueber-den-markt")
+    end
+
+    it "is nil without a title" do
+      expect(described_class.new(number: 42).build_slug).to be_nil
+    end
+  end
+
   describe ".search" do
     it "finds episodes by title" do
       episode = create(:episode, title: "Fahrrad Geschichte", number: 1)
