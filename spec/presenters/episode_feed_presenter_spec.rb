@@ -115,4 +115,14 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
     expect(presenter.description_with_show_notes_text.bytesize).to be <= 4000
     expect(presenter.description_with_show_notes_text).to be_valid_encoding
   end
+
+  context "without a Twitter URL in the settings" do
+    before { setting.update!(twitter_url: "") }
+
+    it "leaves Twitter out of the contact links", :aggregate_failures do
+      expect(presenter.description_with_show_notes_html).not_to include("Twitter")
+      expect(presenter.description_with_show_notes_text).not_to include("Twitter")
+      expect(presenter.description_with_show_notes_html).to include("Instagram")
+    end
+  end
 end

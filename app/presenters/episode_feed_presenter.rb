@@ -2,6 +2,9 @@ require "redcarpet/render_strip"
 class EpisodeFeedPresenter < EpisodePresenter
   include ActionView::Helpers::SanitizeHelper
 
+  SOCIAL_LINKS = { "Twitter" => :twitter_url, "Instagram" => :instagram_url,
+                   "Facebook" => :facebook_url, "YouTube" => :youtube_url }.freeze
+
   delegate :author, to: :current_setting
 
   def artwork_url
@@ -81,14 +84,7 @@ class EpisodeFeedPresenter < EpisodePresenter
         <br />
         Bleibt auf dem Laufenden über zukünftige Folgen
         <br />
-        <a href='#{current_setting.twitter_url}'>Twitter</a>
-        <br />
-        <a href='#{current_setting.instagram_url}'>Instagram</a>
-        <br />
-        <a href='#{current_setting.facebook_url}'>Facebook</a>
-        <br />
-        <a href='#{current_setting.youtube_url}'>YouTube</a>
-        <br />
+        #{social_links.map { |name, url| "<a href='#{url}'>#{name}</a>\n<br />" }.join("\n")}
       </p>
     HTML
   end
@@ -103,11 +99,16 @@ class EpisodeFeedPresenter < EpisodePresenter
 
       **Folgt uns!**
       Bleibt auf dem Laufenden über zukünftige Folgen
-      [Twitter](#{current_setting.twitter_url})
-      [Instagram](#{current_setting.instagram_url})
-      [Facebook](#{current_setting.facebook_url})
-      [YouTube](#{current_setting.youtube_url})
+      #{social_links.map { |name, url| "[#{name}](#{url})" }.join("\n")}
     MARKDOWN
+  end
+
+  # Links without a URL in the settings would lead nowhere in podcast apps.
+  def social_links
+    SOCIAL_LINKS.filter_map do |name, attribute|
+      url = current_setting.public_send(attribute)
+      [ name, url ] if url.present?
+    end
   end
 
   def pub_date
