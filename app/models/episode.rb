@@ -81,6 +81,7 @@ class Episode < ApplicationRecord
   validates(:title, uniqueness: true)
 
   validates(:audio, presence: true)
+  validate(:audio_must_be_mp3)
 
   # TODO: either one or the other
   # validates(:artwork_url, presence: true)
@@ -107,5 +108,14 @@ class Episode < ApplicationRecord
     return if number.blank? || title.blank?
 
     "#{number.to_s.rjust(3, '0')} #{title}".parameterize(locale: :de)
+  end
+
+  private
+
+  def audio_must_be_mp3
+    return unless audio.attached?
+    return if audio.content_type == "audio/mpeg"
+
+    errors.add(:audio, "must be an MP3 file (audio/mpeg)")
   end
 end

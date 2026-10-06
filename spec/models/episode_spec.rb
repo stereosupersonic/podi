@@ -77,6 +77,24 @@ RSpec.describe Episode, type: :model do
     end
   end
 
+  describe "audio validation" do
+    context "with an mp3" do
+      it "is valid" do
+        expect(build(:episode)).to be_valid
+      end
+    end
+
+    context "with a file that is not an mp3" do
+      it "is invalid even when declared as audio/mpeg", :aggregate_failures do
+        image = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/001-vorstellung.jpg"), "audio/mpeg")
+        episode = build(:episode, audio: image)
+
+        expect(episode).not_to be_valid
+        expect(episode.errors[:audio]).to include("must be an MP3 file (audio/mpeg)")
+      end
+    end
+  end
+
   describe ".next_number" do
     it "is 1 when there are no episodes" do
       expect(described_class.next_number).to eq(1)
