@@ -1362,6 +1362,13 @@ Episodes created through it are always `active: false, visible: true` drafts: th
 this, `EpisodeCreator` (shared with the admin) doesn't know about it. Documentation: `docs/api.md`.
 ```
 
+Also update the "Episode Visibility" section for the changes in Tasks 1 and 3:
+- Under the table, add: "`active` defaults to `false`: every new episode, from the admin or the API,
+  is a draft until someone ticks "Active". The admin index marks drafts with a "Draft" badge."
+- In "Other `Episode` details", the slug bullet now reads: "`slug` is built by `Episode#build_slug` from
+  the zero-padded number and the title (`"001 Title".parameterize(locale: :de)`), and new episodes are
+  created through `EpisodeCreator`, which also assigns `Episode.next_number`."
+
 If it isn't merged yet, skip 9c and mention it in the PR description as a follow-up.
 
 ### 9d. Commit
