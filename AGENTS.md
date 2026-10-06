@@ -98,6 +98,10 @@ run locally, they fail when the installed Chrome is newer than any chromedriver 
   versioned SQL file and `update_view`, never by editing an existing version.
 - **Uploads use two stacks:** episode images go through Shrine + Cloudinary (`image_data` column,
   `ImageUploader`), audio through Active Storage + S3. Follow the stack of the file type you are touching.
+- **Live search and endless scrolling** are Stimulus controllers in `app/javascript/controllers/`.
+  `search` submits the navbar form (debounced) into the Turbo Frame `search_results` in the layout,
+  which `episodes#search` renders; `infinite-scroll` loads the next `episodes/_page` when its sentinel
+  scrolls into view.
 - `WelcomeController#epsiode` (sic) serves the numeric shortcut route `/:id` (e.g. `/006`). The
   misspelling is part of the routing; don't rename it in passing.
 
