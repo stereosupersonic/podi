@@ -19,7 +19,7 @@ RSpec.describe Mp3EventJob, type: :job do
     expect { job }.to have_enqueued_job(described_class).on_queue("default")
   end
 
-  it "call the geo data job" do
+  it "creates an event without looking up geo data" do
     client = double(DeviceDetector,
                     name: "ios",
                     full_version: "test",
@@ -30,7 +30,7 @@ RSpec.describe Mp3EventJob, type: :job do
                     device_type: "",
                     bot?: false)
     expect(DeviceDetector).to receive(:new).with("my ua").and_return(client)
-    expect(GeoDataJob).to receive(:perform_later).with(kind_of(Integer), "127.0.0.2")
+    expect(GeoDataJob).not_to receive(:perform_later)
     expect do
       perform_enqueued_jobs do
         job
