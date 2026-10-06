@@ -15,7 +15,7 @@ RSpec.describe FetchGeoData do
   end
 
   it "returns an empty hash if ip is blank" do
-    client = double(MaxMind::GeoIP2::Client, city: nil)
+    client = instance_double(MaxMind::GeoIP2::Client, city: nil)
     expect(MaxMind::GeoIP2::Client).to receive(:new).and_return client
 
     expect(described_class.call(ip_address: "127.0.0.1")).to eq({})
@@ -23,9 +23,28 @@ RSpec.describe FetchGeoData do
 
   it "returns valid data even if not data available" do
     city = double("city", country: double(name: "Spain", iso_code: "ESP")).as_null_object
-    client = double(MaxMind::GeoIP2::Client, city: city)
+    client = instance_double(MaxMind::GeoIP2::Client, city: city)
     expect(MaxMind::GeoIP2::Client).to receive(:new).and_return client
 
     expect(described_class.call(ip_address: "127.0.0.1")).to include(country: "Spain", iso_code: "ESP")
+  end
+
+  it "creates the client with a request timeout" do
+    client = instance_double(MaxMind::GeoIP2::Client, city: nil)
+    expect(MaxMind::GeoIP2::Client).to receive(:new).with(hash_including(timeout: 5)).and_return client
+
+    described_class.call(ip_address: "127.0.0.1")
+  end
+
+  context "when the authentication fails" do
+    it "raises the authentication error" do
+      client = instance_double(MaxMind::GeoIP2::Client)
+      allow(client).to receive(:city).and_raise(MaxMind::GeoIP2::AuthenticationError, "invalid license key")
+      allow(MaxMind::GeoIP2::Client).to receive(:new).and_return client
+
+      expect do
+        described_class.call(ip_address: "127.0.0.1")
+      end.to raise_error(MaxMind::GeoIP2::AuthenticationError, "invalid license key")
+    end
   end
 end
