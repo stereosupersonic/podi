@@ -24,4 +24,13 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
     assert user.save!
   end
+
+  describe "#api_tokens" do
+    it "lists the user's tokens" do
+      admin = create(:user, :admin)
+      api_token = create(:api_token, user: admin)
+
+      expect(admin.api_tokens).to eq([ api_token ])
+    end
+  end
 end
