@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "login", to: "users/sessions#new", as: :login
   post "login", to: "users/sessions#create"
   delete "logout", to: "users/sessions#destroy", as: :logout
+  resource :account, only: %w[edit update]
 
   namespace :admin do
     resources :statistics, only: %w[index]
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
     resources :events, only: %w[index show]
     resource :setting, only: %w[edit update]
     resources :api_tokens, only: %w[index new create destroy]
+    resources :users, only: %w[index new create edit update destroy]
     resource :info, only: %w[show] do
       post :trigger_exception
     end
