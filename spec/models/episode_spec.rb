@@ -112,6 +112,21 @@ RSpec.describe Episode, type: :model do
     end
   end
 
+  describe ".all_tags" do
+    it "lists every tag once, sorted" do
+      create(:episode, tags: %w[Musik Interview])
+      create(:episode, tags: %w[Geschichte Musik], active: false)
+
+      expect(described_class.all_tags).to eq(%w[Geschichte Interview Musik])
+    end
+
+    it "is empty without tags" do
+      create(:episode)
+
+      expect(described_class.all_tags).to eq([])
+    end
+  end
+
   describe "#build_slug" do
     it "combines the zero-padded number and the title" do
       episode = described_class.new(number: 42, title: "Über den Markt")

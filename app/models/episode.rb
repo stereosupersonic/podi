@@ -96,6 +96,10 @@ class Episode < ApplicationRecord
     maximum(:number).to_i.next
   end
 
+  def self.all_tags
+    pluck(Arel.sql("DISTINCT unnest(tags)")).sort
+  end
+
   def duration
     audio.blob.metadata[:duration] if audio.attached?
   end

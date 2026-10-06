@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get "ping", to: "ping#show"
       resources :episodes, only: %w[create]
+      resources :tags, only: %w[index]
     end
   end
 
