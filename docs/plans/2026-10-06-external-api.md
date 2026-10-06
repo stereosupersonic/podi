@@ -35,7 +35,7 @@ The contract must stay compatible with adding `audio_url` later (see Task 9).
 
 | File | Why |
 |---|---|
-| `AGENTS.md` (on branch `add-agents-md` until merged) | Project conventions, spec layout, episode visibility rules |
+| `AGENTS.md` | Project conventions, spec layout, episode visibility rules |
 | `app/models/episode.rb` | Model you will extend; note `ATTRIBUTES`, `published` scope, validations |
 | `app/controllers/admin/episodes_controller.rb` | Contains `build_slug` and the number default you will extract |
 | `app/controllers/admin/base_controller.rb` | `authorize_admin` guard for admin controllers |
@@ -1365,9 +1365,7 @@ that stay unlisted until approved in the admin. See [docs/api.md](docs/api.md).
 
 ### 9c. AGENTS.md
 
-`AGENTS.md` lives on branch `add-agents-md` (separate PR). **If that PR is merged by now**, rebase this
-branch onto `master` (`git fetch && git rebase origin/master`) and add under "Architecture and
-Conventions":
+Add under "Architecture and Conventions" in `AGENTS.md`:
 
 ```markdown
 ### External API
@@ -1384,8 +1382,6 @@ Also update the "Episode Visibility" section for the changes in Tasks 1 and 3:
 - In "Other `Episode` details", the slug bullet now reads: "`slug` is built by `Episode#build_slug` from
   the zero-padded number and the title (`"001 Title".parameterize(locale: :de)`), and new episodes are
   created through `EpisodeCreator`, which also assigns `Episode.next_number`."
-
-If it isn't merged yet, skip 9c and mention it in the PR description as a follow-up.
 
 ### 9d. Commit
 
