@@ -31,11 +31,41 @@ RSpec.describe "admin users", type: :request do
       end
     end
 
+    describe "GET /admin/users/:id/edit" do
+      it "sends you to your account page for yourself" do
+        get "/admin/users/#{admin.id}/edit"
+
+        expect(response).to redirect_to("/account/edit")
+      end
+
+      it "edits another user" do
+        user = create(:user)
+
+        get "/admin/users/#{user.id}/edit"
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
     describe "PATCH /admin/users/:id" do
-      it "does not permit your own admin flag", :aggregate_failures do
-        expect { patch "/admin/users/#{admin.id}", params: { user: { admin: "0" } } }
-          .to raise_error(ActionController::UnpermittedParameters)
-        expect(admin.reload).to be_admin
+      it "does not change your own email and password", :aggregate_failures do
+        patch "/admin/users/#{admin.id}",
+              params: { user: { email: "hijacked@test.com", password: "Hijacked123!",
+                                password_confirmation: "Hijacked123!" } }
+
+        expect(response).to redirect_to("/account/edit")
+        expect(admin.reload.email).not_to eq("hijacked@test.com")
+        expect(admin.authenticate(LoginHelpers::DEFAULT_TEST_PASSWORD)).to eq(admin)
+      end
+
+      it "updates another user", :aggregate_failures do
+        user = create(:user)
+
+        patch "/admin/users/#{user.id}", params: { user: { email: "cohost@test.com", admin: "1" } }
+
+        expect(response).to redirect_to("/admin/users")
+        expect(user.reload.email).to eq("cohost@test.com")
+        expect(user).to be_admin
       end
     end
   end
