@@ -4,7 +4,7 @@ class Mp3EventJob < ApplicationJob
     episode.increment! :downloads_count
     data = payload[:data]
 
-    client = DeviceDetector.new(payload.dig(:data, :user_agent))
+    client = DeviceDetector.new(data[:user_agent])
     data[:client_name] = client.name
     data[:client_full_version] = client.full_version
     data[:client_os_name] = client.os_name

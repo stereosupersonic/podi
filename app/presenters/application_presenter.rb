@@ -4,8 +4,6 @@ class ApplicationPresenter < SimpleDelegator
   alias_method :object, :__getobj__
 
   def self.wrap(collection)
-    return [] unless collection
-
     collection.map { |elem| new(elem) }
   end
 

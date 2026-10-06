@@ -37,7 +37,6 @@ module Admin
                                         instagram_url
                                         itunes_url
                                         spotify_url
-                                        itunes_url
                                       ])
     end
   end

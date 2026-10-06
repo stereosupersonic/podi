@@ -153,7 +153,7 @@ RSpec.describe "episodes", type: :request do
               <pubDate>#{episode2.published_on.to_date.rfc822}</pubDate>
               <description>
                 <![CDATA[<p>we talk about bikes and things</p>
-                  <br /><p>(00:00:00) Intro<br />(00:01:00) Begrüßung<br />(00:04:34) Outro</p>
+                  <br /><p>(00:00:00) Intro<br>(00:01:00) Begrüßung<br>(00:04:34) Outro</p>
                   <br /><h3>Show Notes</h3> <ul>
                   <li><a href="https://test.com">link</a></li> <li><a href="https://test.com">link2</a></li> </ul>
                   <br /><h2>Kontakt</h2> <p> <br /> <b>Schreibt uns!</b>
@@ -167,7 +167,7 @@ RSpec.describe "episodes", type: :request do
               </description>
               <content:encoded>
                 <![CDATA[<p>we talk about bikes and things</p>
-                  <br /><p>(00:00:00) Intro<br />(00:01:00) Begrüßung<br />(00:04:34) Outro</p>
+                  <br /><p>(00:00:00) Intro<br>(00:01:00) Begrüßung<br>(00:04:34) Outro</p>
                   <br /><h3>Show Notes</h3> <ul>
                   <li><a href="https://test.com">link</a></li>
                   <li><a href="https://test.com">link2</a></li> </ul>
@@ -310,7 +310,7 @@ RSpec.describe "episodes", type: :request do
       perform_enqueued_jobs_now!
 
       expect(response).to have_http_status(:found)
-      expect(response).to redirect_to(episode.file_url)
+      expect(response).to redirect_to(episode.cdn_url)
       expect(response.body).to be_blank # https://github.com/rails/rails/commit/c2e756a944fd3ca2efa58bd285c0e75e0b4794ab
     end
 
