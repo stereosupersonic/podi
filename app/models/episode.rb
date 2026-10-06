@@ -74,13 +74,8 @@ class Episode < ApplicationRecord
   validates(:audio, presence: true)
   validate(:audio_must_be_mp3)
 
-  # TODO: either one or the other
-  # validates(:artwork_url, presence: true)
-  # validates(:image, presence: true)
-
   has_one_attached :audio
 
-  has_one :episode_statistic
   has_one :episode_current_statistic
 
   def self.next_number

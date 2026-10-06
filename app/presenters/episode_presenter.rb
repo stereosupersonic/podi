@@ -11,20 +11,8 @@ class EpisodePresenter < ApplicationPresenter
     h.format_date o.published_on
   end
 
+  # Apple requires episode artwork between 1400x1400 and 3000x3000 pixels, JPEG or PNG.
   def artwork_url(size: 900)
-    # You should use this tag when you have a high quality, episode-specific image you would like listeners to see.
-    # Specify your episode artwork using the <a href> attribute in the <itunes:image> tag.
-    # Depending on their device, listeners see your episode artwork in varying sizes.
-    # Therefore, make sure your design is effective at both its original size and at thumbnail size.
-    # You should include a title, brand, or source name as part of your episode artwork.
-    # To avoid technical issues when you update your episode artwork, be sure to:
-    # Change the artwork file name and URL at the same time
-    # Verify the web server hosting your artwork allows HTTP head requests
-    # Artwork must be a minimum size of 1400 x 1400 pixels and a maximum size of 3000 x 3000 pixels,
-    # in JPEG or PNG format, 72 dpi, with appropriate file extensions (.jpg, .png), and in the RGB colorspace.
-    # These requirements are different from the standard RSS image tag specifications.
-    # Make sure the file type in the URL matches the actual file type of the image file.d
-
     if o.image.present?
       if o.image.storage.is_a? Shrine::Storage::Cloudinary
         o.image_url(width: size, height: size, crop: :fit, responsive: true)
@@ -42,13 +30,8 @@ class EpisodePresenter < ApplicationPresenter
     if Rails.application.config.active_storage.service == :aws && Rails.application.config.aws_cloudfront_url
       File.join(Rails.application.config.aws_cloudfront_url, o.audio.blob.key)
     else
-      route = o.audio.blob.is_a?(ActiveStorage::Variant) ? :rails_representation : :rails_blob
-      Rails.application.routes.url_helpers.route_for(route, o.audio.blob)
+      Rails.application.routes.url_helpers.route_for(:rails_blob, o.audio.blob)
     end
-  end
-
-  def file_url
-    cdn_url
   end
 
   def mp3_url(notracking: false)
@@ -74,7 +57,7 @@ class EpisodePresenter < ApplicationPresenter
   end
 
   def audio_filename_formatted
-    o.audio.filename.to_s if o.audio
+    o.audio.filename.to_s
   end
 
   def to_s
