@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_06_124652) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_06_153022) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -141,7 +141,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_06_124652) do
       (date_part('year'::text, e.published_on))::integer AS year,
       count(
           CASE
-              WHEN ((e.published_on <= (CURRENT_DATE - 'PT12H'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'PT12H'::interval))) THEN 1
+              WHEN ((e.published_on <= (now() - 'PT12H'::interval)) AND (ev.created_at >= (now() - 'PT12H'::interval))) THEN 1
               ELSE NULL::integer
           END) AS a12h,
       count(
@@ -199,7 +199,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_06_124652) do
               WHEN ((e.published_on <= (CURRENT_DATE - 'P2Y'::interval)) AND (ev.created_at >= (CURRENT_DATE - 'P2Y'::interval))) THEN 1
               ELSE NULL::integer
           END) AS a24m,
-      count(*) AS cnt
+      count(ev.id) AS cnt
      FROM (episodes e
        LEFT JOIN events ev ON ((e.id = ev.episode_id)))
     GROUP BY e.id
@@ -277,7 +277,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_06_124652) do
               WHEN (ev.created_at <= (e.published_on + 'P2Y'::interval)) THEN 1
               ELSE NULL::integer
           END) AS a24m,
-      count(*) AS cnt
+      count(ev.id) AS cnt
      FROM (episodes e
        LEFT JOIN events ev ON ((e.id = ev.episode_id)))
     WHERE (e.published_on >= ( SELECT events.created_at
