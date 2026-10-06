@@ -32,9 +32,11 @@ module Api
         render_rate_limited if count.to_i > REQUESTS_PER_TOKEN_PER_MINUTE
       end
 
-      # raw: true because increment stores a raw integer, which Redis cannot read back deserialized.
+      # Incrementing by 0 reads the counter the same way in every cache store; a plain read of a
+      # Redis counter needs raw: true, which the MemoryStore in specs would not exercise.
       def failed_authentications_exceeded?
-        Rails.cache.read(failed_authentications_key, raw: true).to_i >= FAILED_AUTHENTICATIONS_PER_IP_PER_MINUTE
+        count = Rails.cache.increment(failed_authentications_key, 0, expires_in: 1.minute)
+        count.to_i >= FAILED_AUTHENTICATIONS_PER_IP_PER_MINUTE
       end
 
       def failed_authentications_key
