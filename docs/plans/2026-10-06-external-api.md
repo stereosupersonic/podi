@@ -20,12 +20,13 @@ v1 consists of:
 | Admin UI | `/admin/api_tokens`: list, create (shows the token once), revoke |
 | `GET /api/v1/ping` | Checks a token and says whose it is |
 | `POST /api/v1/episodes` | Multipart create of a draft episode |
+| `GET /api/v1/tags` | Every tag in use, so an agent can reuse existing tags instead of inventing variants |
 | Rate limits | 60 requests/minute per token, 10 failed authentications/minute per IP |
 | `docs/api.md` | API documentation written for an AI agent to read |
 
 **Out of scope for v1** (decided, do not build): updating episodes via the API (`PATCH`), episode
 ownership (`user_id` on episodes), token expiry, notifications, `audio_url` downloads, OpenAPI/MCP.
-The contract must stay compatible with adding `audio_url` later (see Task 9).
+The contract must stay compatible with adding `audio_url` later (see Task 10).
 
 **Branch:** `external_api` (already exists, branched from `master`). Work and commit there.
 
@@ -316,7 +317,7 @@ bin/rspec spec/models/episode_spec.rb spec/system/admin/episodes_spec.rb
 git commit -am "feat: only accept mp3 audio for episodes"
 ```
 
-**Before this reaches production** someone must run the pre-flight check in Task 10. Old episodes with a
+**Before this reaches production** someone must run the pre-flight check in Task 11. Old episodes with a
 different stored content type would otherwise fail validation when edited.
 
 ---
@@ -1257,9 +1258,128 @@ git commit -am "feat: rate limit the API"
 
 ---
 
-## Task 9: Documentation
+## Task 9: `GET /api/v1/tags`
 
-### 9a. `docs/api.md`
+**Why:** the episode agent in the podcasts folder (`docs/plans/2026-10-06-episoden-agent.md` in the
+Dropbox `podcasts/` folder) proposes tags for new episodes. Tags are not public anywhere (not in the RSS
+feed, no tag route), so without this endpoint the agent can't see which tags exist and invents variants
+("Musik", "Musiker", "Band") that split the episodes apart.
+
+**Rules:**
+- Token-authenticated through `Api::V1::BaseController`, with the same rate limits as every endpoint.
+- Returns every distinct tag across **all** episodes, active or not, sorted alphabetically:
+  `{ "tags": ["Geschichte", "Interview", "Musik"] }`. Draft tags count too: the agent should reuse a tag
+  from an episode that is still in review.
+
+### 9a. Failing model spec
+
+Add to `spec/models/episode_spec.rb`:
+
+```ruby
+  describe ".all_tags" do
+    it "lists every tag once, sorted" do
+      create(:episode, tags: %w[Musik Interview])
+      create(:episode, tags: %w[Geschichte Musik], active: false)
+
+      expect(described_class.all_tags).to eq(%w[Geschichte Interview Musik])
+    end
+
+    it "is empty without tags" do
+      create(:episode)
+
+      expect(described_class.all_tags).to eq([])
+    end
+  end
+```
+
+Run `bin/rspec spec/models/episode_spec.rb` and confirm it fails with `NoMethodError`.
+
+### 9b. Implement in `app/models/episode.rb`
+
+Next to `self.next_number`:
+
+```ruby
+  def self.all_tags
+    pluck(Arel.sql("DISTINCT unnest(tags)")).sort
+  end
+```
+
+`unnest` turns the PostgreSQL array into one row per tag. Run the model spec green.
+
+### 9c. Failing request spec: `spec/requests/api/v1/tags_spec.rb`
+
+```ruby
+require "rails_helper"
+
+RSpec.describe "API v1 tags", type: :request do
+  let(:admin) { create(:user, :admin) }
+  let(:token) { ApiToken.issue(user: admin, name: "agent") }
+
+  context "with a valid token" do
+    it "lists every tag in use", :aggregate_failures do
+      create(:episode, tags: %w[Musik Interview])
+
+      get "/api/v1/tags", headers: { "Authorization" => "Bearer #{token.plaintext_token}" }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body).to eq("tags" => %w[Interview Musik])
+    end
+  end
+
+  context "without a token" do
+    it "answers unauthorized" do
+      get "/api/v1/tags"
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
+end
+```
+
+Run it and confirm it fails with a routing error.
+
+### 9d. Route, controller, view
+
+`config/routes.rb`, inside `namespace :v1`:
+
+```ruby
+      resources :tags, only: %w[index]
+```
+
+`app/controllers/api/v1/tags_controller.rb`:
+
+```ruby
+module Api
+  module V1
+    class TagsController < BaseController
+      def index
+        @tags = Episode.all_tags
+      end
+    end
+  end
+end
+```
+
+`app/views/api/v1/tags/index.json.jbuilder`:
+
+```ruby
+json.tags @tags
+```
+
+### 9e. Verify and commit
+
+```sh
+bin/rspec spec/models/episode_spec.rb spec/requests/api
+bin/rubocop
+git add spec/requests/api/v1/tags_spec.rb app/controllers/api/v1/tags_controller.rb app/views/api/v1/tags
+git commit -am "feat: add GET /api/v1/tags"
+```
+
+---
+
+## Task 10: Documentation
+
+### 10a. `docs/api.md`
 
 The reader is an **AI agent** with a shell, which will follow it literally. Write it precisely. Content:
 
@@ -1324,6 +1444,17 @@ always the next free number.
 - `active: false` means waiting for human approval. Share `preview_url` with the person who approves it.
 - `duration` is `null` at first; it is filled in once the audio has been analysed.
 
+## List tags
+
+`GET /tags` returns every tag used by any episode, drafts included, sorted alphabetically. Reuse these
+tags when you set `episode[tag_list]` instead of inventing variants of the same topic.
+
+    curl -s https://www.wartenberger.de/api/v1/tags -H "Authorization: Bearer $PODI_TOKEN"
+
+`200` response:
+
+    { "tags": ["Geschichte", "Interview", "Musik"] }
+
 ## Errors
 
 Every error has the same shape: `error` (a machine-readable code), and `message` and/or `messages`.
@@ -1352,7 +1483,7 @@ Before committing, **check that the slug in the example matches reality**: `"Fol
 gives `042-folge-uber-den-markt` or `042-folge-ueber-den-markt`, depending on what Task 1a found. Fix
 the example so it's true.
 
-### 9b. README
+### 10b. README
 
 Add a short section to `README.md`:
 
@@ -1363,7 +1494,7 @@ Admins create API tokens under Admin → API Tokens. The token-authenticated API
 that stay unlisted until approved in the admin. See [docs/api.md](docs/api.md).
 ```
 
-### 9c. AGENTS.md
+### 10c. AGENTS.md
 
 Add under "Architecture and Conventions" in `AGENTS.md`:
 
@@ -1383,7 +1514,7 @@ Also update the "Episode Visibility" section for the changes in Tasks 1 and 3:
   the zero-padded number and the title (`"001 Title".parameterize(locale: :de)`), and new episodes are
   created through `EpisodeCreator`, which also assigns `Episode.next_number`."
 
-### 9d. Commit
+### 10d. Commit
 
 ```sh
 git add docs/api.md README.md AGENTS.md
@@ -1392,9 +1523,9 @@ git commit -m "docs: document the episodes API"
 
 ---
 
-## Task 10: Final Checks, PR and Rollout
+## Task 11: Final Checks, PR and Rollout
 
-### 10a. Local checks
+### 11a. Local checks
 
 ```sh
 bin/rubocop
@@ -1404,7 +1535,7 @@ bin/rspec spec/models spec/services spec/requests spec/system/admin/episodes_spe
 
 All must be clean. Any Brakeman warning gets fixed or explained to Michael; don't ignore it.
 
-### 10b. Pull request
+### 11b. Pull request
 
 Push `external_api` and open a PR against `master` (use the `create_pullrequest` skill). The description
 explains the story (AI agents create drafts, a human approves), how to review it (start with
@@ -1412,7 +1543,7 @@ explains the story (AI agents create drafts, a human approves), how to review it
 extraction), and the design choices (digest-only tokens, controller-based rate limits instead of
 Rack::Attack, `slice` before `permit`, the `active` default change). CI runs the full suite.
 
-### 10c. Pre-flight before merging (production data)
+### 11c. Pre-flight before merging (production data)
 
 The MP3 validation must not lock existing episodes. In production:
 
@@ -1431,7 +1562,7 @@ It must return `[]`. If it doesn't, **stop and discuss with Michael** before mer
 Michael ran it on 2026-10-06 and it returned `[]`. Run it again before merging only if episodes with
 non-MP3 audio might have been uploaded since.
 
-### 10d. Smoke test after deploy
+### 11d. Smoke test after deploy
 
 1. Admin → API Tokens → create "smoke test" and copy the token.
 2. `curl -s https://www.wartenberger.de/api/v1/ping -H "Authorization: Bearer $TOKEN"` → `200`.
