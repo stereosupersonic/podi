@@ -1,0 +1,16 @@
+.site-section.bg-light
+  .container
+    .row
+      .col-md-12
+        %h1 New API Token
+        -#
+          Turbo rejects a 200 HTML response to a form POST, and create renders the token page
+          instead of redirecting so the token never goes through the flash/session cookie.
+        = simple_form_for([ :admin, @api_token ], html: { class: "form-horizontal", data: { turbo: false } }) do |f|
+          = f.error_notification
+          .form-inputs
+            = f.input :name, hint: "Where the token is used, e.g. \"n8n publishing\""
+          .form-actions
+            = submit_button "Create"
+
+        = back_button admin_api_tokens_path
