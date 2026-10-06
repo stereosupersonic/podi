@@ -5,6 +5,10 @@ module Api
 
       before_action :authenticate_api_token!
 
+      rescue_from ActionController::ParameterMissing do |error|
+        render_error :bad_request, error: "bad_request", message: "Missing parameter: #{error.param}"
+      end
+
       private
 
       attr_reader :current_api_token
