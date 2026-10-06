@@ -2,26 +2,26 @@
 #
 # Table name: episode_current_statistics
 #
-#  episode_id   :integer
-#  number       :integer
-#  title        :string
-#  published_on :date
+#  a12h         :bigint(8)
+#  a12m         :bigint(8)
+#  a14d         :bigint(8)
+#  a18m         :bigint(8)
+#  a1d          :bigint(8)
+#  a24m         :bigint(8)
+#  a30d         :bigint(8)
+#  a3d          :bigint(8)
+#  a3m          :bigint(8)
+#  a60d         :bigint(8)
+#  a6m          :bigint(8)
+#  a7d          :bigint(8)
+#  cnt          :bigint(8)
 #  day          :text
+#  number       :integer
+#  published_on :date
+#  title        :string
 #  week         :integer
 #  year         :integer
-#  a12h         :integer
-#  a1d          :integer
-#  a3d          :integer
-#  a7d          :integer
-#  a14d         :integer
-#  a30d         :integer
-#  a60d         :integer
-#  a3m          :integer
-#  a6m          :integer
-#  a12m         :integer
-#  a18m         :integer
-#  a24m         :integer
-#  cnt          :integer
+#  episode_id   :bigint(8)
 #
 
 require "rails_helper"

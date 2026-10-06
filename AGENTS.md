@@ -16,7 +16,7 @@ https://www.wartenberger.de. It covers:
 
 | Layer | Technology |
 |---|---|
-| Language / framework | Ruby 3.4 (`.ruby-version`), Rails 8.1 |
+| Language / framework | Ruby 4.0 (`.ruby-version`), Rails 8.1 |
 | Database | PostgreSQL 17, with native arrays, JSONB and Scenic views |
 | Jobs | Sidekiq 7 + Redis (`config/sidekiq.yml`, queues `default` and `low`) |
 | Cache | Redis |
@@ -137,6 +137,9 @@ default artwork). It raises if no record exists.
 
 - **HAML** for all templates, never ERB.
 - **Double quotes** for strings (enforced by RuboCop).
+- Models, factories and model specs start with a generated `# == Schema Information` header
+  (annotaterb, configured in `.annotaterb.yml`). It regenerates on `bin/rails db:migrate` in development;
+  otherwise run `bundle exec annotaterb models`. Never edit it by hand.
 - Strong params use `params.require(:model).permit(...)`, matching the existing controllers.
 - Admin forms use SimpleForm (`= f.input :field`).
 - I18n keys use the full path (`t("episodes.search.placeholder")`), never lazy lookup. Locales are in

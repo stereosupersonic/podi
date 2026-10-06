@@ -62,7 +62,8 @@ gem "kamal", require: false
 gem "thruster", require: false
 gem "connection_pool", "~> 2.5.0" # there is an issue with MemCacheStore and connection_pool >= 3.0.0
 group :development do
-  gem "annotate"
+  # Schema comments in models, factories and specs (config in .annotaterb.yml)
+  gem "annotaterb"
   gem "haml_lint"
   gem "listen", "~> 3.3"
   # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)

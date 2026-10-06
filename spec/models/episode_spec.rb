@@ -2,7 +2,7 @@
 #
 # Table name: episodes
 #
-#  id              :bigint           not null, primary key
+#  id              :bigint(8)        not null, primary key
 #  active          :boolean          default(TRUE)
 #  artwork_url     :string
 #  chapter_marks   :text
@@ -10,22 +10,16 @@
 #  downloads_count :integer          default(0)
 #  image_data      :text
 #  nodes           :text
-#  number          :integer          default(0), not null
-#  published_on    :date
-#  rss_feed        :boolean          default(TRUE)
-#  slug            :string           not null
-#  title           :string           not null
+#  number          :integer          default(0), not null, uniquely indexed
+#  published_on    :date             indexed
+#  rss_feed        :boolean          default(TRUE), indexed
+#  slug            :string           not null, uniquely indexed
+#  tags            :text             default([]), not null, is an Array, indexed
+#  title           :string           not null, uniquely indexed
+#  transcript      :text
 #  visible         :boolean          default(TRUE)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#
-# Indexes
-#
-#  index_episodes_on_number        (number) UNIQUE
-#  index_episodes_on_published_on  (published_on)
-#  index_episodes_on_rss_feed      (rss_feed)
-#  index_episodes_on_slug          (slug) UNIQUE
-#  index_episodes_on_title         (title) UNIQUE
 #
 require "rails_helper"
 

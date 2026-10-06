@@ -2,18 +2,14 @@
 #
 # Table name: users
 #
-#  id              :bigint           not null, primary key
+#  id              :bigint(8)        not null, primary key
 #  admin           :boolean
-#  email           :string           default(""), not null
-#  password_digest :string           default(""), not null
+#  email           :string           default(""), not null, uniquely indexed
 #  first_name      :string
 #  last_name       :string
+#  password_digest :string           default(""), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#
-# Indexes
-#
-#  index_users_on_email  (email) UNIQUE
 #
 class User < ApplicationRecord
   has_secure_password
