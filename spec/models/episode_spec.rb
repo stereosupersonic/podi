@@ -121,6 +121,12 @@ RSpec.describe Episode, type: :model do
     end
   end
 
+  describe "#title" do
+    it "strips surrounding whitespace" do
+      expect(described_class.new(title: " Kiosk am Thenner ").title).to eq("Kiosk am Thenner")
+    end
+  end
+
   describe "#build_slug" do
     it "combines the zero-padded number and the title" do
       episode = described_class.new(number: 42, title: "Über den Markt")

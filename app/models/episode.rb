@@ -65,6 +65,8 @@ class Episode < ApplicationRecord
     )
   }
 
+  normalizes :title, with: ->(title) { title.strip }
+
   validates(:number, :title, :description, :nodes, :published_on, presence: true)
 
   validates(:number, uniqueness: true)
