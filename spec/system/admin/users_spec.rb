@@ -55,13 +55,14 @@ describe "Users", type: :system do
     expect(page).to have_no_content "cohost@test.com"
   end
 
-  it "does not offer to delete or demote yourself", :aggregate_failures do
+  it "edits yourself on the account page", :aggregate_failures do
     visit "/admin/users"
     within "#user-#{admin.id}" do
       expect(page).to have_no_button "Delete"
       click_on "Edit"
     end
 
+    expect(page).to have_field "Current password"
     expect(page).to have_no_field "Admin"
   end
 end
