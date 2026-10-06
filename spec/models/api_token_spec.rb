@@ -95,6 +95,17 @@ RSpec.describe ApiToken, type: :model do
         expect(token.reload.last_used_at).to eq(first_use)
       end
     end
+
+    context "when the last use is over a minute ago" do
+      it "stores the new usage time" do
+        token.record_usage
+
+        travel 61.seconds do
+          token.record_usage
+          expect(token.reload.last_used_at).to eq(Time.current)
+        end
+      end
+    end
   end
 
   it "is destroyed with its user" do
