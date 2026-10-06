@@ -123,6 +123,8 @@ Other `Episode` details:
 - Audio is required (`has_one_attached :audio`). Duration and size come from the blob metadata
   (`config/initializers/active_storage_analyzers.rb`).
 - `tags` is a PostgreSQL text array, edited as a comma-separated `tag_list`.
+- `description` and `nodes` are Markdown, rendered with `render_markdown`, which sanitizes the HTML
+  (API tokens can write them). Never mark rendered Markdown `html_safe` directly.
 
 ### External API
 
