@@ -55,9 +55,11 @@ RSpec.describe "episodes", type: :request do
     before { create(:setting) }
 
     context "with markdown containing HTML" do
+      # Saved without validation: rendering must stay safe for texts the link validation never saw.
       let!(:episode) do
-        create(:episode, description: "<script>alert(1)</script>[link](javascript:alert(2))",
-                         nodes: "<img src=x onerror=alert(3)>\n\n| a | b |\n|---|---|\n| 1 | 2 |")
+        build(:episode, description: "<script>alert(1)</script>[link](javascript:alert(2))",
+                        nodes: "<img src=x onerror=alert(3)>\n\n| a | b |\n|---|---|\n| 1 | 2 |")
+          .tap { |episode| episode.save!(validate: false) }
       end
 
       it "strips scripts, event handlers and javascript links", :aggregate_failures do

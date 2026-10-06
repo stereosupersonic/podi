@@ -107,6 +107,16 @@ RSpec.describe "API v1 episodes", type: :request do
       end
     end
 
+    context "with a link without https:// in the show notes" do
+      it "names the link", :aggregate_failures do
+        post "/api/v1/episodes", params: { episode: episode_params.merge(nodes: "* [Museum](dhm.de/lemo/)") },
+                                 headers: headers
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.parsed_body["messages"]).to eq("nodes" => [ "contains links without https://: dhm.de/lemo/" ])
+      end
+    end
+
     context "with audio that is not an mp3" do
       it "rejects the episode", :aggregate_failures do
         post "/api/v1/episodes",
