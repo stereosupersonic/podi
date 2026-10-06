@@ -4,53 +4,26 @@ class EpisodeFeedPresenter < EpisodePresenter
 
   delegate :author, to: :current_setting
 
-  delegate :duration, to: :o
-
   def artwork_url
     super(size: 1400)
   end
 
   def audio_type
-    #  The type attribute provides the correct category for the type of file you are using.
-    # The type values for the supported file formats are:
-    # audio/x-m4a, audio/mpeg, video/quicktime, video/mp4, video/x-m4v, and application/pdf.
     "audio/mpeg"
   end
 
+  # File size in bytes
   def length
-    # The length attribute is the file size in bytes.
-    # You can find this information in the properties of your podcast file
     o.audio_size
   end
 
+  # Must never change, or podcast apps show the episode twice.
   def guid
-    # The episode’s globally unique identifier (GUID).
-    # It is very important that each episode have a unique GUID and that it never changes, even if an episode’s metadata,
-    # like title or enclosure URL, do change.
-    # Globally unique identifiers (GUID) are case-sensitive strings.
-    # If a GUID is not provided an episode’s enclosure URL will be used instead.
-    # If a GUID is not provided, make sure that an episode’s enclosure URL is unique and never changes.
-    # Failing to comply with these guidelines may result in duplicate episodes being shown to listeners,
-    # inaccurate data in Podcast Analytics,
-    # and can cause issues with your podcasts’s listing and chart placement in Apple Podcasts.
     mp3_url
   end
 
+  # Apple allows up to 4000 characters and some HTML (<p>, <ol>, <ul>, <li>, <a>), wrapped in CDATA.
   def description_with_show_notes_html
-    # An episode description.
-    # description is text containing one or more sentences describing your episode to potential listeners.
-    # You can specify up to 4000 characters.
-    # You can use rich text formatting and some HTML (<p>, <ol>, <ul>, <li>, <a>) if wrapped in the <CDATA> tag.
-    #
-    # To include links in your description or rich HTML, adhere to the following technical guidelines:
-    # enclose all portions of your XML that contain embedded HTML in a CDATA section to prevent formatting issues,
-    # and to ensure proper
-    #  link functionality. For example:
-    #
-    #   <![CDATA[
-    #     <a href="http://www.apple.com">Apple</a>
-    #   ]]>
-
     [].tap do |result|
       result << render_markdown_to_html(o.description)
       result << render_markdown_to_html(chapter_list_html) if chapter_marks.present?
@@ -58,7 +31,7 @@ class EpisodeFeedPresenter < EpisodePresenter
       result << render_markdown_to_html(show_notes) if o.nodes.present?
 
       result << stay_in_contact_html
-    end.compact.join("<br />").html_safe
+    end.join("<br />").html_safe
   end
 
   def description_with_show_notes_text
@@ -69,21 +42,15 @@ class EpisodeFeedPresenter < EpisodePresenter
       result << render_markdown_to_plain_text(show_notes) if o.nodes.present?
 
       result << render_markdown_to_plain_text(stay_in_contact_markdown)
-    end.compact.join("\n")
+    end.join("\n")
   end
 
   def chapter_list
-    return if o.chapter_marks.blank?
-
-    <<~MARKDOWN.strip
-      #{Array(sanitized_chapter_marks).join("\n")}
-    MARKDOWN
+    sanitized_chapter_marks.join("\n")
   end
 
   def chapter_list_html
-    return if o.chapter_marks.blank?
-
-    Array(sanitized_chapter_marks).join("<br />")
+    sanitized_chapter_marks.join("<br />")
   end
 
   def show_notes
@@ -143,7 +110,6 @@ class EpisodeFeedPresenter < EpisodePresenter
   end
 
   def pub_date
-    # # The date and time when an episode was released. RFC 2822
     o.published_on.to_date.rfc822
   end
 
@@ -154,14 +120,10 @@ class EpisodeFeedPresenter < EpisodePresenter
   private
 
   def render_markdown_to_html(text)
-    return "" if text.blank?
-
     sanitize(markdown_processor.render(text), tags: ApplicationHelper::MARKDOWN_TAGS)
   end
 
   def render_markdown_to_plain_text(text)
-    return "" if text.blank?
-
     markdown_text_processor.render(text)
   end
 
