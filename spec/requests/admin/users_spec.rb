@@ -32,9 +32,9 @@ RSpec.describe "admin users", type: :request do
     end
 
     describe "PATCH /admin/users/:id" do
-      it "keeps your own admin flag" do
-        patch "/admin/users/#{admin.id}", params: { user: { admin: "0" } }
-
+      it "does not permit your own admin flag", :aggregate_failures do
+        expect { patch "/admin/users/#{admin.id}", params: { user: { admin: "0" } } }
+          .to raise_error(ActionController::UnpermittedParameters)
         expect(admin.reload).to be_admin
       end
     end
