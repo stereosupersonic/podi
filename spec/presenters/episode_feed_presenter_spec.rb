@@ -70,6 +70,17 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
     expect(presenter.description_with_show_notes_html.squish).to match_html(expected_html)
   end
 
+  it "strips scripts, event handlers and javascript links from the html description", :aggregate_failures do
+    episode.update!(description: "<script>alert(1)</script><img src=x onerror=alert(2)>[link](javascript:alert(3))",
+                    nodes: "<script>alert(4)</script>")
+
+    html = presenter.description_with_show_notes_html
+
+    expect(html).not_to include("<script>")
+    expect(html).not_to include("onerror")
+    expect(html).not_to include('href="javascript:')
+  end
+
   it "generate a valid text description" do
     expected_text = <<~TEXT.strip
       we talk about bikes and things

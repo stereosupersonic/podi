@@ -156,7 +156,7 @@ class EpisodeFeedPresenter < EpisodePresenter
   def render_markdown_to_html(text)
     return "" if text.blank?
 
-    markdown_processor.render(text)
+    sanitize(markdown_processor.render(text), tags: ApplicationHelper::MARKDOWN_TAGS)
   end
 
   def render_markdown_to_plain_text(text)
