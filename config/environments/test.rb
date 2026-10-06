@@ -51,6 +51,9 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 
+  # Raise on request parameters a controller does not permit, so specs catch forms sending unknown fields.
+  config.action_controller.action_on_unpermitted_parameters = :raise
+
   config.aws_access_key = nil
   config.aws_secret_key = nil
   config.aws_bucket_name = nil

@@ -75,7 +75,7 @@ run locally, they fail when the installed Chrome is newer than any chromedriver 
   `allow(FetchGeoData).to receive(:call).and_return({})`.
 - Custom matchers live in `spec/support/` (`html_matcher`, `xml_matcher`, `meta_matcher`, …).
 - Unpermitted request parameters **raise in test** but are only logged in production
-  (`config/initializers/strong_params.rb`). A spec sending an extra field fails with
+  (`action_on_unpermitted_parameters` in `config/environments/`). A spec sending an extra field fails with
   `ActionController::UnpermittedParameters` even though production would ignore it.
 
 ## Architecture and Conventions
