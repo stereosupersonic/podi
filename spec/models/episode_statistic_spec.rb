@@ -27,5 +27,24 @@
 require "rails_helper"
 
 RSpec.describe EpisodeStatistic, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject(:statistic) { described_class.find_by!(episode_id: episode.id) }
+
+  let!(:episode) { create(:episode, published_on: Date.current) }
+
+  # The view only lists episodes published after the first download
+  before { create(:event, created_at: 2.days.ago) }
+
+  context "without downloads" do
+    it "counts zero downloads" do
+      expect(statistic.cnt).to eq(0)
+    end
+  end
+
+  context "with downloads" do
+    before { create(:event, episode: episode) }
+
+    it "counts every download" do
+      expect(statistic.cnt).to eq(1)
+    end
+  end
 end
