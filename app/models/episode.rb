@@ -3,7 +3,7 @@
 # Table name: episodes
 #
 #  id              :bigint(8)        not null, primary key
-#  active          :boolean          default(TRUE)
+#  active          :boolean          default(FALSE)
 #  artwork_url     :string
 #  chapter_marks   :text
 #  description     :text             not null
@@ -72,6 +72,7 @@ class Episode < ApplicationRecord
   validates(:title, uniqueness: true)
 
   validates(:audio, presence: true)
+  validate(:audio_must_be_mp3)
 
   # TODO: either one or the other
   # validates(:artwork_url, presence: true)
@@ -82,11 +83,34 @@ class Episode < ApplicationRecord
   has_one :episode_statistic
   has_one :episode_current_statistic
 
+  def self.next_number
+    maximum(:number).to_i.next
+  end
+
+  def self.all_tags
+    pluck(Arel.sql("DISTINCT unnest(tags)")).sort
+  end
+
   def duration
     audio.blob.metadata[:duration] if audio.attached?
   end
 
   def audio_size
     audio.blob.byte_size if audio.attached?
+  end
+
+  def build_slug
+    return if number.blank? || title.blank?
+
+    "#{number.to_s.rjust(3, '0')} #{title}".parameterize(locale: :de)
+  end
+
+  private
+
+  def audio_must_be_mp3
+    return unless audio.attached?
+    return if audio.content_type == "audio/mpeg"
+
+    errors.add(:audio, "must be an MP3 file (audio/mpeg)")
   end
 end

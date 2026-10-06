@@ -15,8 +15,17 @@ Rails.application.routes.draw do
     resources :episodes, only: %w[index show edit update new create]
     resources :events, only: %w[index show]
     resource :setting, only: %w[edit update]
+    resources :api_tokens, only: %w[index new create destroy]
     resource :info, only: %w[show] do
       post :trigger_exception
+    end
+  end
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      get "ping", to: "ping#show"
+      resources :episodes, only: %w[create]
+      resources :tags, only: %w[index]
     end
   end
 

@@ -1,4 +1,6 @@
 module ApplicationHelper
+  MARKDOWN_TAGS = (Rails::HTML5::SafeListSanitizer.allowed_tags.to_a + %w[table thead tbody tr th td]).freeze
+
   # date/time
   def format_time(time)
     time&.strftime("%H:%M").to_s
@@ -76,6 +78,7 @@ module ApplicationHelper
   def render_markdown(text)
     return "" if text.blank?
 
-    markdown_processor.render(text.to_s).html_safe
+    # Descriptions and show notes can come from API tokens, so rendered HTML is sanitized.
+    sanitize(markdown_processor.render(text.to_s), tags: MARKDOWN_TAGS)
   end
 end

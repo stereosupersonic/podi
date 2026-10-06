@@ -1,0 +1,13 @@
+- turbo_exempts_page_from_cache
+.site-section.bg-light
+  .container
+    .row
+      .col-md-12
+        %h1 API Token Created
+        .alert.alert-warning Copy this token now. It will not be shown again.
+        %pre#api-token-plaintext= @api_token.plaintext_token
+        %p
+          Send it as
+          %code= "Authorization: Bearer <token>"
+          (see docs/api.md).
+        = back_button admin_api_tokens_path, "Back to API Tokens"

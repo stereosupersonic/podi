@@ -18,3 +18,8 @@ scheduler call
 ```
 rake sitemap:refresh
 ```
+
+## API
+
+Admins create API tokens under Admin → API Tokens. The token-authenticated API creates draft episodes
+that stay unlisted until approved in the admin. See [docs/api.md](docs/api.md).

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_19_132809) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_06_124652) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -43,8 +43,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_19_132809) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "api_tokens", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.string "token_digest", null: false
+    t.datetime "last_used_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token_digest"], name: "index_api_tokens_on_token_digest", unique: true
+    t.index ["user_id"], name: "index_api_tokens_on_user_id"
+  end
+
   create_table "episodes", force: :cascade do |t|
-    t.boolean "active", default: true
+    t.boolean "active", default: false
     t.string "artwork_url"
     t.text "chapter_marks"
     t.datetime "created_at", null: false
@@ -117,6 +128,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_19_132809) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "api_tokens", "users", name: "api_tokens_user_id_fk", on_delete: :cascade
   add_foreign_key "events", "episodes"
 
   create_view "episode_current_statistics", sql_definition: <<-SQL

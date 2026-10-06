@@ -3,7 +3,7 @@
 # Table name: episodes
 #
 #  id              :bigint(8)        not null, primary key
-#  active          :boolean          default(TRUE)
+#  active          :boolean          default(FALSE)
 #  artwork_url     :string
 #  chapter_marks   :text
 #  description     :text             not null
@@ -33,6 +33,7 @@ FactoryBot.define do
     # image_data { TestData.image_data }
     downloads_count { 1 }
     published_on { Time.current.to_date }
+    active { true }
     sequence(:number)
     audio { Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/test-001.mp3"), "audio/mpeg") }
     after :create do |episode|

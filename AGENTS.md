@@ -55,7 +55,8 @@ bin/bundler-audit                               # vulnerable gems
 
 `bin/ci` runs everything (setup, RuboCop, RSpec, bundler-audit, Brakeman) as defined in `config/ci.rb`.
 `bin/docker-tests` runs the full suite in Docker exactly as GitHub Actions does
-(`docker-compose.test.yml`, with Selenium in a `chrome` container).
+(`docker-compose.test.yml`, with Selenium in a `chrome` container). Use it for `js: true` system specs:
+run locally, they fail when the installed Chrome is newer than any chromedriver `webdrivers` can find.
 
 ### Spec Layout
 
@@ -73,6 +74,9 @@ bin/bundler-audit                               # vulnerable gems
 - Stub the GeoIP lookup in specs that trigger downloads:
   `allow(FetchGeoData).to receive(:call).and_return({})`.
 - Custom matchers live in `spec/support/` (`html_matcher`, `xml_matcher`, `meta_matcher`, …).
+- Unpermitted request parameters **raise in test** but are only logged in production
+  (`config/initializers/strong_params.rb`). A spec sending an extra field fails with
+  `ActionController::UnpermittedParameters` even though production would ignore it.
 
 ## Architecture and Conventions
 
@@ -108,17 +112,34 @@ The publication state of an `Episode` is defined by these columns:
 | `published_on` | Release date; episodes dated in the future are not listed yet |
 | `rss_feed` | Default `true`. Only filters the RSS feed, on top of `active`: `rss_feed: false` keeps a released episode on the website but out of podcast apps (Spotify, Apple). No effect on unreleased episodes |
 
+`active` defaults to `false`: every new episode, from the admin or the API, is a draft until someone
+ticks "Active". The admin index marks drafts with a "Draft" badge.
+
 `Episode.published` (`visible AND active AND published_on <= today`) is the public listing.
 `episodes#show` only requires `visible`.
 
 Other `Episode` details:
 
-- `slug` is built in `Admin::EpisodesController#build_slug` from the zero-padded number and the title
-  (`"001 Title".parameterize(locale: :de)`). `number`, `slug` and `title` are unique.
+- `slug` is built by `Episode#build_slug` from the zero-padded number and the title
+  (`"001 Title".parameterize(locale: :de)`), and new episodes are created through `EpisodeCreator`,
+  which also assigns `Episode.next_number`. `number`, `slug` and `title` are unique.
 - Permitted attributes are listed in `Episode::ATTRIBUTES`; the admin controller permits exactly those.
 - Audio is required (`has_one_attached :audio`). Duration and size come from the blob metadata
   (`config/initializers/active_storage_analyzers.rb`).
 - `tags` is a PostgreSQL text array, edited as a comma-separated `tag_list`.
+- `description` and `nodes` are Markdown, rendered with `render_markdown`, which sanitizes the HTML
+  (API tokens can write them). Never mark rendered Markdown `html_safe` directly.
+
+### External API
+
+`/api/v1` (`app/controllers/api/v1/`) inherits from `ActionController::API` and authenticates with
+`ApiToken` (`Authorization: Bearer`, only the SHA-256 digest is stored, tokens only work for admins).
+Episodes created through it are always `active: false, visible: true` drafts: the API controller sets
+this, `EpisodeCreator` (shared with the admin) doesn't know about it. Responses are rendered with
+jbuilder (`app/views/api/v1/`). Rate limits (60 requests a minute per token, 10 failed
+authentications a minute per IP) live in `Api::V1::BaseController` and count in `Rails.cache`, not in
+Rack::Attack, because they depend on the authentication result. Endpoints: `GET ping`,
+`POST episodes`, `GET tags`. Documentation: `docs/api.md`.
 
 ### Download Tracking
 

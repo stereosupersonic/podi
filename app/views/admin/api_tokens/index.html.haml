@@ -1,0 +1,26 @@
+.site-section.bg-light
+  .container
+    .row
+      .col-md-12
+        %h1 API Tokens
+        %p
+          Tokens let scripts and AI agents create draft episodes through the API.
+          Drafts stay unlisted until you tick "Active" on the episode.
+        %table.table.table-striped.table-bordered
+          %thead.table-dark
+            %tr
+              %th Name
+              %th Created
+              %th Last used
+              %th
+          %tbody
+            - @api_tokens.each do |api_token|
+              %tr{ id: "api-token-#{api_token.id}" }
+                %td= api_token.name
+                %td= api_token.created_at
+                %td= api_token.last_used
+                %td
+                  = button_to "Revoke", admin_api_token_path(api_token),
+                              method: :delete, class: "btn btn-danger",
+                              form: { data: { turbo_confirm: "Revoke this token? Anything using it stops working." } }
+        = add_button new_admin_api_token_path

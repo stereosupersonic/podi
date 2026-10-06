@@ -33,6 +33,7 @@
 
     = auto_discovery_link_tag :rss, current_setting.rss_url
     = csrf_meta_tags
+    = yield :head
     = csp_meta_tag
 
     = stylesheet_link_tag "application", media: "all"
@@ -76,6 +77,7 @@
                 = link_to "Statistics", admin_statistics_path, class: "nav-link text-white"
                 = link_to "Events", admin_events_path, class: "nav-link text-white"
                 = link_to "Settings", edit_admin_setting_path, class: "nav-link text-white"
+                = link_to "API Tokens", admin_api_tokens_path, class: "nav-link text-white"
                 = link_to "Info", admin_info_path, class: "nav-link text-white"
                 %div{"data-turbo" => "false"}
                   = link_to "Jobs", "/sidekiq", class: "nav-link text-white"

@@ -100,7 +100,7 @@ describe "Administrate Episodes", type: :system do
                                                      "Published on",
                                                      "",
                                                      "" ],
-                                                   [ "",
+                                                   [ "Draft",
                                                      "Yes",
                                                      "Yes",
                                                      "001",
@@ -114,6 +114,7 @@ describe "Administrate Episodes", type: :system do
                                                      "Edit",
                                                      "Show" ]
                                                  ])
+      expect(last_episode.active).to be(false)
 
       # expect(episode.artwork_url).to eq "https://test.com/001-test.png"
       expect(last_episode.chapter_marks.squish).to eq %(00:00:01 Intro
