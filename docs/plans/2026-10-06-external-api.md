@@ -1428,6 +1428,9 @@ ActiveStorage::Attachment.where(record_type: "Episode", name: "audio")
 
 It must return `[]`. If it doesn't, **stop and discuss with Michael** before merging.
 
+Michael ran it on 2026-10-06 and it returned `[]`. Run it again before merging only if episodes with
+non-MP3 audio might have been uploaded since.
+
 ### 10d. Smoke test after deploy
 
 1. Admin → API Tokens → create "smoke test" and copy the token.
