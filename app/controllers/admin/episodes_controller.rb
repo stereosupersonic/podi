@@ -19,7 +19,7 @@ module Admin
     end
 
     def create
-      @episode = EpisodeCreator.call(episode_attributes: create_params)
+      @episode = EpisodeCreator.call(episode_attributes: episode_params)
       if @episode.persisted?
         redirect_to admin_episodes_path, notice: "Episode was successfully created."
       else
@@ -34,7 +34,7 @@ module Admin
     def update
       @episode = Episode.find_by!(slug: params[:id])
 
-      if @episode.update(update_params) && @episode.update(slug: @episode.build_slug)
+      if @episode.update(episode_params) && @episode.update(slug: @episode.build_slug)
         redirect_to admin_episodes_path, notice: "Episode was successfully updated."
       else
         render :edit
@@ -43,11 +43,7 @@ module Admin
 
     protected
 
-    def create_params
-      params.require(:episode).permit(*Episode::ATTRIBUTES)
-    end
-
-    def update_params
+    def episode_params
       params.require(:episode).permit(*Episode::ATTRIBUTES)
     end
   end
