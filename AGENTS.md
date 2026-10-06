@@ -106,7 +106,7 @@ The publication state of an `Episode` is defined by these columns:
 | `active` | Released: listed on the homepage, in the episode list, search, the RSS feed and the sitemap |
 | `visible` | Reachable by direct link (`/episodes/:slug`, `/:number`). `visible: true, active: false` is how previews are shared |
 | `published_on` | Release date; episodes dated in the future are not listed yet |
-| `rss_feed` | Whether a listed episode also goes into the RSS feed |
+| `rss_feed` | Default `true`. Only filters the RSS feed, on top of `active`: `rss_feed: false` keeps a released episode on the website but out of podcast apps (Spotify, Apple). No effect on unreleased episodes |
 
 `Episode.published` (`visible AND active AND published_on <= today`) is the public listing.
 `episodes#show` only requires `visible`.
