@@ -24,7 +24,7 @@ https://www.wartenberger.de. It covers:
 | Audio storage | Active Storage (disk locally, S3 + CloudFront in production) |
 | Image storage | Shrine + Cloudinary (`app/uploaders/image_uploader.rb`) |
 | Auth | Session-based, `has_secure_password` on `User` (no Devise) |
-| Rate limiting | Rack::Attack (`config/initializers/rack_attack.rb`) |
+| Rate limiting | Rack::Attack (`config/initializers/rack_attack.rb`); `POST /login` allows 10 attempts per IP in 3 minutes (`rate_limit` in `Users::SessionsController`) |
 | Monitoring | Rollbar (errors), Scout APM (performance) |
 | Deployment | Docker + Kamal to a single VPS |
 
