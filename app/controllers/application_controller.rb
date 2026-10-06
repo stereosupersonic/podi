@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_setting, :markdown_processor, :current_user, :user_signed_in?
 
+  # The layout shows admin links to logged-in users, so a page cached while logged in must not be
+  # revalidated after logout, and vice versa.
+  etag { current_user&.id }
+
   def current_setting
     @current_setting ||= Setting.current
   end
