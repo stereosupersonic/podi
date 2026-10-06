@@ -10,7 +10,7 @@ module Admin
       if @setting.update update_params
         redirect_to root_path, notice: "Setting was successfully updated."
       else
-        render :edit
+        render :edit, status: :unprocessable_content
       end
     end
 
