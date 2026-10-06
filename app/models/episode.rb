@@ -3,7 +3,7 @@
 # Table name: episodes
 #
 #  id              :bigint           not null, primary key
-#  active          :boolean          default(TRUE)
+#  active          :boolean          default(FALSE)
 #  artwork_url     :string
 #  chapter_marks   :text
 #  description     :text             not null
