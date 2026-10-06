@@ -74,14 +74,15 @@ curl -s https://www.wartenberger.de/api/v1/episodes \
 
 ## Errors
 
-Every error has the same shape: `error` (a machine-readable code), and `message` and/or `messages`.
+Every 4xx error has the same shape: `error` (a machine-readable code), and `message` and/or `messages`.
 
 | Status | `error` | Meaning | What to do |
 |---|---|---|---|
 | 400 | `bad_request` | Fields not nested under `episode[...]` | Fix the request shape |
 | 401 | `unauthorized` | Token missing, wrong or revoked | Ask an admin for a valid token; don't retry |
-| 422 | `validation_failed` | A field is invalid; `messages` lists them per field | Fix the listed fields and send again |
+| 422 | `validation_failed` | A field is invalid, or `audio`/`image` was sent as text instead of a file; `messages` lists them per field | Fix the listed fields and send again |
 | 429 | `rate_limited` | More than 60 requests a minute with your token, or 10 failed authentications a minute from your IP | Wait one minute |
+| 500 | — | Unexpected server error; the body is not JSON in this shape | Retry once later; if it persists, tell an admin |
 
 After 10 failed authentications from your IP, every request from it gets `429` for the rest of the
 minute, even with a valid token.
