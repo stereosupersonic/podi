@@ -13,6 +13,7 @@ module Admin
     def create
       @api_token = ApiToken.issue(user: current_user, name: api_token_params[:name])
       if @api_token.persisted?
+        response.headers["Cache-Control"] = "no-store"
         render :created
       else
         render :new, status: :unprocessable_content

@@ -33,6 +33,7 @@
 
     = auto_discovery_link_tag :rss, current_setting.rss_url
     = csrf_meta_tags
+    = yield :head
     = csp_meta_tag
 
     = stylesheet_link_tag "application", media: "all"
