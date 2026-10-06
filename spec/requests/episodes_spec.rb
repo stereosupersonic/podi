@@ -75,6 +75,15 @@ RSpec.describe "episodes", type: :request do
       end
     end
 
+    it "answers an unchanged page with 304" do
+      episode = create(:episode)
+      get "/episodes/#{episode.slug}"
+
+      get "/episodes/#{episode.slug}", headers: { "If-None-Match" => response.headers["ETag"] }
+
+      expect(response).to have_http_status(:not_modified)
+    end
+
     it "does not answer a page cached while logged in with 304 after logout", :aggregate_failures do
       episode = create(:episode)
       admin = create(:user, :admin)
@@ -328,6 +337,24 @@ RSpec.describe "episodes", type: :request do
 
         expect(episode.reload.downloads_count).to eq 1
       end
+
+      it "counts a repeat request with cache validators", :aggregate_failures do
+        get episode.mp3_url
+        validators = { "If-None-Match" => response.headers["ETag"], "If-Modified-Since" => 1.day.from_now.httpdate }
+
+        get episode.mp3_url, headers: validators
+        perform_enqueued_jobs_now!
+
+        expect(response).to have_http_status(:found)
+        expect(episode.reload.downloads_count).to eq 3
+      end
+    end
+
+    it "does not let caches store the redirect", :aggregate_failures do
+      get episode.mp3_url
+
+      expect(response.headers["Cache-Control"]).not_to include("public")
+      expect(response.headers["ETag"]).to be_nil
     end
 
     describe "log data" do
