@@ -98,6 +98,10 @@ run locally, they fail when the installed Chrome is newer than any chromedriver 
   versioned SQL file and `update_view`, never by editing an existing version.
 - **Uploads use two stacks:** episode images go through Shrine + Cloudinary (`image_data` column,
   `ImageUploader`), audio through Active Storage + S3. Follow the stack of the file type you are touching.
+- **Live search and endless scrolling** are Stimulus controllers in `app/javascript/controllers/`.
+  `search` submits the navbar form (debounced) into the Turbo Frame `search_results` in the layout,
+  which `episodes#search` renders; `infinite-scroll` loads the next `episodes/_page` when its sentinel
+  scrolls into view.
 - `WelcomeController#epsiode` (sic) serves the numeric shortcut route `/:id` (e.g. `/006`). The
   misspelling is part of the routing; don't rename it in passing.
 
@@ -177,7 +181,8 @@ default artwork). It raises if no record exists.
   `fix: …`, `refactor: …`, `test: …`, `docs: …`. Keep the summary under 50 characters.
 - **Pull requests** target `master` on GitHub (`stereosupersonic/podi`). CI (`.github/workflows/ci.yml`)
   runs Brakeman, bundler-audit, RuboCop and the full RSpec suite in Docker.
-- **Implementation plans** live in `docs/plans/`.
+- **Implementation plans** live in `docs/plans/` while they are being implemented. Remove a plan once
+  its PR is merged: the code, the PR description and git history are the record from then on.
 
 ## Deployment
 
