@@ -14,8 +14,7 @@ class WelcomeController < ApplicationController
   end
 
   def epsiode
-    epsiode_id = params[:id].to_i.positive? ? params[:id].to_i : nil
-    episode_record = Episode.find_by(number: epsiode_id) if epsiode_id
+    episode_record = Episode.find_by(number: params[:id].to_i)
 
     if episode_record
       redirect_to episode_path slug: episode_record.slug

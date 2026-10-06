@@ -1,4 +1,7 @@
 class FetchGeoData < BaseService
+  # The client waits forever by default, which would block a Sidekiq thread
+  TIMEOUT_SECONDS = 5
+
   attr_accessor :ip_address
 
   def call
@@ -18,9 +21,6 @@ class FetchGeoData < BaseService
       result[:accuracy_radius] = record.location&.accuracy_radius
       result[:isp] = record&.traits&.isp
     end
-  rescue MaxMind::GeoIP2::AuthenticationError => e
-    Rails.logger.error("MaxMind GeoIP2 authentication failed: #{e.message}")
-    {}
   end
 
   private
@@ -33,7 +33,8 @@ class FetchGeoData < BaseService
 
     MaxMind::GeoIP2::Client.new(
       account_id: ENV["GEOIP_ACCOUNT"],
-      license_key: ENV["GEOIP_LICENSE_KEY"]
+      license_key: ENV["GEOIP_LICENSE_KEY"],
+      timeout: TIMEOUT_SECONDS
     )
   end
 

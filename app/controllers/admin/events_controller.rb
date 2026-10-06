@@ -1,7 +1,8 @@
 module Admin
   class EventsController < BaseController
     def index
-      @event_records = params[:episode_id].present? ? Event.where(episode_id: params[:episode_id]).order(downloaded_at: :desc) : Event.order(downloaded_at: :desc)
+      @event_records = Event.order(downloaded_at: :desc)
+      @event_records = @event_records.where(episode_id: params[:episode_id]) if params[:episode_id].present?
       @event_records = @event_records.paginate(page: params[:page], per_page: params[:per_page])
       @events = EventPresenter.wrap @event_records
     end

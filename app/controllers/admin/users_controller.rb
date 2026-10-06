@@ -1,5 +1,8 @@
 module Admin
   class UsersController < BaseController
+    before_action :set_user, only: %i[edit update]
+    before_action :redirect_own_user_to_account, only: %i[edit update]
+
     def index
       @users = UserPresenter.wrap User.order(:email)
     end
@@ -19,12 +22,9 @@ module Admin
     end
 
     def edit
-      @user = User.find(params[:id])
     end
 
     def update
-      @user = User.find(params[:id])
-
       if @user.update(user_params)
         redirect_to admin_users_path, notice: "User was successfully updated."
       else
@@ -42,11 +42,18 @@ module Admin
 
     private
 
-    # Admins cannot revoke their own admin flag, so at least one admin always remains.
+    def set_user
+      @user = User.find(params[:id])
+    end
+
+    # The account page requires the current password for email and password changes and
+    # cannot revoke the admin flag, so at least one admin always remains.
+    def redirect_own_user_to_account
+      redirect_to edit_account_path if @user == current_user
+    end
+
     def user_params
-      attributes = %i[first_name last_name email password password_confirmation]
-      attributes << :admin unless @user == current_user
-      params.require(:user).permit(attributes)
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :admin)
     end
   end
 end

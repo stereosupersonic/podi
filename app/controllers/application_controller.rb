@@ -1,17 +1,16 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, with: :render404
+  rescue_from ActiveRecord::RecordNotFound, with: :render404
 
   def render404
     respond_to do |format|
       format.html { render file: Rails.root.join("public/404.html"), layout: false, status: :not_found }
-      format.xml { head :not_found }
       format.any { head :not_found }
     end
   end
 
-  helper_method :current_setting, :markdown_processor, :current_user, :user_signed_in?
+  helper_method :current_setting, :current_user, :user_signed_in?
 
   # The layout shows admin links to logged-in users, so a page cached while logged in must not be
   # revalidated after logout, and vice versa.
@@ -37,9 +36,5 @@ class ApplicationController < ActionController::Base
 
   def authorize_admin
     redirect_to "/", alert: "Access Denied" unless current_user&.admin?
-  end
-
-  def markdown_processor
-    @markdown_processor ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
   end
 end
