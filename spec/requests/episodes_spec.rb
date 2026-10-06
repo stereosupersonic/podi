@@ -51,6 +51,31 @@ RSpec.describe "episodes", type: :request do
     end
   end
 
+  describe "GET /episodes/:slug" do
+    before { create(:setting) }
+
+    context "with markdown containing HTML" do
+      let!(:episode) do
+        create(:episode, description: "<script>alert(1)</script>[link](javascript:alert(2))",
+                         nodes: "<img src=x onerror=alert(3)>\n\n| a | b |\n|---|---|\n| 1 | 2 |")
+      end
+
+      it "strips scripts, event handlers and javascript links", :aggregate_failures do
+        get "/episodes/#{episode.slug}"
+
+        expect(response.body).not_to include("<script>alert(1)")
+        expect(response.body).not_to include("onerror")
+        expect(response.body).not_to include('href="javascript:')
+      end
+
+      it "keeps markdown tables" do
+        get "/episodes/#{episode.slug}"
+
+        expect(response.body).to include("<td>1</td>")
+      end
+    end
+  end
+
   describe "GET /episodes.rss" do
     let!(:setting) { create(:setting) }
 
