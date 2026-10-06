@@ -9,7 +9,7 @@ RSpec.describe "API v1 episodes", type: :request do
       title: "Neue Folge",
       description: "Wir reden über den Markt",
       nodes: "* Shownotes",
-      published_on: "2026-10-20",
+      published_on: Date.current.iso8601,
       audio: fixture_file_upload(Rails.root.join("spec/fixtures/test-001.mp3"), "audio/mpeg")
     }
   end
@@ -32,7 +32,7 @@ RSpec.describe "API v1 episodes", type: :request do
           "number" => 42,
           "slug" => "042-neue-folge",
           "title" => "Neue Folge",
-          "published_on" => "2026-10-20",
+          "published_on" => Date.current.iso8601,
           "active" => false,
           "visible" => true,
           "tags" => [],
@@ -115,6 +115,33 @@ RSpec.describe "API v1 episodes", type: :request do
 
         expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body["messages"]["audio"]).to eq([ "must be an MP3 file (audio/mpeg)" ])
+      end
+    end
+
+    context "with episode sent as a plain value" do
+      it "answers bad request", :aggregate_failures do
+        post "/api/v1/episodes", params: { episode: "Neue Folge" }, headers: headers
+
+        expect(response).to have_http_status(:bad_request)
+        expect(response.parsed_body).to eq("error" => "bad_request", "message" => "Missing parameter: episode")
+      end
+    end
+
+    context "with audio sent as text instead of a file" do
+      it "explains that a file upload is needed", :aggregate_failures do
+        post "/api/v1/episodes", params: { episode: episode_params.merge(audio: "folge.mp3") }, headers: headers
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.parsed_body["messages"]).to eq("audio" => [ "must be a file upload" ])
+      end
+    end
+
+    context "with an image sent as text instead of a file" do
+      it "explains that a file upload is needed", :aggregate_failures do
+        post "/api/v1/episodes", params: { episode: episode_params.merge(image: "cover.jpg") }, headers: headers
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.parsed_body["messages"]).to eq("image" => [ "must be a file upload" ])
       end
     end
 
