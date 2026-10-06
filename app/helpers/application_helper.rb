@@ -2,10 +2,6 @@ module ApplicationHelper
   MARKDOWN_TAGS = (Rails::HTML5::SafeListSanitizer.allowed_tags.to_a + %w[table thead tbody tr th td]).freeze
 
   # date/time
-  def format_time(time)
-    time&.strftime("%H:%M").to_s
-  end
-
   def format_date(date)
     date&.strftime("%d.%m.%Y").to_s
   end
@@ -40,7 +36,6 @@ module ApplicationHelper
   end
 
   def edit_button(link, text = "Edit", options = {})
-    link = link.is_a?(ActiveRecord::Base) ? [ :edit, link ] : link
     options.reverse_merge! class: "btn btn-primary"
     button_with_icon link, text, "pencil-alt", options
   end
@@ -52,19 +47,9 @@ module ApplicationHelper
     end
   end
 
-  def remove_button(link, text = "Remove", options = {})
-    options.reverse_merge! data: { confirm: "Are you sure?" }, class: "btn btn-danger"
-    button_with_icon link, text, "trash", options
-  end
-
   def back_button(link = :back, text = "Back", options = {})
     options.reverse_merge! class: "btn btn-default"
     button_with_icon link, text, "arrow-left", options
-  end
-
-  def cancel_button(link = :back, text = "Cancel", options = {})
-    options.reverse_merge! class: "btn btn-danger"
-    button_with_icon link, text, "remove", options
   end
 
   def show_boolean_value(value)
@@ -80,5 +65,9 @@ module ApplicationHelper
 
     # Descriptions and show notes can come from API tokens, so rendered HTML is sanitized.
     sanitize(markdown_processor.render(text.to_s), tags: MARKDOWN_TAGS)
+  end
+
+  def markdown_processor
+    @markdown_processor ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
   end
 end
