@@ -15,6 +15,13 @@ RSpec.describe "admin api tokens", type: :request do
       expect(response.headers["Cache-Control"]).to include("no-store")
       expect(response.body).to include('<meta name="turbo-cache-control" content="no-cache">')
     end
+
+    context "with an unpermitted parameter" do
+      it "raises in test" do
+        expect { post "/admin/api_tokens", params: { api_token: { name: "n8n", user_id: 1 } } }
+          .to raise_error(ActionController::UnpermittedParameters)
+      end
+    end
   end
 
   describe "DELETE /admin/api_tokens/:id" do
