@@ -20,10 +20,8 @@
 #  api_tokens_user_id_fk  (user_id => users.id) ON DELETE => cascade
 #
 FactoryBot.define do
-  sequence(:api_token_user_email) { |n| "api-admin-#{n}@test.com" }
-
   factory :api_token do
-    user { association :user, :admin, email: generate(:api_token_user_email) }
+    user { association :user, :admin }
     sequence(:name) { |n| "Token #{n}" }
     token_digest { ApiToken.digest(SecureRandom.hex) }
   end
