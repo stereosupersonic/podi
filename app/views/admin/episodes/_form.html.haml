@@ -18,5 +18,5 @@
 = f.input :downloads_count, as: :text
 = f.input :published_on, as: :date, html5: true
 = f.input :active, as: :boolean, hint: "is the episode live, but depends on the published_on date"
-= f.input :visible, as: :boolean, hint: "is the episode visible on the website and RSS feed"
+= f.input :visible, as: :boolean, hint: "Reachable by direct link, e.g. for previews. Listing on the website and in the RSS feed needs \"Active\""
 = f.input :rss_feed, as: :boolean, hint: "Include this episode in the RSS feed (Spotify, Itunes, etc)"

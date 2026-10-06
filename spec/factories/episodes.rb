@@ -39,6 +39,7 @@ FactoryBot.define do
     # image_data { TestData.image_data }
     downloads_count { 1 }
     published_on { Time.current.to_date }
+    active { true }
     sequence(:number)
     audio { Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/test-001.mp3"), "audio/mpeg") }
     after :create do |episode|

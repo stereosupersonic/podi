@@ -37,6 +37,10 @@ RSpec.describe Episode, type: :model do
     assert episode.save!
   end
 
+  it "is inactive by default" do
+    expect(described_class.new.active).to be(false)
+  end
+
   describe ".published" do
     it "find active published ones the past" do
       episode = create(:episode, published_on: 1.day.ago, active: true)

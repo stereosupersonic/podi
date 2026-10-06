@@ -20,7 +20,10 @@
     %tbody
       - @episodes.each do |episode|
         %tr{id: "episode-#{episode.id}", class: "text-nowrap #{'inactive' if !episode.published?}"}
-          %td= show_boolean_value episode.published?
+          %td
+            = show_boolean_value episode.published?
+            - unless episode.active?
+              %span.badge.text-bg-warning Draft
           %td= episode.visible? ? "Yes" : "No"
           %td= episode.rss_feed? ? "Yes" : "No"
           %td= episode.number
