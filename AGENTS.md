@@ -55,7 +55,8 @@ bin/bundler-audit                               # vulnerable gems
 
 `bin/ci` runs everything (setup, RuboCop, RSpec, bundler-audit, Brakeman) as defined in `config/ci.rb`.
 `bin/docker-tests` runs the full suite in Docker exactly as GitHub Actions does
-(`docker-compose.test.yml`, with Selenium in a `chrome` container).
+(`docker-compose.test.yml`, with Selenium in a `chrome` container). Use it for `js: true` system specs:
+run locally, they fail when the installed Chrome is newer than any chromedriver `webdrivers` can find.
 
 ### Spec Layout
 
@@ -73,6 +74,9 @@ bin/bundler-audit                               # vulnerable gems
 - Stub the GeoIP lookup in specs that trigger downloads:
   `allow(FetchGeoData).to receive(:call).and_return({})`.
 - Custom matchers live in `spec/support/` (`html_matcher`, `xml_matcher`, `meta_matcher`, …).
+- Unpermitted request parameters **raise in test** but are only logged in production
+  (`config/initializers/strong_params.rb`). A spec sending an extra field fails with
+  `ActionController::UnpermittedParameters` even though production would ignore it.
 
 ## Architecture and Conventions
 
