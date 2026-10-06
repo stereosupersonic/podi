@@ -1,7 +1,6 @@
 # AGENTS.md
 
 Guidance for coding agents (Claude Code, Codex, Cursor, …) working in this repository.
-For a deeper architecture walkthrough with diagrams, read `docs/SYSTEM_OVERVIEW.md`.
 
 ## What Podi Is
 
@@ -90,8 +89,13 @@ bin/bundler-audit                               # vulnerable gems
   View formatting belongs here, never in models or controller helpers.
 - **Jobs** (`app/jobs/`) run on Sidekiq through Active Job.
 - **Statistics** come from PostgreSQL views managed by Scenic (`db/views/`), read through the read-only
-  models `EpisodeStatistic` and `EpisodeCurrentStatistic`. Change a view with a new versioned SQL file
-  and `update_view`, never by editing an existing version.
+  models `EpisodeStatistic` and `EpisodeCurrentStatistic`. All time windows (`a12h`, `a1d`, `a7d`, …)
+  are computed in the view SQL, so a new window means a new view version. Change a view with a new
+  versioned SQL file and `update_view`, never by editing an existing version.
+- **Uploads use two stacks:** episode images go through Shrine + Cloudinary (`image_data` column,
+  `ImageUploader`), audio through Active Storage + S3. Follow the stack of the file type you are touching.
+- `WelcomeController#epsiode` (sic) serves the numeric shortcut route `/:id` (e.g. `/006`). The
+  misspelling is part of the routing; don't rename it in passing.
 
 ### Episode Visibility
 
