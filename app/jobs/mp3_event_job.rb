@@ -14,8 +14,6 @@ class Mp3EventJob < ApplicationJob
     data[:client_device_type] = client.device_type
     data[:client_bot] = client.bot?
 
-    event = Event.create! data: data, episode: episode, downloaded_at: payload[:downloaded_at]
-
-    GeoDataJob.perform_later event.id, data[:remote_ip]
+    Event.create! data: data, episode: episode, downloaded_at: payload[:downloaded_at]
   end
 end

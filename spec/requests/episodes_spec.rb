@@ -348,7 +348,6 @@ RSpec.describe "episodes", type: :request do
       it "logs valid data" do
         ua = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.17 Safari/537.36"
         headers = { "HTTP_USER_AGENT" => ua }
-        expect(FetchGeoData).to receive(:call).with(ip_address: "127.0.0.1").and_return build(:event).geo_data
         downloaded_at = Time.current
         travel_to downloaded_at do
           get episode.mp3_url, params: {}, headers: headers
@@ -369,17 +368,7 @@ RSpec.describe "episodes", type: :request do
           client_device_name: nil,
           client_device_type: "desktop"
         )
-        expect(event.geo_data.symbolize_keys).to include(
-          country: "Germany",
-          county: "Bavaria",
-          iso_code: "DE",
-          city: "Moosburg",
-          plz: "85368",
-          latitude: "48.4668",
-          longitude: "11.9476",
-          accuracy_radiu: 10,
-          isp: "Deutsche Telekom AG"
-        )
+        expect(event.geo_data).to eq({})
       end
 
       it "logs valid data without a user_agent" do
