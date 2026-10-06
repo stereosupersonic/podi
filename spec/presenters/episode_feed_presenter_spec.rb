@@ -107,4 +107,11 @@ RSpec.describe EpisodeFeedPresenter, type: :model do
 
     expect(presenter.description_with_show_notes_text.strip).to eq(expected_text.strip)
   end
+
+  it "keeps the plain text description within Apple's 4000 bytes", :aggregate_failures do
+    episode.update!(description: "Grüße " * 1000)
+
+    expect(presenter.description_with_show_notes_text.bytesize).to be <= 4000
+    expect(presenter.description_with_show_notes_text).to be_valid_encoding
+  end
 end

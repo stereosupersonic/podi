@@ -125,7 +125,7 @@ RSpec.describe "episodes", type: :request do
         <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"
                            xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
                            xmlns:admin="http://webns.net/mvcb/"
-                           xmlns:atom="http://www.w3.org/2005/Atom/"
+                           xmlns:atom="http://www.w3.org/2005/Atom"
                            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                            xmlns:content="http://purl.org/rss/1.0/modules/content/"
                           xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
@@ -137,9 +137,10 @@ RSpec.describe "episodes", type: :request do
             <itunes:category text="News">
               <itunes:category text="Politics"/>
             </itunes:category>
-            <itunes:explicit>False</itunes:explicit>
+            <itunes:explicit>false</itunes:explicit>
             <itunes:author>Michael Deimel, Thomas Rademacher</itunes:author>
             <link>http://wartenberger.test.com</link>
+            <atom:link href="http://wartenberger.test.com/episodes.rss" rel="self" type="application/rss+xml"/>
             <itunes:owner>
               <itunes:name>Michael Deimel</itunes:name>
               <itunes:email>admin@wartenberger.de</itunes:email>
@@ -195,7 +196,7 @@ RSpec.describe "episodes", type: :request do
               </psc:chapters>
               <link>http://wartenberger.test.com/episodes/002-anton-muller</link>
               <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/002-anton-muller.jpg"/>
-              <itunes:explicit>False</itunes:explicit>
+              <itunes:explicit>false</itunes:explicit>
               <itunes:episode>2</itunes:episode>
               <itunes:episodeType>full</itunes:episodeType>
             </item>
@@ -219,7 +220,7 @@ RSpec.describe "episodes", type: :request do
               <itunes:duration>321</itunes:duration>
               <link>http://wartenberger.test.com/episodes/001-soli-wartenberg</link>
               <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/001-soli-wartenberg.jpg"/>
-              <itunes:explicit>False</itunes:explicit>
+              <itunes:explicit>false</itunes:explicit>
               <itunes:episode>1</itunes:episode>
               <itunes:episodeType>full</itunes:episodeType>
             </item>
@@ -239,7 +240,7 @@ RSpec.describe "episodes", type: :request do
         <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"
                            xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
                            xmlns:admin="http://webns.net/mvcb/"
-                           xmlns:atom="http://www.w3.org/2005/Atom/"
+                           xmlns:atom="http://www.w3.org/2005/Atom"
                            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                            xmlns:content="http://purl.org/rss/1.0/modules/content/"
                           xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
@@ -251,9 +252,10 @@ RSpec.describe "episodes", type: :request do
             <itunes:category text="News">
               <itunes:category text="Politics"/>
             </itunes:category>
-            <itunes:explicit>False</itunes:explicit>
+            <itunes:explicit>false</itunes:explicit>
             <itunes:author>Michael Deimel, Thomas Rademacher</itunes:author>
             <link>http://wartenberger.test.com</link>
+            <atom:link href="http://wartenberger.test.com/episodes.rss" rel="self" type="application/rss+xml"/>
             <itunes:owner>
               <itunes:name>Michael Deimel</itunes:name>
               <itunes:email>admin@wartenberger.de</itunes:email>
@@ -280,7 +282,7 @@ RSpec.describe "episodes", type: :request do
               <itunes:duration>321</itunes:duration>
               <link>http://wartenberger.test.com/episodes/001-soli-wartenberg</link>
               <itunes:image href="https://wartenberger-podcast.s3.eu-central-1.amazonaws.com/001-soli-wartenberg.jpg"/>
-              <itunes:explicit>False</itunes:explicit>
+              <itunes:explicit>false</itunes:explicit>
               <itunes:episode>1</itunes:episode>
               <itunes:episodeType>full</itunes:episodeType>
             </item>

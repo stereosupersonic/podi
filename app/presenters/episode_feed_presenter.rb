@@ -34,6 +34,7 @@ class EpisodeFeedPresenter < EpisodePresenter
     end.join("<br />").html_safe
   end
 
+  # Apple allows up to 4000 bytes, and umlauts take two bytes each.
   def description_with_show_notes_text
     [].tap do |result|
       result << render_markdown_to_plain_text(o.description)
@@ -42,7 +43,7 @@ class EpisodeFeedPresenter < EpisodePresenter
       result << render_markdown_to_plain_text(show_notes) if o.nodes.present?
 
       result << render_markdown_to_plain_text(stay_in_contact_markdown)
-    end.join("\n")
+    end.join("\n").truncate_bytes(4000)
   end
 
   def chapter_list
