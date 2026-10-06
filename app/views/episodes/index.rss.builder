@@ -6,7 +6,7 @@ xml.rss("version" => "2.0",
         "xmlns:dc" => "http://purl.org/dc/elements/1.1/",
         "xmlns:sy" => "http://purl.org/rss/1.0/modules/syndication/",
         "xmlns:admin" => "http://webns.net/mvcb/",
-        "xmlns:atom" => "http://www.w3.org/2005/Atom/",
+        "xmlns:atom" => "http://www.w3.org/2005/Atom",
         "xmlns:rdf" => "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
         "xmlns:content" => "http://purl.org/rss/1.0/modules/content/",
         "xmlns:itunes" => "http://www.itunes.com/dtds/podcast-1.0.dtd") do
@@ -31,13 +31,16 @@ xml.rss("version" => "2.0",
     end
 
     # The podcast parental advisory information.
-    xml.tag! "itunes:explicit", "False"
+    xml.tag! "itunes:explicit", "false"
 
     # The group responsible for creating the show.
     xml.tag! "itunes:author", @feed.author
 
     # The website associated with a podcast.
     xml.link @feed.canonical_url
+
+    # The URL of this feed, recommended by feed validators.
+    xml.tag! "atom:link", href: @feed.rss_url, rel: "self", type: "application/rss+xml"
 
     # The podcast owner contact information.
     xml.tag! "itunes:owner" do
