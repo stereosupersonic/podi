@@ -74,6 +74,22 @@ RSpec.describe "episodes", type: :request do
         expect(response.body).to include("<td>1</td>")
       end
     end
+
+    it "does not answer a page cached while logged in with 304 after logout", :aggregate_failures do
+      episode = create(:episode)
+      admin = create(:user, :admin)
+      post "/login", params: { email: admin.email, password: LoginHelpers::DEFAULT_TEST_PASSWORD }
+      follow_redirect!
+      get "/episodes/#{episode.slug}"
+      etag = response.headers["ETag"]
+      delete "/logout"
+      follow_redirect!
+
+      get "/episodes/#{episode.slug}", headers: { "If-None-Match" => etag }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include("Administration")
+    end
   end
 
   describe "GET /episodes.rss" do
