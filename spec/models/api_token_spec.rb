@@ -2,18 +2,13 @@
 #
 # Table name: api_tokens
 #
-#  id           :bigint           not null, primary key
+#  id           :bigint(8)        not null, primary key
 #  last_used_at :datetime
 #  name         :string           not null
-#  token_digest :string           not null
+#  token_digest :string           not null, uniquely indexed
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  user_id      :bigint           not null
-#
-# Indexes
-#
-#  index_api_tokens_on_token_digest  (token_digest) UNIQUE
-#  index_api_tokens_on_user_id       (user_id)
+#  user_id      :bigint(8)        not null, indexed
 #
 # Foreign Keys
 #
