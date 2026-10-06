@@ -23,10 +23,10 @@ class ApiToken < ApplicationRecord
   PREFIX = "podi_".freeze
   USAGE_PRECISION = 1.minute
 
-  belongs_to :user
-
   # Only set on the instance returned by .issue; never stored.
   attr_accessor :plaintext_token
+
+  belongs_to :user
 
   validates :name, presence: true
   validates :token_digest, presence: true, uniqueness: true
