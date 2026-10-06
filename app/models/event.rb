@@ -2,18 +2,13 @@
 #
 # Table name: events
 #
-#  id            :bigint           not null, primary key
+#  id            :bigint(8)        not null, primary key
 #  data          :jsonb
-#  downloaded_at :datetime
-#  geo_data      :jsonb            default({})
+#  downloaded_at :datetime         indexed
+#  geo_data      :jsonb
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  episode_id    :bigint           not null
-#
-# Indexes
-#
-#  index_events_on_downloaded_at  (downloaded_at)
-#  index_events_on_episode_id     (episode_id)
+#  episode_id    :bigint(8)        not null, indexed
 #
 # Foreign Keys
 #
