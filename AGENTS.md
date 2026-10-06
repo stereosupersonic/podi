@@ -103,7 +103,7 @@ The publication state of an `Episode` is defined by these columns:
 
 | Field | Meaning |
 |---|---|
-| `active` | Released: listed on the homepage, in the episode list and in the RSS feed |
+| `active` | Released: listed on the homepage, in the episode list, search, the RSS feed and the sitemap |
 | `visible` | Reachable by direct link (`/episodes/:slug`, `/:number`). `visible: true, active: false` is how previews are shared |
 | `published_on` | Release date; episodes dated in the future are not listed yet |
 | `rss_feed` | Whether a listed episode also goes into the RSS feed |
