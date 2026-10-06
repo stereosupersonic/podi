@@ -1,0 +1,27 @@
+.site-section.bg-light
+  .container
+    .row
+      .col-md-12
+        %h1 Users
+        %table.table.table-striped.table-bordered
+          %thead.table-dark
+            %tr
+              %th Name
+              %th Email
+              %th Admin
+              %th Created
+              %th
+          %tbody
+            - @users.each do |user|
+              %tr{ id: "user-#{user.id}" }
+                %td= user.name
+                %td= user.email
+                %td= user.admin
+                %td= user.created_at
+                %td
+                  = edit_button edit_admin_user_path(user)
+                  - unless user.object == current_user
+                    = button_to "Delete", admin_user_path(user),
+                                method: :delete, class: "btn btn-danger",
+                                form: { class: "d-inline", data: { turbo_confirm: "Delete #{user.email}?" } }
+        = add_button new_admin_user_path

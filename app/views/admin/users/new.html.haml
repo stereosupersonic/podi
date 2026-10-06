@@ -1,0 +1,7 @@
+.site-section.bg-light
+  .container
+    .row
+      .col-md-12
+        %h1 New User
+        = render "form", user: @user
+        = back_button admin_users_path
