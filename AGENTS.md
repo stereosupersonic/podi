@@ -138,7 +138,8 @@ Episodes created through it are always `active: false, visible: true` drafts: th
 this, `EpisodeCreator` (shared with the admin) doesn't know about it. Responses are rendered with
 jbuilder (`app/views/api/v1/`). Rate limits (60 requests a minute per token, 10 failed
 authentications a minute per IP) live in `Api::V1::BaseController` and count in `Rails.cache`, not in
-Rack::Attack, because they depend on the authentication result. Documentation: `docs/api.md`.
+Rack::Attack, because they depend on the authentication result. Endpoints: `GET ping`,
+`POST episodes`, `GET tags`. Documentation: `docs/api.md`.
 
 ### Download Tracking
 

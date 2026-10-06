@@ -43,7 +43,7 @@ curl -s https://www.wartenberger.de/api/v1/ping -H "Authorization: Bearer $PODI_
 | `episode[published_on]` | yes | Date, `YYYY-MM-DD` |
 | `episode[chapter_marks]` | no | One chapter per line: `HH:MM:SS.mmm Title`, e.g. `00:00:41.018 Intro` |
 | `episode[transcript]` | no | WebVTT content (starts with `WEBVTT`) |
-| `episode[tag_list]` | no | Comma-separated, e.g. `Interview, Geschichte` |
+| `episode[tag_list]` | no | Comma-separated, e.g. `Interview, Geschichte`. Reuse tags from `GET /tags` |
 | `episode[image]` | no | Cover image file: JPEG, PNG or WebP |
 
 Any other field (for example `active`, `visible`, `number`, `slug`) is ignored. The episode number is
@@ -71,6 +71,22 @@ curl -s https://www.wartenberger.de/api/v1/episodes \
 
 - `active: false` means waiting for human approval. Share `preview_url` with the person who approves it.
 - `duration` is `null` at first; it is filled in once the audio has been analysed.
+
+## List tags
+
+`GET /tags` returns every tag used by any episode, drafts included, sorted alphabetically. Reuse these
+tags when you set `episode[tag_list]` instead of inventing variants of the same topic ("Musik",
+"Musiker", "Band").
+
+```sh
+curl -s https://www.wartenberger.de/api/v1/tags -H "Authorization: Bearer $PODI_TOKEN"
+```
+
+`200 OK`:
+
+```json
+{ "tags": ["Geschichte", "Interview", "Musik"] }
+```
 
 ## Errors
 
