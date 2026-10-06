@@ -375,6 +375,22 @@ In `app/views/admin/episodes/index.html.haml`, replace the "Published" cell:
               %span.badge.text-bg-warning Draft
 ```
 
+Also fix the misleading `visible` hint in `app/views/admin/episodes/_form.html.haml`. `visible` only
+controls whether the episode can be reached by direct link; listing and the RSS feed depend on `active`
+and `rss_feed`. Replace:
+
+```haml
+= f.input :visible, as: :boolean, hint: "is the episode visible on the website and RSS feed"
+```
+
+with:
+
+```haml
+= f.input :visible, as: :boolean, hint: "Reachable by direct link, e.g. for previews. Listing on the website and in the RSS feed needs \"Active\""
+```
+
+This is copy only; no spec asserts the hint text (check with `grep -rn "visible on the website" spec`).
+
 ### 3e. Update the admin system spec
 
 In `spec/system/admin/episodes_spec.rb`, the example **"create a new episode"** now creates an inactive
@@ -392,7 +408,7 @@ example already covers this: its factory episode is active and its first cell st
 
 ```sh
 bin/rspec spec/models/episode_spec.rb spec/system/admin/episodes_spec.rb spec/requests spec/system/episodes_spec.rb spec/system/welcome_spec.rb
-git add db/migrate db/schema.rb app/models/episode.rb app/views/admin/episodes/index.html.haml spec/factories/episodes.rb spec/models/episode_spec.rb spec/system/admin/episodes_spec.rb
+git add db/migrate db/schema.rb app/models/episode.rb app/views/admin/episodes/index.html.haml app/views/admin/episodes/_form.html.haml spec/factories/episodes.rb spec/models/episode_spec.rb spec/system/admin/episodes_spec.rb
 git status   # check for annotate changes elsewhere and add them deliberately
 git commit -m "feat: make new episodes inactive by default"
 ```
