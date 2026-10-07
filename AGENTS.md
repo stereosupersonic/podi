@@ -16,17 +16,10 @@ https://www.wartenberger.de. It covers:
 
 | Layer | Technology |
 |---|---|
-| Language / framework | Ruby 4.0 (`.ruby-version`), Rails 8.1 |
-| Database | PostgreSQL 17, with native arrays, JSONB and Scenic views |
-| Jobs | Sidekiq 7 + Redis (`config/sidekiq.yml`, queues `default` and `low`) |
-| Cache | Redis |
-| Frontend | HAML, Hotwire (Turbo + Stimulus), importmap, Propshaft, dartsass, Bootstrap 5.3, SimpleForm |
 | Audio storage | Active Storage (disk locally, S3 + CloudFront in production) |
 | Image storage | Shrine + Cloudinary (`app/uploaders/image_uploader.rb`) |
 | Auth | Session-based, `has_secure_password` on `User` (no Devise) |
 | Rate limiting | Rack::Attack (`config/initializers/rack_attack.rb`); `POST /login` allows 10 attempts per IP in 3 minutes (`rate_limit` in `Users::SessionsController`) |
-| Monitoring | Rollbar (errors), Scout APM (performance) |
-| Deployment | Docker + Kamal to a single VPS |
 
 ## Getting It Running
 
@@ -161,7 +154,6 @@ default artwork). It raises if no record exists.
 ## Code Style
 
 - **HAML** for all templates, never ERB.
-- **Double quotes** for strings (enforced by RuboCop).
 - Models, factories and model specs start with a generated `# == Schema Information` header
   (annotaterb, configured in `.annotaterb.yml`). It regenerates on `bin/rails db:migrate` in development;
   otherwise run `bundle exec annotaterb models`. Never edit it by hand.
