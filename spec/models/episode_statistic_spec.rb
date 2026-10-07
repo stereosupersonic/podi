@@ -29,6 +29,7 @@ require "rails_helper"
 RSpec.describe EpisodeStatistic, type: :model do
   subject(:statistic) { described_class.find_by!(episode_id: episode.id) }
 
+  let!(:setting) { create(:setting) }
   let!(:episode) { create(:episode, published_on: Date.current) }
 
   # The view only lists episodes published after the first download

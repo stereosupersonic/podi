@@ -24,6 +24,8 @@
 require "rails_helper"
 
 RSpec.describe Episode, type: :model do
+  let!(:setting) { create(:setting) }
+
   it "has a valid factory" do
     episode = build(:episode)
 

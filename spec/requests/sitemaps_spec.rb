@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Sitemaps", type: :request do
+  let!(:setting) { create(:setting) }
+
   describe "GET /sitemap.xml" do
     it "returns success with XML content type" do
       get sitemap_path(format: :xml)

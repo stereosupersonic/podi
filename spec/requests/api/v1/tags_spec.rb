@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "API v1 tags", type: :request do
+  let!(:setting) { create(:setting) }
   let(:admin) { create(:user, :admin) }
   let(:token) { ApiToken.issue(user: admin, name: "agent") }
 

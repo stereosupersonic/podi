@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe EpisodePresenter, type: :model do
+  let!(:setting) { create(:setting) }
   let(:episode) { create(:episode, created_at: Time.zone.parse("2012-07-11 21:00")) }
   let(:presenter) { described_class.new(episode) }
 
