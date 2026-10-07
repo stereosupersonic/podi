@@ -166,6 +166,7 @@ GEM
     factory_bot_rails (6.4.4)
       factory_bot (~> 6.5)
       railties (>= 5.0.0)
+    fastimage (2.4.1)
     ffi (1.17.4)
     ffi-compiler (1.4.2)
       ffi (>= 1.15.5)
@@ -543,6 +544,7 @@ DEPENDENCIES
   device_detector!
   dotenv-rails
   factory_bot_rails (~> 6.4.2)
+  fastimage (~> 2.4)
   font-awesome-sass (~> 6.7)
   foreman
   haml-rails (~> 2.0)
