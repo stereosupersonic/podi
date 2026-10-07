@@ -95,6 +95,45 @@ RSpec.describe Episode, type: :model do
     end
   end
 
+  describe "image validation" do
+    def upload(name, type)
+      Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures", name), type)
+    end
+
+    context "with a square image of 1500 px" do
+      it "is valid" do
+        expect(build(:episode, image: upload("001-vorstellung.jpg", "image/jpeg"))).to be_valid
+      end
+    end
+
+    context "with an image that is not square" do
+      it "is invalid", :aggregate_failures do
+        episode = build(:episode, image: upload("image-1400x1120.png", "image/png"))
+
+        expect(episode).not_to be_valid
+        expect(episode.errors[:image]).to eq([ "must be square (1:1), this image is 1400×1120 px" ])
+      end
+    end
+
+    context "with a square image smaller than 1400 px" do
+      it "is invalid" do
+        episode = build(:episode, image: upload("image-600x600.png", "image/png"))
+
+        episode.validate
+        expect(episode.errors[:image]).to eq([ "must be 1400 to 3000 px wide, this image is 600×600 px" ])
+      end
+    end
+
+    context "with a square image larger than 3000 px" do
+      it "is invalid" do
+        episode = build(:episode, image: upload("image-3200x3200.png", "image/png"))
+
+        episode.validate
+        expect(episode.errors[:image]).to eq([ "must be 1400 to 3000 px wide, this image is 3200×3200 px" ])
+      end
+    end
+  end
+
   describe "feed description size" do
     context "with a short description" do
       it "is valid" do
