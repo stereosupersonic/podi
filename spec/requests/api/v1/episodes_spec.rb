@@ -128,6 +128,17 @@ RSpec.describe "API v1 episodes", type: :request do
       end
     end
 
+    context "with a cover that is not square" do
+      it "names the size", :aggregate_failures do
+        cover = fixture_file_upload(Rails.root.join("spec/fixtures/image-1400x1120.png"), "image/png")
+
+        post "/api/v1/episodes", params: { episode: episode_params.merge(image: cover) }, headers: headers
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.parsed_body["messages"]).to eq("image" => [ "must be square (1:1), this image is 1400×1120 px" ])
+      end
+    end
+
     context "with episode sent as a plain value" do
       it "answers bad request", :aggregate_failures do
         post "/api/v1/episodes", params: { episode: "Neue Folge" }, headers: headers
