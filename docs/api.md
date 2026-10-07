@@ -44,7 +44,7 @@ curl -s https://www.wartenberger.de/api/v1/ping -H "Authorization: Bearer $PODI_
 | `episode[chapter_marks]` | no | One chapter per line: `HH:MM:SS.mmm Title`, e.g. `00:00:41.018 Intro` |
 | `episode[transcript]` | no | WebVTT content (starts with `WEBVTT`) |
 | `episode[tag_list]` | no | Comma-separated, e.g. `Interview, Geschichte`. Reuse tags from `GET /tags` |
-| `episode[image]` | no | Cover image file: JPEG, PNG or WebP |
+| `episode[image]` | no | Cover image file: JPEG, PNG or WebP, exactly square, 1400–3000 px per side (Apple, Spotify) |
 
 Any other field (for example `active`, `visible`, `number`, `slug`) is ignored. The episode number is
 always the next free number, and the slug is built from the zero-padded number and the title.

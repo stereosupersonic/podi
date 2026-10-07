@@ -43,6 +43,8 @@ gem "rack-attack"
 gem "shrine", "~> 3.0"
 gem "shrine-cloudinary", "~> 1.1"
 gem "mime-types", "~> 3.7"
+# Reads cover image dimensions for Shrine (store_dimensions), so uploads can be checked
+gem "fastimage", "~> 2.4"
 
 gem "device_detector", git: "https://github.com/stereosupersonic/device_detector"
 

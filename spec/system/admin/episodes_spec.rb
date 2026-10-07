@@ -55,6 +55,7 @@ describe "Administrate Episodes", type: :system do
       click_on "Add"
 
       expect(page).to have_text "New Episode"
+      expect(page).to have_no_field "Artwork url"
 
       click_on "Save"
       expect(page).to have_content "Title can't be blank"
@@ -73,7 +74,6 @@ describe "Administrate Episodes", type: :system do
         00:01:30 Vorstellung
       )
 
-      fill_in "Artwork url", with: "https://test.com/001-test.png"
       attach_file "Audio", Rails.root.join("spec/fixtures/test-002.mp3")
 
       click_on "Save"
@@ -116,10 +116,19 @@ describe "Administrate Episodes", type: :system do
                                                  ])
       expect(last_episode.active).to be(false)
 
-      # expect(episode.artwork_url).to eq "https://test.com/001-test.png"
       expect(last_episode.chapter_marks.squish).to eq %(00:00:01 Intro
         00:00:41 Begrüßung der Mannschaft
         00:01:30 Vorstellung).squish
+    end
+
+    it "rejects a cover that is not square" do
+      episode = create(:episode)
+
+      visit "/admin/episodes/#{episode.slug}/edit"
+      attach_file "Image", Rails.root.join("spec/fixtures/image-1400x1120.png")
+      click_on "Save"
+
+      expect(page).to have_content "Image must be square (1:1), this image is 1400×1120 px"
     end
 
     it "edits a existin episode" do
