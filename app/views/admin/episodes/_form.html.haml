@@ -10,8 +10,6 @@
 = image_tag f.object.image_url, size: "50x50" if  f.object.cached_image_data || f.object.image
 = f.input :image, as: :file
 
-= f.input :artwork_url, hint: "Path for episodes logo"
-
 - if f.object.audio.attached?
   =  "The currently attached file is #{f.object.audio.filename} (#{f.object.audio.key}) Click here to replace this file."
 = f.input :audio, as: :file
