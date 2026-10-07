@@ -4,6 +4,8 @@ class EpisodeFeedPresenter < EpisodePresenter
 
   SOCIAL_LINKS = { "Twitter" => :twitter_url, "Instagram" => :instagram_url,
                    "Facebook" => :facebook_url, "YouTube" => :youtube_url }.freeze
+  # Apple shows at most this many bytes of an episode description.
+  MAX_DESCRIPTION_BYTES = 4000
 
   delegate :author, to: :current_setting
 
@@ -25,7 +27,7 @@ class EpisodeFeedPresenter < EpisodePresenter
     mp3_url
   end
 
-  # Apple allows up to 4000 characters and some HTML (<p>, <ol>, <ul>, <li>, <a>), wrapped in CDATA.
+  # Apple allows up to 4000 bytes and some HTML (<p>, <ol>, <ul>, <li>, <a>), wrapped in CDATA.
   def description_with_show_notes_html
     [].tap do |result|
       result << render_markdown_to_html(o.description)
@@ -46,7 +48,7 @@ class EpisodeFeedPresenter < EpisodePresenter
       result << render_markdown_to_plain_text(show_notes) if o.nodes.present?
 
       result << render_markdown_to_plain_text(stay_in_contact_markdown)
-    end.join("\n").truncate_bytes(4000)
+    end.join("\n").truncate_bytes(MAX_DESCRIPTION_BYTES)
   end
 
   def chapter_list
