@@ -126,6 +126,9 @@ Other `Episode` details:
 - `tags` is a PostgreSQL text array, edited as a comma-separated `tag_list`.
 - `description` and `nodes` are Markdown, rendered with `render_markdown`, which sanitizes the HTML
   (API tokens can write them). Never mark rendered Markdown `html_safe` directly.
+- The RSS description of an episode (description, chapters, show notes and the contact block from the
+  settings) may be at most 4000 bytes. `FeedDescriptionSizeValidator` checks it on save, so episode
+  specs need a `Setting` record.
 
 ### External API
 
