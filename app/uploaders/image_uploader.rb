@@ -8,7 +8,7 @@ class ImageUploader < Shrine
     validate_mime_type %w[image/jpeg image/png image/webp]
 
     width, height = file.dimensions
-    if width.nil? || height.nil?
+    if width.nil?
       errors << "dimensions could not be read"
     elsif width != height
       errors << "must be square (1:1), this image is #{width}×#{height} px"
