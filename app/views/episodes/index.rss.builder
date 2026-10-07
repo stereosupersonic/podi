@@ -59,7 +59,7 @@ xml.rss("version" => "2.0",
     # Podcasting 2.0 (https://podcasting2.org/docs/podcast-namespace): stops other platforms from
     # importing the feed, and gives the show an ID that survives a move to another URL.
     xml.tag! "podcast:locked", "yes", owner: @feed.email
-    xml.tag! "podcast:guid", PodcastFeedPresenter::GUID
+    xml.tag! "podcast:guid", @feed.podcast_guid
 
     # The new podcast RSS Feed URL.
     # xml.tag! "itunes:new-feed-url", episodes_url(:xml)

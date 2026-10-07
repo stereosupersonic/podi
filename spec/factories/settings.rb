@@ -17,6 +17,7 @@
 #  language                    :string           not null
 #  logo_url                    :string           not null
 #  owner                       :string           not null
+#  podcast_guid                :string           not null
 #  seo_keywords                :text
 #  spotify_url                 :string
 #  title                       :string           not null

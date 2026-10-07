@@ -160,7 +160,7 @@ RSpec.describe "episodes", type: :request do
             <itunes:title>Wartenberger Podcast</itunes:title>
             <copyright>Copyright #{Time.current.year} Michael Deimel</copyright>
             <podcast:locked owner="admin@wartenberger.de">yes</podcast:locked>
-            <podcast:guid>2bac87e9-7f7b-581e-aea8-44d36776e94a</podcast:guid>
+            <podcast:guid>#{setting.podcast_guid}</podcast:guid>
             <item>
               <title>Anton Müller</title>
               <enclosure url="http://wartenberger.test.com/episodes/002-anton-muller.mp3" length="52632" type="audio/mpeg"/>
@@ -278,7 +278,7 @@ RSpec.describe "episodes", type: :request do
             <itunes:title>Wartenberger Podcast</itunes:title>
             <copyright>Copyright #{Time.current.year} Michael Deimel</copyright>
             <podcast:locked owner="admin@wartenberger.de">yes</podcast:locked>
-            <podcast:guid>2bac87e9-7f7b-581e-aea8-44d36776e94a</podcast:guid>
+            <podcast:guid>#{setting.podcast_guid}</podcast:guid>
             <item>
               <title>Soli Wartenberg</title>
               <enclosure url="http://wartenberger.test.com/episodes/001-soli-wartenberg.mp3" length="52632" type="audio/mpeg"/>
