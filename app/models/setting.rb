@@ -17,6 +17,7 @@
 #  language                    :string           not null
 #  logo_url                    :string           not null
 #  owner                       :string           not null
+#  podcast_guid                :string           not null
 #  seo_keywords                :text
 #  spotify_url                 :string
 #  title                       :string           not null
@@ -27,6 +28,13 @@
 #
 
 class Setting < ApplicationRecord
+  # https://podcasting2.org/docs/podcast-namespace/tags/guid
+  PODCAST_GUID_NAMESPACE = "ead4c236-bf58-58c6-a2c6-a6b28d128cb6".freeze
+
+  # The podcast's permanent ID in the feed. Generated once from the feed URL and never changed afterwards,
+  # so it survives a move to another domain.
+  attribute :podcast_guid, :string, default: -> { generate_podcast_guid }
+
   validates(:title, presence: true)
   validates(:description, presence: true)
   validates(:email, presence: true)
@@ -44,6 +52,12 @@ class Setting < ApplicationRecord
   validates(:instagram_url, url: true)
   validates(:itunes_url, url: true)
   validates(:spotify_url, url: true)
+  validates(:podcast_guid, presence: true)
+
+  def self.generate_podcast_guid
+    feed_url = URI(Rails.application.routes.url_helpers.episodes_url(format: :rss))
+    Digest::UUID.uuid_v5(PODCAST_GUID_NAMESPACE, "#{feed_url.host}#{feed_url.path}")
+  end
 
   def self.current
     Setting.order(:created_at).last || raise("no setting")

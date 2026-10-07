@@ -9,7 +9,8 @@ xml.rss("version" => "2.0",
         "xmlns:atom" => "http://www.w3.org/2005/Atom",
         "xmlns:rdf" => "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
         "xmlns:content" => "http://purl.org/rss/1.0/modules/content/",
-        "xmlns:itunes" => "http://www.itunes.com/dtds/podcast-1.0.dtd") do
+        "xmlns:itunes" => "http://www.itunes.com/dtds/podcast-1.0.dtd",
+        "xmlns:podcast" => "https://podcastindex.org/namespace/1.0") do
   xml.channel do
     # https://help.apple.com/itc/podcasts_connect/#/itcb54353390
 
@@ -54,6 +55,11 @@ xml.rss("version" => "2.0",
 
     #	The show copyright details.
     xml.copyright @feed.copyright
+
+    # Podcasting 2.0 (https://podcasting2.org/docs/podcast-namespace): stops other platforms from
+    # importing the feed, and gives the show an ID that survives a move to another URL.
+    xml.tag! "podcast:locked", "yes", owner: @feed.email
+    xml.tag! "podcast:guid", @feed.podcast_guid
 
     # The new podcast RSS Feed URL.
     # xml.tag! "itunes:new-feed-url", episodes_url(:xml)
