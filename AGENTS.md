@@ -133,6 +133,12 @@ Other `Episode` details:
 - `tags` is a PostgreSQL text array, edited as a comma-separated `tag_list`.
 - `description` and `nodes` are Markdown, rendered with `render_markdown`, which sanitizes the HTML
   (API tokens can write them). Never mark rendered Markdown `html_safe` directly.
+- Covers are uploaded through `image` (Shrine) and must be square, 1400–3000 px (Apple, Spotify);
+  `ImageUploader` rejects anything else. The `artwork_url` column only serves episodes 001–019 from
+  before the uploads and is no longer editable.
+- The RSS description of an episode (description, chapters, show notes and the contact block from the
+  settings) may be at most 4000 bytes. `FeedDescriptionSizeValidator` checks it on save, so episode
+  specs need a `Setting` record.
 
 ### External API
 
