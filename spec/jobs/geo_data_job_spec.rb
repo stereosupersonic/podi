@@ -5,6 +5,7 @@ RSpec.describe GeoDataJob, type: :job do
     described_class.perform_later(event.id, ip)
   end
 
+  let!(:setting) { create(:setting) }
   let(:event) { create(:event) }
   let(:ip) { "127.0.0.1" }
 

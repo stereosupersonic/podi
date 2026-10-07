@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe PodloveWebplayerConfigBuilder do
+  let!(:setting) { create(:setting) }
   let(:episode) { EpisodePresenter.new(create(:episode)) }
 
   describe "#episode_config" do

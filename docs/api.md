@@ -38,8 +38,8 @@ curl -s https://www.wartenberger.de/api/v1/ping -H "Authorization: Bearer $PODI_
 |---|---|---|
 | `episode[audio]` | yes | MP3 file (`audio/mpeg`). Other formats are rejected |
 | `episode[title]` | yes | Text, unique across all episodes |
-| `episode[description]` | yes | Markdown |
-| `episode[nodes]` | yes | Show notes, Markdown |
+| `episode[description]` | yes | Markdown. Links must be full URLs (`https://…` or `mailto:…`). Together with the chapters, the show notes and the contact block, the description may take at most 4000 bytes in the RSS feed (Apple's limit); the error names the size and the excess |
+| `episode[nodes]` | yes | Show notes, Markdown. Links must be full URLs (`https://…` or `mailto:…`); they count toward the 4000-byte feed limit above |
 | `episode[published_on]` | yes | Date, `YYYY-MM-DD` |
 | `episode[chapter_marks]` | no | One chapter per line: `HH:MM:SS.mmm Title`, e.g. `00:00:41.018 Intro` |
 | `episode[transcript]` | no | WebVTT content (starts with `WEBVTT`) |

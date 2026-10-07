@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe EpisodeCreator do
+  let!(:setting) { create(:setting) }
   let(:attributes) do
     {
       title: "Neue Folge",
