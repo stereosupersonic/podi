@@ -34,7 +34,6 @@ class Episode < ApplicationRecord
     image
     chapter_marks
     transcript
-    artwork_url
     audio
     visible
     rss_feed
