@@ -37,6 +37,9 @@ module Podi
     # config.eager_load_paths << Rails.root.join("extras")
     config.time_zone = "Berlin"
     config.i18n.default_locale = :en
+    # Without this, S3 stores mp3s with "Content-Disposition: attachment" and some players download
+    # them instead of playing them (flagged by podcast feed validators).
+    config.active_storage.content_types_allowed_inline += %w[audio/mpeg]
     config.generators do |g|
       g.assets = false
       g.helper = false

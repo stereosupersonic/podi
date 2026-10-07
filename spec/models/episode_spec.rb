@@ -95,6 +95,14 @@ RSpec.describe Episode, type: :model do
     end
   end
 
+  describe "audio storage" do
+    it "stores the mp3 for playing in place, not as a download" do
+      episode = create(:episode)
+
+      expect(episode.audio.blob.service_metadata).not_to include(:disposition)
+    end
+  end
+
   describe "image validation" do
     def upload(name, type)
       Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures", name), type)
