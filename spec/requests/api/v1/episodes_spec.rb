@@ -128,6 +128,16 @@ RSpec.describe "API v1 episodes", type: :request do
       end
     end
 
+    context "with a description that makes the feed too long" do
+      it "names the size", :aggregate_failures do
+        post "/api/v1/episodes", params: { episode: episode_params.merge(description: "a" * 4000) },
+                                 headers: headers
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.parsed_body["messages"]["description"].first).to start_with("makes the RSS feed description")
+      end
+    end
+
     context "with episode sent as a plain value" do
       it "answers bad request", :aggregate_failures do
         post "/api/v1/episodes", params: { episode: "Neue Folge" }, headers: headers

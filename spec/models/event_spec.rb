@@ -17,6 +17,8 @@
 require "rails_helper"
 
 RSpec.describe Event, type: :model do
+  let!(:setting) { create(:setting) }
+
   it "has a valid factory" do
     user = build(:event)
 

@@ -95,6 +95,30 @@ RSpec.describe Episode, type: :model do
     end
   end
 
+  describe "feed description size" do
+    context "with a short description" do
+      it "is valid" do
+        expect(build(:episode)).to be_valid
+      end
+    end
+
+    context "with a description over Apple's limit" do
+      it "names the size and the excess", :aggregate_failures do
+        episode = build(:episode, description: "a" * 4000)
+
+        expect(episode).not_to be_valid
+        expect(episode.errors[:description].first)
+          .to match(/\Amakes the RSS feed description \d+ bytes, \d+ more than Apple allows \(4000\)/)
+      end
+    end
+
+    context "with umlauts under 4000 characters but over 4000 bytes" do
+      it "is invalid" do
+        expect(build(:episode, description: "ü" * 1900)).not_to be_valid
+      end
+    end
+  end
+
   describe "link validation" do
     context "with full and mail links" do
       it "is valid" do

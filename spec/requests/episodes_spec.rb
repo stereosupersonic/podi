@@ -316,6 +316,7 @@ RSpec.describe "episodes", type: :request do
   end
 
   describe "GET /episode.mp3" do
+    let!(:setting) { create(:setting) }
     let(:episode) { EpisodePresenter.new create :episode, downloads_count: 1, number: 4, title: :test }
 
     it "redirects to the file" do
