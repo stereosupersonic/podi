@@ -139,7 +139,8 @@ RSpec.describe "episodes", type: :request do
                            xmlns:atom="http://www.w3.org/2005/Atom"
                            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                            xmlns:content="http://purl.org/rss/1.0/modules/content/"
-                          xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+                          xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+                          xmlns:podcast="https://podcastindex.org/namespace/1.0">
           <channel>
             <title>Wartenberger Podcast</title>
             <description>Der Podcast über und um den Markt Wartenberg</description>
@@ -158,6 +159,8 @@ RSpec.describe "episodes", type: :request do
             </itunes:owner>
             <itunes:title>Wartenberger Podcast</itunes:title>
             <copyright>Copyright #{Time.current.year} Michael Deimel</copyright>
+            <podcast:locked owner="admin@wartenberger.de">yes</podcast:locked>
+            <podcast:guid>2bac87e9-7f7b-581e-aea8-44d36776e94a</podcast:guid>
             <item>
               <title>Anton Müller</title>
               <enclosure url="http://wartenberger.test.com/episodes/002-anton-muller.mp3" length="52632" type="audio/mpeg"/>
@@ -254,7 +257,8 @@ RSpec.describe "episodes", type: :request do
                            xmlns:atom="http://www.w3.org/2005/Atom"
                            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                            xmlns:content="http://purl.org/rss/1.0/modules/content/"
-                          xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+                          xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+                          xmlns:podcast="https://podcastindex.org/namespace/1.0">
           <channel>
             <title>Wartenberger Podcast</title>
             <description>Der Podcast über und um den Markt Wartenberg</description>
@@ -273,6 +277,8 @@ RSpec.describe "episodes", type: :request do
             </itunes:owner>
             <itunes:title>Wartenberger Podcast</itunes:title>
             <copyright>Copyright #{Time.current.year} Michael Deimel</copyright>
+            <podcast:locked owner="admin@wartenberger.de">yes</podcast:locked>
+            <podcast:guid>2bac87e9-7f7b-581e-aea8-44d36776e94a</podcast:guid>
             <item>
               <title>Soli Wartenberg</title>
               <enclosure url="http://wartenberger.test.com/episodes/001-soli-wartenberg.mp3" length="52632" type="audio/mpeg"/>
