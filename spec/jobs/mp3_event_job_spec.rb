@@ -5,6 +5,7 @@ RSpec.describe Mp3EventJob, type: :job do
     described_class.perform_later payload
   end
 
+  let!(:setting) { create(:setting) }
   let(:episode) { create(:episode) }
   let(:payload) do
     { data: {

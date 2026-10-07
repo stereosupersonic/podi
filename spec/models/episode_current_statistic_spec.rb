@@ -29,6 +29,7 @@ require "rails_helper"
 RSpec.describe EpisodeCurrentStatistic, type: :model do
   subject(:statistic) { described_class.find_by!(episode_id: episode.id) }
 
+  let!(:setting) { create(:setting) }
   let!(:episode) { create(:episode, published_on: 2.days.ago.to_date) }
 
   context "without downloads" do
