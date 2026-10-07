@@ -40,6 +40,8 @@ module Podi
     # Without this, S3 stores mp3s with "Content-Disposition: attachment" and some players download
     # them instead of playing them (flagged by podcast feed validators).
     config.active_storage.content_types_allowed_inline += %w[audio/mpeg]
+    # Images go through Shrine and Cloudinary; Active Storage only holds audio and never builds variants.
+    config.active_storage.variant_processor = :disabled
     config.generators do |g|
       g.assets = false
       g.helper = false
