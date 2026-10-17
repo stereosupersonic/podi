@@ -266,7 +266,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2026.1006)
+    mime-types-data (3.2026.1013)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (6.0.6)
@@ -446,7 +446,7 @@ GEM
     ruby-mp3info (0.8.10)
     ruby-progressbar (1.13.0)
     rubyzip (3.7.0)
-    sass-embedded (1.105.1)
+    sass-embedded (1.105.2)
       google-protobuf (~> 4.31)
       rake (~> 13.3)
     sassc (2.4.0)
