@@ -317,7 +317,7 @@ GEM
     pry-nav (1.0.0)
       pry (>= 0.9.10, < 0.15)
     public_suffix (7.0.5)
-    puma (7.2.2)
+    puma (7.2.3)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.8)
@@ -382,7 +382,7 @@ GEM
       redis-client (= 0.30.1)
     redis-client (0.30.1)
       connection_pool
-    regexp_parser (2.13.1)
+    regexp_parser (2.13.3)
     reline (0.7.0)
       io-console (~> 0.5)
     rest-client (2.1.0)
