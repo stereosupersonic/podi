@@ -1,12 +1,12 @@
 SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::HTMLFormatter
 ])
-SimpleCov.start "rails" do
+SimpleCov.configure do
   coverage_dir "coverage"
 
-  add_filter "db"
-  add_filter "config"
-  add_filter "bin"
-  add_filter "spec"
-  add_filter "lib/tasks"
+  skip "db"
+  skip "config"
+  skip "bin"
+  skip "spec"
+  skip "lib/tasks"
 end
