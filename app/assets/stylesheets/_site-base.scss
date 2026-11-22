@@ -1,6 +1,8 @@
+@use "sass:color";
+
 body {
   line-height: 1.7;
-  color: lighten($black, 30%);
+  color: color.adjust($black, $lightness: 30%);
   font-weight: 200;
   font-size: $font-size-base + .1rem;
 }
@@ -75,8 +77,8 @@ a {
   }
 
   &.btn-secondary {
-    background-color: lighten($secondary, 45%);
-    border-color: lighten($secondary, 45%);
+    background-color: color.adjust($secondary, $lightness: 45%);
+    border-color: color.adjust($secondary, $lightness: 45%);
     color: $black;
   }
 
@@ -156,10 +158,10 @@ a {
 
 .site-footer {
   padding-top: 3em;
-  background: lighten($black, 20%);
+  background: color.adjust($black, $lightness: 20%);
 
   p {
-    color: lighten($black, 45%);
+    color: color.adjust($black, $lightness: 45%);
   }
 
   h2,
@@ -170,10 +172,10 @@ a {
   }
 
   a {
-    color: lighten($black, 60%);
+    color: color.adjust($black, $lightness: 60%);
 
     &:hover {
-      color: lighten($black, 100%);
+      color: color.adjust($black, $lightness: 100%);
     }
   }
 

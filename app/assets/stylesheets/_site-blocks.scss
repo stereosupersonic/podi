@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .welcome-hero {
   background-color: $red;
   padding: 2rem 0;
@@ -170,7 +172,7 @@
   position: relative;
   margin-top: -70px;
   z-index: 2;
-  color: darken($white, 40%);
+  color: color.adjust($white, $lightness: -40%);
 
   &.no-margin-top {
     margin-top: 0px;
@@ -211,7 +213,7 @@
     }
 
     p {
-      color: lighten($black, 80%);
+      color: color.adjust($black, $lightness: 80%);
     }
 
     &:hover,
@@ -295,7 +297,7 @@
 .post-entry {
   position: relative;
   overflow: hidden;
-  border: 1px solid lighten($black, 90%);
+  border: 1px solid color.adjust($black, $lightness: 90%);
 
   &,
   .text {
@@ -347,7 +349,7 @@
       border-bottom: 2px solid transparent;
       border-radius: 0 !important;
       font-weight: bold;
-      color: lighten($black, 80%);
+      color: color.adjust($black, $lightness: 80%);
 
       &:hover,
       &.active {
@@ -552,7 +554,7 @@
             margin: 0;
             padding: 0;
             transition: .3s all ease;
-            color: lighten($black, 60%);
+            color: color.adjust($black, $lightness: 60%);
           }
         }
 
@@ -578,7 +580,7 @@
 
 #date-countdown {
   .countdown-block {
-    color: lighten($black, 70%);
+    color: color.adjust($black, $lightness: 70%);
   }
 
   .label {
@@ -626,7 +628,7 @@
 
   .position {
     font-size: 14px;
-    color: lighten($black, 70%);
+    color: color.adjust($black, $lightness: 70%);
     text-transform: uppercase;
   }
 }
