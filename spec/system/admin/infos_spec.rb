@@ -14,7 +14,7 @@ describe "Info", type: :system do
       expect(page).to have_selector "h1", text: "Info"
       within ".dev" do
         expect(page).to have_selector "h3", text: "Development"
-        expect(page).to have_content(/Ruby-Version:.*3/)
+        expect(page).to have_content("Ruby-Version: ruby #{RUBY_VERSION}")
         expect(page).to have_content(/Rails-Version:.*8/)
       end
 

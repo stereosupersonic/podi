@@ -452,7 +452,7 @@ Lint/Loop:
 
 Lint/MissingCopEnableDirective:
   Enabled: true
-  MaximumRangeSize: .inf
+  MaxRangeSize: .inf
 
 Lint/MixedRegexpCaptureTypes:
   Enabled: true
@@ -1169,10 +1169,10 @@ RSpec/ContextWording:
 RSpec/EmptyLineAfterExampleGroup:
   Enabled: true
 
-Capybara/MatchStyle:
+Capybara/RSpec/MatchStyle:
   Enabled: true
 
-Capybara/NegationMatcher:
+Capybara/RSpec/NegationMatcher:
   Enabled: true
 
 Capybara/SpecificActions:
@@ -1181,5 +1181,5 @@ Capybara/SpecificActions:
 Capybara/SpecificFinders:
   Enabled: true
 
-Capybara/SpecificMatcher:
+Capybara/RSpec/SpecificMatcher:
   Enabled: true
