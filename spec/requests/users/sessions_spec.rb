@@ -17,7 +17,7 @@ RSpec.describe "sessions", type: :request do
     it "re-renders the form with the wrong password", :aggregate_failures do
       post "/login", params: { email: user.email, password: "wrong" }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to include("Invalid email or password")
       expect(session[:user_id]).to be_nil
     end
@@ -45,7 +45,7 @@ RSpec.describe "sessions", type: :request do
       it "allows 10 attempts within 3 minutes" do
         10.times { post "/login", params: { email: user.email, password: "wrong" } }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
 
       it "rejects the 11th attempt within 3 minutes", :aggregate_failures do
