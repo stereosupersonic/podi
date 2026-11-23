@@ -44,12 +44,26 @@ bin/rspec spec/requests/episodes_spec.rb:12    # one example
 bin/rubocop                                     # style (rubocop-rails-omakase + project rules)
 bin/brakeman --no-pager                         # security static analysis
 bin/bundler-audit                               # vulnerable gems
+git diff --unified=0 origin/master...HEAD | bin/coverage-check   # after the specs ran
 ```
 
 `bin/ci` runs everything (setup, RuboCop, RSpec, bundler-audit, Brakeman) as defined in `config/ci.rb`.
 `bin/docker-tests` runs the full suite in Docker exactly as GitHub Actions does
 (`docker-compose.test.yml`, with Selenium in a `chrome` container). Use it for `js: true` system specs:
 run locally, they fail when the installed Chrome is newer than any chromedriver `webdrivers` can find.
+
+### Coverage
+
+SimpleCov measures every spec run, in CI as well (`.simplecov`, lines only); the report is
+`coverage/index.html`, or the folder `COVERAGE_DIR` names. On a pull request the `docker` job runs
+the suite with `COVERAGE_DIR=tmp/coverage`, copies the report out of the container and runs
+`bin/coverage-check`, which fails when a line of Ruby the pull request adds or changes under `app/`
+or `lib/` never ran while the specs ran, and names each one. A line no spec can reach goes between
+two `# :nocov:` markers, with a comment saying why. The job writes the totals and the result of the
+check into the summary of the run and uploads the whole report as the artifact `coverage`.
+SimpleCov measures Ruby only: views and Stimulus controllers are covered by system specs, not by
+this check. Run only some specs locally and the check reports every changed line those specs did
+not reach.
 
 ### Spec Layout
 
@@ -178,7 +192,8 @@ default artwork). It raises if no record exists.
 - **Commits** are atomic, use conventional prefixes and the imperative mood: `feat: add episode tags`,
   `fix: …`, `refactor: …`, `test: …`, `docs: …`. Keep the summary under 50 characters.
 - **Pull requests** target `master` on GitHub (`stereosupersonic/podi`). CI (`.github/workflows/ci.yml`)
-  runs Brakeman, bundler-audit, RuboCop and the full RSpec suite in Docker.
+  runs Brakeman, bundler-audit, RuboCop and the full RSpec suite in Docker, and on a pull request checks
+  that every changed line of Ruby ran in the specs (see [Coverage](#coverage)).
 - **Implementation plans** live in `docs/plans/` while they are being implemented. Remove a plan once
   its PR is merged: the code, the PR description and git history are the record from then on.
 
