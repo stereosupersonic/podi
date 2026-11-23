@@ -68,6 +68,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v6
+      with:
+        # The check of changed lines compares the pull request with its base branch.
+        fetch-depth: 0
 
     - name: Start chrome container
       run: |
@@ -97,7 +100,47 @@ jobs:
 
     - name: Run tests
       run: |
-        docker compose -f docker-compose.test.yml exec -e CI=true -T app bundle exec rspec .
+        docker compose -f docker-compose.test.yml exec -e CI=true -e COVERAGE_DIR=tmp/coverage -T app bundle exec rspec .
+
+    - name: Copy the coverage out of the container
+      run: docker compose -f docker-compose.test.yml cp app:/rails/tmp/coverage ./coverage
+
+    # Named, so that the step runs with pipefail and a failing git diff fails the check.
+    - name: Check that every changed line of Ruby ran in the specs
+      if: github.event_name == 'pull_request'
+      shell: bash
+      run: |
+        git diff --unified=0 "origin/${{ github.base_ref }}...HEAD" \
+          | docker compose -f docker-compose.test.yml exec -T app bin/coverage-check tmp/coverage/.resultset.json \
+          | tee coverage-check.txt
+
+    - name: Write the coverage into the summary of the run
+      if: ${{ !cancelled() && hashFiles('coverage/.last_run.json') != '' }}
+      shell: bash
+      run: |
+        {
+          echo "### Coverage"
+          echo
+          jq -r '"Lines: \(.result.line) %" + (if .result.branch then ", branches: \(.result.branch) %" else "" end)' coverage/.last_run.json
+          if [ -f coverage-check.txt ]; then
+            echo
+            echo '```'
+            cat coverage-check.txt
+            echo '```'
+          fi
+          echo
+          echo 'The whole report is the artifact "coverage" of this run.'
+        } >> "$GITHUB_STEP_SUMMARY"
+
+    - name: Upload the coverage report
+      if: ${{ !cancelled() && hashFiles('coverage/index.html') != '' }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: coverage
+        path: coverage/
+        # .resultset.json is hidden; with it, bin/coverage-check runs on the report locally.
+        include-hidden-files: true
+        retention-days: 14
 
     - name: Stop containers
       if: always()

@@ -1,0 +1,87 @@
+#!/usr/bin/env ruby
+#
+# Fails when a line of Ruby that a change adds or changes never ran while the specs ran.
+#
+#   git diff --unified=0 origin/master...HEAD | bin/coverage-check [coverage/.resultset.json]
+#
+# The diff comes from standard input, the line counts from the file SimpleCov writes after a run
+# of the suite. Only Ruby under app/, lib/ and mcp/lib/ is checked: SimpleCov measures nothing
+# else. Lines between two "# :nocov:" markers are left out, as SimpleCov leaves them out.
+
+require "json"
+
+CHECKED_FILES = %r{\A(app|lib|mcp/lib)/.+\.rb\z}
+NOCOV_MARKER = /\A\s*#\s*:nocov:/
+
+# The lines each file of the diff has after the change, by path.
+def changed_lines(diff)
+  path = nil
+  diff.each_line.with_object(Hash.new { |lines, file| lines[file] = [] }) do |line, lines|
+    case line
+    when %r{\A\+\+\+ (?:b/)?(.+)$}
+      path = Regexp.last_match(1) == "/dev/null" ? nil : Regexp.last_match(1)
+    when /\A@@ -\S+ \+(\d+)(?:,(\d+))? @@/
+      first = Regexp.last_match(1).to_i
+      lines[path].concat((first...(first + (Regexp.last_match(2) || "1").to_i)).to_a) if path
+    end
+  end
+end
+
+# How often each line ran, by the path the file has in the suite's run. A file the suite ran in
+# several processes counts a line as run when one of them ran it.
+def line_counts(resultset)
+  runs = JSON.parse(File.read(resultset)).values.map { |run| run.fetch("coverage", {}) }
+  runs.flat_map(&:to_a).group_by(&:first).transform_values do |files|
+    files.map { |_, file| file.is_a?(Hash) ? file["lines"] : file }.transpose.map { |counts| counts.compact.max }
+  end
+end
+
+def counts_of(counts_by_path, path)
+  counts_by_path.find { |measured_path, _| measured_path.end_with?("/#{path}") }&.last
+end
+
+# The numbers of the lines between two :nocov: markers, the markers included.
+def silenced_lines(path)
+  silenced = false
+  File.readlines(path).each_with_index.select do |line, _|
+    marker = line.match?(NOCOV_MARKER)
+    silenced = !silenced if marker
+    marker || silenced
+  end.map { |_, index| index + 1 }
+end
+
+def never_run(path, numbers, counts)
+  source = File.readlines(path)
+  (numbers - silenced_lines(path))
+    .select { |number| counts[number - 1]&.zero? }
+    .map { |number| "  #{path}:#{number}  #{source[number - 1].strip}" }
+end
+
+resultset = ARGV.fetch(0, "coverage/.resultset.json")
+unless File.exist?(resultset)
+  warn "No coverage found at #{resultset}. Run the specs with SimpleCov first."
+  exit 2
+end
+
+counts_by_path = line_counts(resultset)
+findings = changed_lines($stdin.read).select { |path, _| path.match?(CHECKED_FILES) }.flat_map do |path, numbers|
+  counts = counts_of(counts_by_path, path)
+  next [ "  #{path}  was not loaded while the specs ran" ] unless counts
+
+  never_run(path, numbers, counts)
+end
+
+if findings.empty?
+  puts "Every changed line of Ruby ran while the specs ran."
+  exit 0
+end
+
+puts <<~MESSAGE
+  These changed lines of Ruby never ran while the specs ran:
+
+  #{findings.join("\n")}
+
+  Add a spec that runs them. A line that cannot be reached in a spec goes between two
+  "# :nocov:" markers, with a comment saying why.
+MESSAGE
+exit 1
